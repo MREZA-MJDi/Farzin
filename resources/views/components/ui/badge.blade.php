@@ -8,13 +8,13 @@
     $classes = [
         'badge',
         "badge--{$variant}",
-        $size !== 'md' ? "badge--{$size}" : '',
+        $size !== 'md' ? "badge--{$size}" : null,
     ];
 @endphp
 
 <span
     {{ $attributes->merge([
-        'class' => implode(' ', array_filter($classes))
+        'class' => implode(' ', array_filter($classes)),
     ]) }}
 >
     @if($dot)

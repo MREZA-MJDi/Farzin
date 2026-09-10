@@ -18,6 +18,8 @@
         <img
             src="{{ $image }}"
             alt="{{ $alt ?? $title }}"
+            width="800"
+            height="500"
             loading="lazy"
         >
     </a>
@@ -33,9 +35,11 @@
 
 
         <h3 class="blog-card__title">
+
             <a href="{{ $href }}">
                 {{ $title }}
             </a>
+
         </h3>
 
 
@@ -48,6 +52,7 @@
 
         @if($meta)
             <div class="blog-card__meta">
+
                 <span>
                     {{ $meta }}
                 </span>
@@ -55,6 +60,7 @@
                 <span aria-hidden="true">
                     ←
                 </span>
+
             </div>
         @endif
 

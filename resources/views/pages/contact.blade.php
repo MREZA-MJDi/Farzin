@@ -11,153 +11,159 @@
 
     <main class="contact-page">
 
-        <x-layout.breadcrumb
-            :items="[
-                ['label' => 'تماس با ما']
-            ]"
-        />
-
-
         <section class="section section--sm">
 
             <div class="container">
 
-                <header class="page-header">
+                <div class="section__inner">
 
-                    <span class="page-header__eyebrow">
-                        تماس با ما
-                    </span>
+                    <x-layout.breadcrumb
+                        :items="[
+                            ['label' => 'تماس با ما']
+                        ]"
+                    />
 
-                    <h1 class="page-header__title">
-                        در کنار شما هستیم.
-                    </h1>
+                    <header class="page-header">
 
-                    <p class="page-header__description">
-                        برای مشاوره قبل از خرید یا پیگیری سفارش،
-                        با ما در ارتباط باشید.
-                    </p>
+                        <span class="page-header__eyebrow">
+                            تماس با ما
+                        </span>
 
-                </header>
+                        <h1 class="page-header__title">
+                            در کنار شما هستیم.
+                        </h1>
 
+                        <p class="page-header__description">
+                            برای مشاوره قبل از خرید یا پیگیری سفارش،
+                            با ما در ارتباط باشید.
+                        </p>
 
-                <div class="contact-layout">
-
-                    <div class="contact-layout__info">
-
-                        <div class="contact-item">
-
-                            <span class="contact-item__label">
-                                تلفن
-                            </span>
-
-                            <a
-                                href="tel:+982112345678"
-                                class="contact-item__value"
-                            >
-                                ۰۲۱-۱۲۳۴۵۶۷۸
-                            </a>
-
-                        </div>
+                    </header>
 
 
-                        <div class="contact-item">
+                    <div class="grid grid-cols-2 gap-8">
 
-                            <span class="contact-item__label">
-                                ایمیل
-                            </span>
+                        <div class="card card--padded">
 
-                            <a
-                                href="mailto:info@example.com"
-                                class="contact-item__value"
-                            >
-                                info@example.com
-                            </a>
+                            <div class="stack stack--lg">
 
-                        </div>
+                                <div class="stack stack--xs">
 
+                                    <span class="text-muted text-xs">
+                                        تلفن
+                                    </span>
 
-                        <div class="contact-item">
-
-                            <span class="contact-item__label">
-                                ساعات پاسخگویی
-                            </span>
-
-                            <span class="contact-item__value">
-                                شنبه تا پنجشنبه، ۹ تا ۱۸
-                            </span>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="contact-layout__form">
-
-                        <form
-                            method="POST"
-                            action="/contact"
-                            class="card card__body"
-                        >
-
-                            @csrf
-
-                            <div class="stack stack-5">
-
-                                <x-ui.input
-                                    name="name"
-                                    label="نام"
-                                    placeholder="نام شما"
-                                    required
-                                />
-
-                                <x-ui.input
-                                    name="phone"
-                                    label="شماره تماس"
-                                    type="tel"
-                                    placeholder="۰۹۱۲..."
-                                    required
-                                />
-
-                                <x-ui.input
-                                    name="email"
-                                    label="ایمیل"
-                                    type="email"
-                                    placeholder="example@mail.com"
-                                />
-
-
-                                <div class="form-field">
-
-                                    <label
-                                        for="message"
-                                        class="form-field__label"
+                                    <a
+                                        href="tel:+982112345678"
+                                        class="font-semibold"
                                     >
-                                        پیام
-                                    </label>
-
-                                    <textarea
-                                        id="message"
-                                        name="message"
-                                        class="form-input form-textarea"
-                                        placeholder="پیام خود را بنویسید..."
-                                        required
-                                    ></textarea>
+                                        ۰۲۱-۱۲۳۴۵۶۷۸
+                                    </a>
 
                                 </div>
 
 
-                                <x-ui.button
-                                    type="submit"
-                                    variant="primary"
-                                    size="lg"
-                                    full
-                                >
-                                    ارسال پیام
-                                </x-ui.button>
+                                <div class="stack stack--xs">
+
+                                    <span class="text-muted text-xs">
+                                        ایمیل
+                                    </span>
+
+                                    <a
+                                        href="mailto:info@example.com"
+                                        class="font-semibold"
+                                    >
+                                        info@example.com
+                                    </a>
+
+                                </div>
+
+
+                                <div class="stack stack--xs">
+
+                                    <span class="text-muted text-xs">
+                                        ساعات پاسخگویی
+                                    </span>
+
+                                    <span class="font-medium">
+                                        شنبه تا پنجشنبه، ۹ تا ۱۸
+                                    </span>
+
+                                </div>
 
                             </div>
 
-                        </form>
+                        </div>
+
+
+                        <div class="card card--padded">
+
+                            <form
+                                method="POST"
+                                action="{{ route('contact.store') }}"
+                            >
+
+                                @csrf
+
+                                <div class="stack stack--md">
+
+                                    <x-ui.input
+                                        name="name"
+                                        label="نام"
+                                        placeholder="نام شما"
+                                        required
+                                    />
+
+                                    <x-ui.input
+                                        name="phone"
+                                        label="شماره تماس"
+                                        type="tel"
+                                        placeholder="۰۹۱۲..."
+                                        autocomplete="tel"
+                                        required
+                                    />
+
+                                    <x-ui.input
+                                        name="email"
+                                        label="ایمیل"
+                                        type="email"
+                                        placeholder="example@mail.com"
+                                        autocomplete="email"
+                                    />
+
+                                    <div class="form-field">
+
+                                        <label
+                                            for="message"
+                                            class="form-field__label"
+                                        >
+                                            پیام
+                                        </label>
+
+                                        <textarea
+                                            id="message"
+                                            name="message"
+                                            class="form-textarea"
+                                            placeholder="پیام خود را بنویسید..."
+                                            required
+                                        ></textarea>
+
+                                    </div>
+
+                                    <x-ui.button
+                                        type="submit"
+                                        variant="primary"
+                                        size="lg"
+                                        full
+                                    >
+                                        ارسال پیام
+                                    </x-ui.button>
+
+                                </div>
+
+                            </form>
+
+                        </div>
 
                     </div>
 

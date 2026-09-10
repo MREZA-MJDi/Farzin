@@ -11,33 +11,36 @@
 
     <main class="about-page">
 
-        <x-layout.breadcrumb
-            :items="[
-                ['label' => 'درباره ما']
-            ]"
-        />
-
-
-        <section class="section section--lg">
+        <section class="section section--sm">
 
             <div class="container">
 
-                <div class="content-hero">
+                <div class="section__inner">
 
-                    <span class="content-hero__eyebrow">
-                        درباره فرزین
-                    </span>
+                    <x-layout.breadcrumb
+                        :items="[
+                            ['label' => 'درباره ما']
+                        ]"
+                    />
 
-                    <h1 class="content-hero__title">
-                        طراحی بهتر،
-                        برای زندگی بهتر.
-                    </h1>
+                    <header class="page-header">
 
-                    <p class="content-hero__description">
-                        فرزین با تمرکز بر هود و سینک،
-                        تلاش می‌کند انتخاب و خرید تجهیزات آشپزخانه را ساده‌تر،
-                        شفاف‌تر و حرفه‌ای‌تر کند.
-                    </p>
+                        <span class="page-header__eyebrow">
+                            درباره فرزین
+                        </span>
+
+                        <h1 class="page-header__title">
+                            طراحی بهتر،
+                            برای زندگی بهتر.
+                        </h1>
+
+                        <p class="page-header__description">
+                            فرزین با تمرکز بر هود و سینک،
+                            تلاش می‌کند انتخاب و خرید تجهیزات آشپزخانه را
+                            ساده‌تر، شفاف‌تر و حرفه‌ای‌تر کند.
+                        </p>
+
+                    </header>
 
                 </div>
 
@@ -46,44 +49,51 @@
         </section>
 
 
-        <section class="section">
+        <section class="section section--top-none">
 
             <div class="container">
 
-                <div class="content-block">
+                <div class="grid grid-cols-2 gap-8">
 
-                    <div class="content-block__content">
+                    <article class="card card--padded">
 
-                        <span class="content-block__eyebrow">
-                            نگاه ما
-                        </span>
+                        <div class="stack stack--md">
 
-                        <h2>
-                            محصول فقط یک وسیله نیست.
-                        </h2>
+                            <span class="section-header__eyebrow">
+                                نگاه ما
+                            </span>
 
-                        <p>
-                            کیفیت، طراحی، جزئیات و تجربه استفاده روزمره،
-                            همه بخشی از انتخاب درست هستند.
-                        </p>
+                            <h2>
+                                محصول فقط یک وسیله نیست.
+                            </h2>
 
-                        <p>
-                            ما تلاش می‌کنیم اطلاعات محصول را روشن و قابل فهم ارائه کنیم
-                            تا خرید برای شما ساده‌تر باشد.
-                        </p>
+                            <p>
+                                کیفیت، طراحی، جزئیات و تجربه استفاده روزمره،
+                                همه بخشی از انتخاب درست هستند.
+                            </p>
 
-                    </div>
+                            <p>
+                                ما تلاش می‌کنیم اطلاعات محصول را روشن و قابل فهم
+                                ارائه کنیم تا خرید برای شما ساده‌تر باشد.
+                            </p>
+
+                        </div>
+
+                    </article>
 
 
-                    <div class="content-block__image">
+                    <figure class="card overflow-hidden">
 
                         <img
-                            src="/images/about/about.webp"
+                            src="{{ asset('images/about/about.webp') }}"
                             alt="فضای مدرن آشپزخانه فرزین"
+                            width="900"
+                            height="700"
                             loading="lazy"
+                            class="w-full h-full object-cover"
                         >
 
-                    </div>
+                    </figure>
 
                 </div>
 

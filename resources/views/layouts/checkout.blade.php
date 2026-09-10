@@ -27,13 +27,14 @@
         )"
     >
 
-    @vite([
-    'resources/css/app.css',
-    'resources/css/components.css',
-    'resources/js/app.js',
-    ])
+    @stack('meta')
+
+    @vite('resources/js/app.js')
+
+    @stack('styles')
 
 </head>
+
 
 <body>
 
@@ -41,16 +42,14 @@
 
     <header class="checkout-header">
 
-        <div class="container">
+        <div class="container checkout-header__inner">
 
             <a
-                href="/"
-                class="site-logo"
-                aria-label="فرزین"
+                href="{{ route('home') }}"
+                class="checkout-header__logo"
+                aria-label="بازگشت به فرزین"
             >
-                    <span class="site-logo__text">
-                        FARZIN
-                    </span>
+                FARZIN
             </a>
 
         </div>
@@ -59,12 +58,11 @@
 
 
     <main class="app-main">
-
         @yield('content')
-
     </main>
 
 </div>
+
 
 @stack('scripts')
 

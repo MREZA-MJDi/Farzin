@@ -4,14 +4,16 @@
 >
     <div class="hero__inner">
 
-        {{-- Content --}}
         <div class="hero__content">
 
             <span class="hero__eyebrow">
                 طراحی برای آشپزخانه امروز
             </span>
 
-            <h1 id="hero-title" class="hero__title">
+            <h1
+                id="hero-title"
+                class="hero__title"
+            >
                 هود و سینک،
                 <span>با نگاه فرزین</span>
             </h1>
@@ -71,7 +73,6 @@
         </div>
 
 
-        {{-- Visual --}}
         <div class="hero__visual">
 
             <div class="hero__image-wrap">

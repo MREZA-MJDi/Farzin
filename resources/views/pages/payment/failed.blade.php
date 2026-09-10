@@ -6,7 +6,7 @@
 
     <main class="payment-page">
 
-        <section class="section">
+        <section class="section section--lg">
 
             <div class="container">
 
@@ -19,26 +19,31 @@
                         ×
                     </div>
 
-                    <h1 class="payment-status__title">
-                        پرداخت انجام نشد
-                    </h1>
+                    <div class="stack stack--md">
 
-                    <p class="payment-status__description">
-                        پرداخت سفارش شما موفق نبود. می‌توانید دوباره برای پرداخت اقدام کنید.
-                    </p>
+                        <h1 class="payment-status__title">
+                            پرداخت انجام نشد
+                        </h1>
+
+                        <p class="payment-status__description">
+                            پرداخت سفارش شما موفق نبود.
+                            می‌توانید دوباره برای پرداخت اقدام کنید.
+                        </p>
+
+                    </div>
 
 
                     @if(!empty($order['number']))
 
-                        <div class="payment-status__details">
+                        <div class="stack stack--sm">
 
-                            <div class="payment-status__row">
+                            <div class="inline justify-between">
 
-                                <span class="payment-status__label">
+                                <span class="text-muted">
                                     شماره سفارش
                                 </span>
 
-                                <strong class="payment-status__value">
+                                <strong>
                                     {{ $order['number'] }}
                                 </strong>
 
@@ -46,13 +51,13 @@
 
                             @if(!empty($payment['message']))
 
-                                <div class="payment-status__row">
+                                <div class="inline justify-between">
 
-                                    <span class="payment-status__label">
+                                    <span class="text-muted">
                                         پیام
                                     </span>
 
-                                    <strong class="payment-status__value">
+                                    <strong>
                                         {{ $payment['message'] }}
                                     </strong>
 
@@ -68,14 +73,14 @@
                     <div class="payment-status__actions">
 
                         <a
-                            href="/checkout"
+                            href="{{ route('checkout') }}"
                             class="btn btn--primary"
                         >
                             تلاش دوباره
                         </a>
 
                         <a
-                            href="/cart"
+                            href="{{ route('cart') }}"
                             class="btn btn--outline"
                         >
                             بازگشت به سبد خرید

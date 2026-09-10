@@ -11,58 +11,63 @@
 
     <main class="blog-page">
 
-        <x-layout.breadcrumb
-            :items="[
-                ['label' => 'مجله']
-            ]"
-        />
-
-
         <section class="section section--sm">
 
             <div class="container">
 
-                <header class="page-header">
+                <div class="section__inner">
 
-                    <span class="page-header__eyebrow">
-                        مجله فرزین
-                    </span>
+                    <x-layout.breadcrumb
+                        :items="[
+                            ['label' => 'مجله']
+                        ]"
+                    />
 
-                    <h1 class="page-header__title">
-                        راهنمای انتخاب بهتر
-                    </h1>
+                    <header class="page-header">
 
-                    <p class="page-header__description">
-                        مطالب کاربردی برای انتخاب هود، سینک و طراحی آشپزخانه.
-                    </p>
+                        <span class="page-header__eyebrow">
+                            مجله فرزین
+                        </span>
 
-                </header>
+                        <h1 class="page-header__title">
+                            راهنمای انتخاب بهتر
+                        </h1>
+
+                        <p class="page-header__description">
+                            مطالب کاربردی برای انتخاب هود،
+                            سینک و طراحی آشپزخانه.
+                        </p>
+
+                    </header>
 
 
-                <div class="blog-grid">
+                    @if(!empty($posts))
 
-                    @forelse($posts ?? [] as $post)
+                        <div class="blog-grid">
 
-                        <x-content.blog-card
-                            :title="$post['title']"
-                            :image="$post['image']"
-                            :href="$post['url']"
-                            :category="$post['category'] ?? null"
-                            :excerpt="$post['excerpt'] ?? null"
-                            :meta="$post['meta'] ?? null"
-                        />
+                            @foreach($posts as $post)
 
-                    @empty
+                                <x-content.blog-card
+                                    :title="$post['title']"
+                                    :image="$post['image']"
+                                    :href="$post['url']"
+                                    :category="$post['category'] ?? null"
+                                    :excerpt="$post['excerpt'] ?? null"
+                                    :meta="$post['meta'] ?? null"
+                                />
 
-                        <div class="blog-empty">
-
-                            <x-ui.empty-state>
-                                هنوز مقاله‌ای منتشر نشده است.
-                            </x-ui.empty-state>
+                            @endforeach
 
                         </div>
 
-                    @endforelse
+                    @else
+
+                        <x-ui.empty-state
+                            title="هنوز مقاله‌ای منتشر نشده است"
+                            description="به‌زودی مطالب کاربردی جدیدی در مجله فرزین منتشر می‌کنیم."
+                        />
+
+                    @endif
 
                 </div>
 

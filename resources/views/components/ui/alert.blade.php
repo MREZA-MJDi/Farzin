@@ -15,7 +15,7 @@
 
 <div
     {{ $attributes->merge([
-        'class' => "alert alert--{$type}"
+        'class' => "alert alert--{$type}",
     ]) }}
     role="alert"
 >
@@ -23,7 +23,7 @@
         class="alert__icon"
         aria-hidden="true"
     >
-        {!! $icon ?? $iconMap[$type] ?? 'i' !!}
+        {!! $icon ?? ($iconMap[$type] ?? 'i') !!}
     </span>
 
     <div class="alert__content">

@@ -16,24 +16,31 @@
 
     <meta
         name="description"
-        content="@yield('meta_description', 'فرزین')"
+        content="@yield(
+            'meta_description',
+            'فرزین؛ هود و سینک مدرن با طراحی و کیفیت قابل اعتماد.'
+        )"
     >
 
-    @vite([
-    'resources/css/app.css',
-    'resources/css/components.css',
-    'resources/js/app.js',
-    ])
+    @stack('meta')
+
+    @vite('resources/js/app.js')
+
+    @stack('styles')
 
 </head>
 
+
 <body>
 
-<main class="app-main">
+<div id="app" class="app">
 
-    @yield('content')
+    <main class="app-main">
+        @yield('content')
+    </main>
 
-</main>
+</div>
+
 
 @stack('scripts')
 

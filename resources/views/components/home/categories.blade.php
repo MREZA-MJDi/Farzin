@@ -22,7 +22,7 @@
                         title="هود"
                         eyebrow="آشپزخانه"
                         description="هودهای مدرن با طراحی تمیز و عملکرد قابل اعتماد."
-                        image="/images/categories/hood.webp"
+                        image="{{ asset('images/categories/hood.webp') }}"
                         href="{{ route('category.hood') }}"
                     />
 
@@ -30,7 +30,7 @@
                         title="سینک"
                         eyebrow="آشپزخانه"
                         description="سینک‌هایی با طراحی کاربردی و ظاهر ماندگار."
-                        image="/images/categories/sink.webp"
+                        image="{{ asset('images/categories/sink.webp') }}"
                         href="{{ route('category.sink') }}"
                     />
 

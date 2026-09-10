@@ -1,88 +1,83 @@
 @props([
 'items' => [],
+'homeLabel' => 'خانه',
+'homeHref' => null,
 ])
 
-@if(count($items))
+@php
+    $homeHref ??= route('home');
+@endphp
+
+@if(count($items) > 0)
 
     <nav
-        class="breadcrumb"
+        {{ $attributes->merge([
+            'class' => 'breadcrumb',
+        ]) }}
         aria-label="مسیر صفحه"
     >
 
-        <div class="container">
+        <ol class="breadcrumb__list">
 
-            <ol class="breadcrumb__list">
+            {{-- Home --}}
+            <li class="breadcrumb__item">
+
+                <a
+                    href="{{ $homeHref }}"
+                    class="breadcrumb__link"
+                >
+                    {{ $homeLabel }}
+                </a>
+
+            </li>
+
+
+            @foreach($items as $index => $item)
+
+                <li
+                    class="breadcrumb__item"
+                    aria-hidden="true"
+                >
+                    <span class="breadcrumb__separator">
+                        /
+                    </span>
+                </li>
+
 
                 <li class="breadcrumb__item">
 
-                    <a
-                        href="/"
-                        class="breadcrumb__link"
-                    >
-                        خانه
-                    </a>
+                    @if(
+                        is_array($item)
+                        && !empty($item['href'])
+                        && $index !== array_key_last($items)
+                    )
 
-                    @if(count($items))
-                        <span
-                            class="breadcrumb__separator"
-                            aria-hidden="true"
+                        <a
+                            href="{{ $item['href'] }}"
+                            class="breadcrumb__link"
                         >
-                            /
+                            {{ $item['label'] ?? '' }}
+                        </a>
+
+                    @else
+
+                        <span
+                            class="breadcrumb__current"
+                            aria-current="page"
+                        >
+                            {{ is_array($item)
+                                ? ($item['label'] ?? '')
+                                : $item
+                            }}
                         </span>
+
                     @endif
 
                 </li>
 
+            @endforeach
 
-                @foreach($items as $index => $item)
-
-                    @php
-                        $isLast = $loop->last;
-
-                        $label = is_array($item)
-                            ? ($item['label'] ?? '')
-                            : $item;
-
-                        $url = is_array($item)
-                            ? ($item['url'] ?? null)
-                            : null;
-                    @endphp
-
-                    <li class="breadcrumb__item">
-
-                        @if($url && !$isLast)
-
-                            <a
-                                href="{{ $url }}"
-                                class="breadcrumb__link"
-                            >
-                                {{ $label }}
-                            </a>
-
-                        @else
-
-                            <span class="breadcrumb__current">
-                                {{ $label }}
-                            </span>
-
-                        @endif
-
-                        @if(!$isLast)
-                            <span
-                                class="breadcrumb__separator"
-                                aria-hidden="true"
-                            >
-                                /
-                            </span>
-                        @endif
-
-                    </li>
-
-                @endforeach
-
-            </ol>
-
-        </div>
+        </ol>
 
     </nav>
 

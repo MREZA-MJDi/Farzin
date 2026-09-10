@@ -11,7 +11,6 @@
     data-cart-drawer
     hidden
 >
-
     <div
         class="cart-drawer__panel"
         role="dialog"
@@ -53,28 +52,32 @@
 
             @empty
 
-                <div class="empty-state">
+                <x-ui.empty-state
+                    title="سبد خرید خالی است"
+                    description="هنوز محصولی به سبد خرید اضافه نکرده‌اید."
+                >
+                    <x-slot:icon>
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.7"
+                        >
+                            <path d="M4 5H6L8.2 15.5H18L20 8H7" />
+                            <circle cx="9.5" cy="19" r="1.2" />
+                            <circle cx="17" cy="19" r="1.2" />
+                        </svg>
+                    </x-slot:icon>
 
-                    <div class="empty-state__icon">
-                        🛒
-                    </div>
-
-                    <h3 class="empty-state__title">
-                        سبد خرید خالی است
-                    </h3>
-
-                    <p class="empty-state__text">
-                        هنوز محصولی به سبد خرید اضافه نکرده‌اید.
-                    </p>
-
-                    <a
-                        href="/shop"
-                        class="btn btn--primary"
-                    >
-                        مشاهده محصولات
-                    </a>
-
-                </div>
+                    <x-slot:action>
+                        <a
+                            href="{{ route('shop') }}"
+                            class="btn btn--primary"
+                        >
+                            مشاهده محصولات
+                        </a>
+                    </x-slot:action>
+                </x-ui.empty-state>
 
             @endforelse
 
@@ -92,17 +95,17 @@
                     :total="$total"
                 />
 
-                <div class="stack stack-3" style="margin-top: var(--space-5);">
+                <div class="stack stack--sm">
 
                     <a
-                        href="/cart"
+                        href="{{ route('cart') }}"
                         class="btn btn--outline btn--full"
                     >
                         مشاهده سبد خرید
                     </a>
 
                     <a
-                        href="/checkout"
+                        href="{{ route('checkout') }}"
                         class="btn btn--primary btn--full"
                     >
                         ادامه و پرداخت
@@ -115,5 +118,4 @@
         @endif
 
     </div>
-
 </div>

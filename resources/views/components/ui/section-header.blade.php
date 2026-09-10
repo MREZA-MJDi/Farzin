@@ -11,7 +11,6 @@
         'class' => 'section-header' . ($centered ? ' section-header--center' : ''),
     ]) }}
 >
-
     <div class="section-header__content">
 
         @if($eyebrow)

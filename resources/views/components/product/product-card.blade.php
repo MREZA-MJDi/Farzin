@@ -1,7 +1,7 @@
 @props([
 'id' => null,
 'name',
-'image',
+'image' => 'https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=1200&q=85',
 'href' => '#',
 'price',
 'oldPrice' => null,
@@ -12,14 +12,22 @@
 'reviewCount' => null,
 'badge' => null,
 'isWishlisted' => false,
+'alt' => null,
 ])
 
 <article
-    class="product-card"
+    {{ $attributes->merge([
+        'class' => 'product-card',
+    ]) }}
     data-product-card
-    @if($id) data-product-id="{{ $id }}" @endif
+    @if($id)
+    data-product-id="{{ $id }}"
+    @endif
 >
 
+    {{-- =====================================================
+         MEDIA
+    ====================================================== --}}
     <div class="product-card__media">
 
         @if($badge)
@@ -29,12 +37,19 @@
         @endif
 
 
+        {{-- Wishlist --}}
         <button
             type="button"
             class="icon-btn icon-btn--border product-card__wishlist"
-            aria-label="افزودن {{ $name }} به علاقه‌مندی‌ها"
+            aria-label="{{ $isWishlisted
+                ? 'حذف ' . $name . ' از علاقه‌مندی‌ها'
+                : 'افزودن ' . $name . ' به علاقه‌مندی‌ها'
+            }}"
             aria-pressed="{{ $isWishlisted ? 'true' : 'false' }}"
             data-wishlist
+            @if($id)
+            data-product-id="{{ $id }}"
+            @endif
         >
             <svg
                 viewBox="0 0 24 24"
@@ -52,6 +67,7 @@
         </button>
 
 
+        {{-- Product Image --}}
         <a
             href="{{ $href }}"
             class="product-card__image-link"
@@ -61,8 +77,11 @@
 
                 <img
                     src="{{ $image }}"
-                    alt="{{ $name }}"
+                    alt="{{ $alt ?? $name }}"
+                    width="800"
+                    height="800"
                     loading="lazy"
+                    decoding="async"
                 >
 
             </div>
@@ -71,8 +90,12 @@
     </div>
 
 
+    {{-- =====================================================
+         CONTENT
+    ====================================================== --}}
     <div class="product-card__content">
 
+        {{-- Brand --}}
         @if($brand)
             <span class="product-card__brand">
                 {{ $brand }}
@@ -80,15 +103,15 @@
         @endif
 
 
+        {{-- Title --}}
         <h3 class="product-card__title">
-
             <a href="{{ $href }}">
                 {{ $name }}
             </a>
-
         </h3>
 
 
+        {{-- Meta --}}
         @if($meta)
             <p class="product-card__meta">
                 {{ $meta }}
@@ -96,9 +119,13 @@
         @endif
 
 
+        {{-- Rating --}}
         @if($rating !== null)
 
-            <div class="product-card__rating">
+            <div
+                class="product-card__rating"
+                aria-label="امتیاز {{ $rating }} از ۵"
+            >
 
                 <span
                     class="product-card__rating-stars"
@@ -122,6 +149,7 @@
         @endif
 
 
+        {{-- Bottom --}}
         <div class="product-card__bottom">
 
             <x-product.price
@@ -131,6 +159,7 @@
             />
 
 
+            {{-- Add to Cart --}}
             <button
                 type="button"
                 class="product-card__add"
@@ -148,9 +177,9 @@
                     stroke-width="1.7"
                     aria-hidden="true"
                 >
-                    <path d="M3 4H5L7.2 15.5H18L21 7H6"/>
-                    <circle cx="9" cy="19" r="1.2"/>
-                    <circle cx="17" cy="19" r="1.2"/>
+                    <path d="M3 4H5L7.2 15.5H18L21 7H6" />
+                    <circle cx="9" cy="19" r="1.2" />
+                    <circle cx="17" cy="19" r="1.2" />
                 </svg>
 
             </button>
@@ -160,3 +189,4 @@
     </div>
 
 </article>
+

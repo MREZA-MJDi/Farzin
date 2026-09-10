@@ -20,7 +20,6 @@
         </div>
     @endif
 
-
     <div class="empty-state__content">
 
         <h2 class="empty-state__title">
@@ -34,7 +33,6 @@
         @endif
 
     </div>
-
 
     @isset($action)
         <div class="empty-state__action">

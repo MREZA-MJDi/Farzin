@@ -15,11 +15,12 @@
         @checked($checked)
     >
 
-
     <span class="payment-method__content">
 
-        <span class="payment-method__radio"></span>
-
+        <span
+            class="payment-method__radio"
+            aria-hidden="true"
+        ></span>
 
         <span class="payment-method__info">
 
@@ -28,11 +29,9 @@
             </span>
 
             @if($description)
-
                 <span class="payment-method__description">
                     {{ $description }}
                 </span>
-
             @endif
 
         </span>

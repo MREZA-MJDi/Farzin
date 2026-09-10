@@ -9,7 +9,6 @@
     class="quantity"
     data-quantity
 >
-
     <button
         type="button"
         class="quantity__btn"
@@ -20,7 +19,6 @@
     −
     </button>
 
-
     <input
         type="number"
         name="{{ $name }}"
@@ -29,9 +27,9 @@
         max="{{ $max }}"
         class="quantity__value"
         data-quantity-input
+        inputmode="numeric"
         aria-label="تعداد"
     >
-
 
     <button
         type="button"
@@ -42,5 +40,4 @@
         >
         +
     </button>
-
 </div>

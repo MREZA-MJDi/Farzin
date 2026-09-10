@@ -1,133 +1,110 @@
 <?php
 
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
 
 /*
 |--------------------------------------------------------------------------
-| Web Routes
+| Home
 |--------------------------------------------------------------------------
 */
 
-
-// =====================================================
-// HOME
-// =====================================================
-
-Route::get('/', function () {
-    return view('pages.home');
-})->name('home');
+Route::get('/', [HomeController::class, 'index'])
+    ->name('home');
 
 
-// =====================================================
-// SHOP
-// =====================================================
+/*
+|--------------------------------------------------------------------------
+| Shop / Products
+|--------------------------------------------------------------------------
+*/
 
-Route::get('/shop', function () {
-    return view('pages.shop');
-})->name('shop');
+Route::get('/shop', [ProductController::class, 'index'])
+    ->name('shop');
 
-
-// =====================================================
-// PRODUCT
-// =====================================================
-
-Route::get('/product/{slug}', function (string $slug) {
-    return view('pages.product', [
-        'slug' => $slug,
-    ]);
-})->name('product.show');
+Route::get('/product/{slug}', [ProductController::class, 'show'])
+    ->name('product.show');
 
 
-// =====================================================
-// CATEGORY
-// =====================================================
+/*
+|--------------------------------------------------------------------------
+| Categories
+|--------------------------------------------------------------------------
+*/
 
 Route::get('/hood', function () {
-    return view('pages.shop', [
+    return redirect()->route('shop', [
         'category' => 'hood',
     ]);
 })->name('category.hood');
 
-
 Route::get('/sink', function () {
-    return view('pages.shop', [
+    return redirect()->route('shop', [
         'category' => 'sink',
     ]);
 })->name('category.sink');
 
 
-// =====================================================
-// SEARCH
-// =====================================================
+/*
+|--------------------------------------------------------------------------
+| Search
+|--------------------------------------------------------------------------
+*/
 
-Route::get('/search', function () {
-    return view('pages.shop', [
-        'search' => request('q'),
-    ]);
-})->name('search');
+Route::get('/search', [ProductController::class, 'index'])
+    ->name('search');
 
 
-// =====================================================
-// CART
-// =====================================================
+/*
+|--------------------------------------------------------------------------
+| Cart
+|--------------------------------------------------------------------------
+*/
 
 Route::get('/cart', function () {
-    return view('pages.cart', [
-        'items' => [],
-        'subtotal' => 0,
-        'shipping' => 0,
-        'discount' => 0,
-        'total' => 0,
-    ]);
+    return view('pages.cart');
 })->name('cart');
 
 
-// =====================================================
-// CHECKOUT
-// =====================================================
+/*
+|--------------------------------------------------------------------------
+| Checkout
+|--------------------------------------------------------------------------
+*/
 
 Route::get('/checkout', function () {
-    return view('pages.checkout', [
-        'items' => [],
-        'subtotal' => 0,
-        'shipping' => 0,
-        'discount' => 0,
-        'total' => 0,
-    ]);
+    return view('pages.checkout');
 })->name('checkout');
-
-
-// =====================================================
-// CHECKOUT SUBMIT
-// =====================================================
 
 Route::post('/checkout', function () {
     return redirect()->route('payment.success');
 })->name('checkout.store');
 
 
-// =====================================================
-// WISHLIST
-// =====================================================
+/*
+|--------------------------------------------------------------------------
+| Wishlist
+|--------------------------------------------------------------------------
+*/
 
 Route::get('/wishlist', function () {
-    return view('pages.shop', [
-        'wishlist' => true,
-    ]);
+    return redirect()->route('shop');
 })->name('wishlist');
 
 
-// =====================================================
-// PAYMENT
-// =====================================================
+/*
+|--------------------------------------------------------------------------
+| Payment
+|--------------------------------------------------------------------------
+*/
 
 Route::get('/payment/success', function () {
     return view('pages.payment.success', [
         'order' => [],
     ]);
 })->name('payment.success');
-
 
 Route::get('/payment/failed', function () {
     return view('pages.payment.failed', [
@@ -136,7 +113,6 @@ Route::get('/payment/failed', function () {
     ]);
 })->name('payment.failed');
 
-
 Route::get('/payment/cancelled', function () {
     return view('pages.payment.cancelled', [
         'order' => [],
@@ -144,16 +120,17 @@ Route::get('/payment/cancelled', function () {
 })->name('payment.cancelled');
 
 
-// =====================================================
-// BLOG
-// =====================================================
+/*
+|--------------------------------------------------------------------------
+| Blog
+|--------------------------------------------------------------------------
+*/
 
 Route::get('/blog', function () {
     return view('pages.blog.index', [
         'posts' => [],
     ]);
 })->name('blog.index');
-
 
 Route::get('/blog/{slug}', function (string $slug) {
     return view('pages.blog.show', [
@@ -164,23 +141,26 @@ Route::get('/blog/{slug}', function (string $slug) {
 })->name('blog.show');
 
 
-// =====================================================
-// STATIC PAGES
-// =====================================================
+/*
+|--------------------------------------------------------------------------
+| Static Pages
+|--------------------------------------------------------------------------
+*/
 
 Route::get('/about', function () {
     return view('pages.about');
 })->name('about');
-
 
 Route::get('/contact', function () {
     return view('pages.contact');
 })->name('contact');
 
 
-// =====================================================
-// NEWSLETTER
-// =====================================================
+/*
+|--------------------------------------------------------------------------
+| Newsletter
+|--------------------------------------------------------------------------
+*/
 
 Route::post('/newsletter', function () {
     return back()->with(

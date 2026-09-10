@@ -98,7 +98,7 @@
             </nav>
 
 
-            {{-- Header Actions --}}
+            {{-- Actions --}}
             <div class="site-header__actions">
 
                 {{-- Search --}}
@@ -106,6 +106,7 @@
                     type="button"
                     class="icon-btn site-header__action"
                     aria-label="جستجو"
+                    aria-expanded="false"
                     data-search-toggle
                 >
                     <svg
@@ -113,6 +114,7 @@
                         fill="none"
                         stroke="currentColor"
                         stroke-width="1.8"
+                        aria-hidden="true"
                     >
                         <circle
                             cx="11"
@@ -135,6 +137,7 @@
                         fill="none"
                         stroke="currentColor"
                         stroke-width="1.8"
+                        aria-hidden="true"
                     >
                         <path
                             d="M20.8 8.8C20.8 13.7 12 19 12 19S3.2 13.7 3.2 8.8C3.2 6.2 5.2 4 7.8 4C9.5 4 11 4.9 12 6.2C13 4.9 14.5 4 16.2 4C18.8 4 20.8 6.2 20.8 8.8Z"
@@ -154,12 +157,14 @@
                         fill="none"
                         stroke="currentColor"
                         stroke-width="1.8"
+                        aria-hidden="true"
                     >
                         <circle
                             cx="12"
                             cy="8"
                             r="3.2"
                         />
+
                         <path
                             d="M5.2 20C5.9 16.6 8.4 14.8 12 14.8C15.6 14.8 18.1 16.6 18.8 20"
                         />
@@ -178,13 +183,16 @@
                         fill="none"
                         stroke="currentColor"
                         stroke-width="1.8"
+                        aria-hidden="true"
                     >
                         <path d="M4 5H6L8.2 15.5H18L20 8H7" />
+
                         <circle
                             cx="9.5"
                             cy="19"
                             r="1.2"
                         />
+
                         <circle
                             cx="17"
                             cy="19"
@@ -198,12 +206,13 @@
                 </a>
 
 
-                {{-- Mobile Menu --}}
+                {{-- Mobile menu --}}
                 <button
                     type="button"
                     class="icon-btn site-header__menu-toggle"
                     aria-label="باز کردن منو"
                     aria-expanded="false"
+                    aria-controls="mobile-menu"
                     data-menu-toggle
                 >
                     <svg
@@ -211,6 +220,7 @@
                         fill="none"
                         stroke="currentColor"
                         stroke-width="1.8"
+                        aria-hidden="true"
                     >
                         <path d="M4 7H20" />
                         <path d="M4 12H20" />
@@ -221,10 +231,11 @@
             </div>
 
         </div>
+
     </div>
 
 
-    {{-- Search --}}
+    {{-- Search Panel --}}
     <div
         class="site-header__search"
         data-search-panel
@@ -250,15 +261,24 @@
                         cy="11"
                         r="6.5"
                     />
+
                     <path d="M16 16L21 21" />
                 </svg>
 
+                <label
+                    for="header-search"
+                    class="sr-only"
+                >
+                    جستجوی محصولات
+                </label>
+
                 <input
+                    id="header-search"
                     type="search"
                     name="q"
                     value="{{ request('q') }}"
                     placeholder="جستجوی هود، سینک و محصولات..."
-                    aria-label="جستجوی محصولات"
+                    autocomplete="off"
                 >
 
                 <button
@@ -276,7 +296,6 @@
     </div>
 
 
-    {{-- Mobile Navigation --}}
     <x-layout.mobile-menu />
 
 </header>

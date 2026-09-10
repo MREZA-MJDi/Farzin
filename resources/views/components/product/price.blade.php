@@ -4,7 +4,11 @@
 'discount' => null,
 ])
 
-<div {{ $attributes->merge(['class' => 'price']) }}>
+<div
+    {{ $attributes->merge([
+        'class' => 'price',
+    ]) }}
+>
 
     @if($oldPrice)
         <span class="price__old">

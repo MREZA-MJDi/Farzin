@@ -11,89 +11,93 @@
 
     <main class="cart-page">
 
-        <x-layout.breadcrumb
-            :items="[
-                ['label' => 'سبد خرید']
-            ]"
-        />
-
-
         <section class="section section--sm">
 
             <div class="container">
 
-                <header class="page-header">
+                <div class="section__inner">
 
-                    <span class="page-header__eyebrow">
-                        سبد خرید
-                    </span>
+                    <x-layout.breadcrumb
+                        :items="[
+                            ['label' => 'سبد خرید']
+                        ]"
+                    />
 
-                    <h1 class="page-header__title">
-                        سفارش شما
-                    </h1>
+                    <header class="page-header">
 
-                </header>
+                        <span class="page-header__eyebrow">
+                            سبد خرید
+                        </span>
+
+                        <h1 class="page-header__title">
+                            سفارش شما
+                        </h1>
+
+                    </header>
 
 
-                @if(!empty($items))
+                    @if(!empty($items))
 
-                    <div class="cart-layout">
+                        <div class="grid grid-cols-2 gap-8">
 
-                        <div class="cart-layout__items">
+                            <div class="stack stack--sm">
 
-                            @foreach($items as $item)
+                                @foreach($items as $item)
 
-                                <x-cart.cart-item
-                                    :item="$item"
+                                    <x-cart.cart-item
+                                        :item="$item"
+                                    />
+
+                                @endforeach
+
+                            </div>
+
+
+                            <aside class="stack stack--md">
+
+                                <x-cart.cart-summary
+                                    :subtotal="$subtotal ?? 0"
+                                    :shipping="$shipping ?? 0"
+                                    :discount="$discount ?? 0"
+                                    :total="$total ?? 0"
                                 />
 
-                            @endforeach
+                                <a
+                                    href="{{ route('checkout') }}"
+                                    class="btn btn--primary btn--lg btn--full"
+                                >
+                                    ادامه و پرداخت
+                                </a>
+
+                            </aside>
 
                         </div>
 
+                    @else
 
-                        <aside class="cart-layout__sidebar">
+                        <x-ui.empty-state
+                            title="سبد خرید شما خالی است"
+                            description="هنوز محصولی به سبد خریدتان اضافه نکرده‌اید."
+                        >
 
-                            <x-cart.cart-summary
-                                :subtotal="$subtotal ?? 0"
-                                :shipping="$shipping ?? 0"
-                                :discount="$discount ?? 0"
-                                :total="$total ?? 0"
-                            />
+                            <x-slot:icon>
+                                🛒
+                            </x-slot:icon>
 
+                            <x-slot:action>
+                                <a
+                                    href="{{ route('shop') }}"
+                                    class="btn btn--primary"
+                                >
+                                    مشاهده محصولات
+                                </a>
+                            </x-slot:action>
 
-                            <a
-                                href="/checkout"
-                                class="btn btn--primary btn--lg btn--full"
-                                style="margin-top: var(--space-5);"
-                            >
-                                ادامه و پرداخت
-                            </a>
+                        </x-ui.empty-state>
 
-                        </aside>
+                    @endif
 
-                    </div>
-
-                @else
-
-                    <x-ui.empty-state>
-                        <x-slot:icon>
-                            🛒
-                        </x-slot:icon>
-
-                        سبد خرید شما خالی است.
-
-                        <x-slot:action>
-                            <a
-                                href="/shop"
-                                class="btn btn--primary"
-                            >
-                                مشاهده محصولات
-                            </a>
-                        </x-slot:action>
-                    </x-ui.empty-state>
-
-                @endif
+                </div>
 
             </div>
 

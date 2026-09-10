@@ -6,7 +6,7 @@
 
     <main class="payment-page">
 
-        <section class="section">
+        <section class="section section--lg">
 
             <div class="container">
 
@@ -19,30 +19,31 @@
                         !
                     </div>
 
-                    <h1 class="payment-status__title">
-                        پرداخت لغو شد
-                    </h1>
+                    <div class="stack stack--md">
 
-                    <p class="payment-status__description">
-                        پرداخت توسط شما لغو شد و سفارشتان در انتظار پرداخت باقی مانده است.
-                    </p>
+                        <h1 class="payment-status__title">
+                            پرداخت لغو شد
+                        </h1>
+
+                        <p class="payment-status__description">
+                            پرداخت توسط شما لغو شد و سفارشتان
+                            در انتظار پرداخت باقی مانده است.
+                        </p>
+
+                    </div>
 
 
                     @if(!empty($order['number']))
 
-                        <div class="payment-status__details">
+                        <div class="inline justify-between">
 
-                            <div class="payment-status__row">
+                            <span class="text-muted">
+                                شماره سفارش
+                            </span>
 
-                                <span class="payment-status__label">
-                                    شماره سفارش
-                                </span>
-
-                                <strong class="payment-status__value">
-                                    {{ $order['number'] }}
-                                </strong>
-
-                            </div>
+                            <strong>
+                                {{ $order['number'] }}
+                            </strong>
 
                         </div>
 
@@ -52,14 +53,14 @@
                     <div class="payment-status__actions">
 
                         <a
-                            href="/checkout"
+                            href="{{ route('checkout') }}"
                             class="btn btn--primary"
                         >
                             بازگشت به پرداخت
                         </a>
 
                         <a
-                            href="/cart"
+                            href="{{ route('cart') }}"
                             class="btn btn--outline"
                         >
                             سبد خرید

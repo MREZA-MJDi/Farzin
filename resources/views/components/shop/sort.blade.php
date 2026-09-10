@@ -23,18 +23,14 @@
         class="form-select"
         form="shop-filters-form"
     >
-
         @foreach($options as $value => $label)
-
             <option
                 value="{{ $value }}"
                 @selected($current === $value)
             >
                 {{ $label }}
             </option>
-
         @endforeach
-
     </select>
 
 </div>

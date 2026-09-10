@@ -11,92 +11,155 @@
 
     <main class="shop-page">
 
-        <x-layout.breadcrumb
-            :items="[
-                ['label' => 'فروشگاه']
-            ]"
-        />
-
-
         <section class="section section--sm">
 
             <div class="container">
 
-                <header class="page-header">
+                <div class="section__inner">
 
-                    <span class="page-header__eyebrow">
-                        فروشگاه
-                    </span>
+                    <x-layout.breadcrumb
+                        :items="[
+                            ['label' => 'فروشگاه']
+                        ]"
+                    />
 
-                    <h1 class="page-header__title">
-                        هود و سینک
-                    </h1>
+                    <header class="page-header">
 
-                    <p class="page-header__description">
-                        محصولات را بر اساس دسته‌بندی، برند و ویژگی‌های موردنظر خود پیدا کنید.
-                    </p>
+                        <span class="page-header__eyebrow">
+                            فروشگاه
+                        </span>
 
-                </header>
+                        <h1 class="page-header__title">
+                            {{ $pageTitle ?? 'هود و سینک' }}
+                        </h1>
 
+                        <p class="page-header__description">
+                            محصولات را بر اساس دسته‌بندی،
+                            برند و ویژگی‌های موردنظر خود پیدا کنید.
+                        </p>
 
-                <div class="shop-layout">
-
-                    <aside class="shop-layout__sidebar">
-
-                        <x-shop.filters
-                            :categories="[]"
-                            :brands="[]"
-                            :availability="[]"
-                        />
-
-                    </aside>
+                    </header>
 
 
-                    <div class="shop-layout__content">
+                    <div class="shop__layout">
 
-                        <div class="shop-toolbar">
+                        <aside class="shop__sidebar">
 
-                            <div class="shop-toolbar__result">
-                                <span>
-                                    محصولات
-                                </span>
+                            <x-shop.filters
+                                :categories="$categories ?? []"
+                                :brands="$brands ?? []"
+                                :availability="$availability ?? []"
+                            />
+
+                        </aside>
+
+
+                        <section class="shop__main">
+
+                            <div class="shop__toolbar">
+
+                                <div class="shop__result-count">
+
+                                    <span>
+                                        {{ $products->total() ?? count($products ?? []) }}
+                                        محصول
+                                    </span>
+
+                                </div>
+
+
+                                <div class="shop__actions">
+
+                                    <button
+                                        type="button"
+                                        class="btn btn--outline shop-filter-trigger"
+                                        data-shop-filter-toggle
+                                    >
+                                        فیلترها
+                                    </button>
+
+
+                                    <form
+                                        id="shop-filters-form"
+                                        method="GET"
+                                        action="{{ route('shop') }}"
+                                    >
+
+                                        <x-shop.sort
+                                            :current="request('sort', '')"
+                                        />
+
+                                    </form>
+
+                                </div>
+
                             </div>
 
 
-                            <div class="shop-toolbar__actions">
+                            @if(isset($products) && count($products))
 
-                                <button
-                                    type="button"
-                                    class="btn btn--outline shop-filter-trigger"
-                                    data-shop-filter-toggle
-                                >
-                                    فیلترها
-                                </button>
-
-
-                                <form
-                                    id="shop-filters-form"
-                                    method="GET"
-                                    action="/shop"
+                                <x-product.product-grid
+                                    columns="4"
                                 >
 
-                                    <x-shop.sort />
+                                    @foreach($products as $product)
 
-                                </form>
+                                        <x-product.product-card
+                                            :id="$product['id']"
+                                            :name="$product['name']"
+                                            :image="$product['image']"
+                                            :href="$product['url']"
+                                            :price="$product['price']"
+                                            :brand="$product['brand'] ?? null"
+                                            :meta="$product['meta'] ?? null"
+                                            :rating="$product['rating'] ?? null"
+                                            :review-count="$product['review_count'] ?? 0"
+                                            :badge="$product['badge'] ?? null"
+                                        />
 
-                            </div>
+                                    @endforeach
 
-                        </div>
-
-
-                        <x-product.product-grid>
-
-                            {{-- Products will come from controller --}}
-
-                        </x-product.product-grid>
+                                </x-product.product-grid>
 
 
-                        {{-- Pagination will come from controller --}}
+                                @isset($paginator)
+                                    <x-shop.pagination
+                                        :paginator="$paginator"
+                                    />
+                                @endisset
+
+                            @else
+
+                                <x-ui.empty-state
+                                    title="محصولی پیدا نشد"
+                                    description="فیلترها یا عبارت جستجو را تغییر دهید و دوباره امتحان کنید."
+                                    class="shop__empty"
+                                >
+                                    <x-slot:icon>
+                                        <svg
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="1.7"
+                                        >
+                                            <circle cx="11" cy="11" r="6.5" />
+                                            <path d="M16 16L21 21" />
+                                        </svg>
+                                    </x-slot:icon>
+
+                                    <x-slot:action>
+                                        <a
+                                            href="{{ route('shop') }}"
+                                            class="btn btn--primary"
+                                        >
+                                            مشاهده همه محصولات
+                                        </a>
+                                    </x-slot:action>
+                                </x-ui.empty-state>
+
+                            @endif
+
+                        </section>
 
                     </div>
 

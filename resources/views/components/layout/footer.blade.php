@@ -8,8 +8,9 @@
             <div class="site-footer__brand">
 
                 <a
-                    href="/"
+                    href="{{ route('home') }}"
                     class="site-footer__logo"
+                    aria-label="فرزین"
                 >
                     FARZIN
                 </a>
@@ -29,34 +30,44 @@
                     خرید
                 </h3>
 
-                <nav class="site-footer__links">
+                <nav
+                    class="site-footer__links"
+                    aria-label="لینک‌های خرید"
+                >
 
                     <a
-                        href="/shop"
+                        href="{{ route('shop') }}"
                         class="site-footer__link"
                     >
                         فروشگاه
                     </a>
 
                     <a
-                        href="/hood"
+                        href="{{ route('category.hood') }}"
                         class="site-footer__link"
                     >
                         هود
                     </a>
 
                     <a
-                        href="/sink"
+                        href="{{ route('category.sink') }}"
                         class="site-footer__link"
                     >
                         سینک
                     </a>
 
                     <a
-                        href="/wishlist"
+                        href="{{ route('wishlist') }}"
                         class="site-footer__link"
                     >
                         علاقه‌مندی‌ها
+                    </a>
+
+                    <a
+                        href="{{ route('cart') }}"
+                        class="site-footer__link"
+                    >
+                        سبد خرید
                     </a>
 
                 </nav>
@@ -71,34 +82,30 @@
                     اطلاعات
                 </h3>
 
-                <nav class="site-footer__links">
+                <nav
+                    class="site-footer__links"
+                    aria-label="اطلاعات سایت"
+                >
 
                     <a
-                        href="/about"
+                        href="{{ route('about') }}"
                         class="site-footer__link"
                     >
                         درباره ما
                     </a>
 
                     <a
-                        href="/blog"
+                        href="{{ route('blog.index') }}"
                         class="site-footer__link"
                     >
                         مجله
                     </a>
 
                     <a
-                        href="/contact"
+                        href="{{ route('contact') }}"
                         class="site-footer__link"
                     >
                         تماس با ما
-                    </a>
-
-                    <a
-                        href="/shipping"
-                        class="site-footer__link"
-                    >
-                        قوانین ارسال
                     </a>
 
                 </nav>
@@ -113,23 +120,23 @@
                     تماس
                 </h3>
 
-                <div class="site-footer__links">
+                <div class="site-footer__contact">
 
                     <a
                         href="tel:+982112345678"
-                        class="site-footer__link"
+                        class="site-footer__contact-item"
                     >
                         ۰۲۱-۱۲۳۴۵۶۷۸
                     </a>
 
                     <a
                         href="mailto:info@example.com"
-                        class="site-footer__link"
+                        class="site-footer__contact-item"
                     >
                         info@example.com
                     </a>
 
-                    <span class="site-footer__link">
+                    <span class="site-footer__contact-item">
                         شنبه تا پنجشنبه
                     </span>
 
@@ -143,7 +150,8 @@
         <div class="site-footer__bottom">
 
             <span>
-                © {{ date('Y') }} Farzin. تمامی حقوق محفوظ است.
+                © {{ date('Y') }} Farzin.
+                تمامی حقوق محفوظ است.
             </span>
 
             <span>

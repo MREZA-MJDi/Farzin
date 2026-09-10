@@ -8,24 +8,16 @@
 <div class="cart-summary">
 
     <div class="cart-summary__row">
-
-        <span>
-            جمع محصولات
-        </span>
+        <span>جمع محصولات</span>
 
         <strong>
             {{ number_format($subtotal) }}
             تومان
         </strong>
-
     </div>
 
-
     <div class="cart-summary__row">
-
-        <span>
-            ارسال
-        </span>
+        <span>ارسال</span>
 
         <strong>
             @if($shipping > 0)
@@ -35,19 +27,17 @@
                 رایگان
             @endif
         </strong>
-
     </div>
-
 
     @if($discount > 0)
 
-        <div class="cart-summary__row">
+        <div class="cart-summary__row cart-summary__row--discount">
 
             <span>
                 تخفیف
             </span>
 
-            <strong class="text-danger">
+            <strong>
                 -{{ number_format($discount) }}
                 تومان
             </strong>
@@ -55,7 +45,6 @@
         </div>
 
     @endif
-
 
     <div class="cart-summary__row cart-summary__row--total">
 

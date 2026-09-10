@@ -32,12 +32,13 @@
 
                 </div>
 
-
                 <div class="order-summary__item-price">
-                    {{ number_format(
-                        ($item['price'] ?? 0) *
-                        ($item['quantity'] ?? 1)
-                    ) }}
+                    {{
+                        number_format(
+                            ($item['price'] ?? 0) *
+                            ($item['quantity'] ?? 1)
+                        )
+                    }}
                     تومان
                 </div>
 
@@ -48,69 +49,58 @@
     </div>
 
 
-    <div
-        class="cart-summary"
-        style="margin-top: var(--space-5);"
-    >
+    <div class="order-summary__totals">
 
-        <div class="cart-summary__row">
-
-            <span>
-                جمع محصولات
-            </span>
-
-            <strong>
-                {{ number_format($subtotal) }}
-                تومان
-            </strong>
-
-        </div>
-
-
-        <div class="cart-summary__row">
-
-            <span>
-                ارسال
-            </span>
-
-            <strong>
-                {{ $shipping > 0
-                    ? number_format($shipping) . ' تومان'
-                    : 'رایگان'
-                }}
-            </strong>
-
-        </div>
-
-
-        @if($discount > 0)
+        <div class="cart-summary">
 
             <div class="cart-summary__row">
+                <span>جمع محصولات</span>
+
+                <strong>
+                    {{ number_format($subtotal) }}
+                    تومان
+                </strong>
+            </div>
+
+            <div class="cart-summary__row">
+                <span>ارسال</span>
+
+                <strong>
+                    {{
+                        $shipping > 0
+                            ? number_format($shipping) . ' تومان'
+                            : 'رایگان'
+                    }}
+                </strong>
+            </div>
+
+            @if($discount > 0)
+
+                <div class="cart-summary__row cart-summary__row--discount">
+
+                    <span>تخفیف</span>
+
+                    <strong>
+                        -{{ number_format($discount) }}
+                        تومان
+                    </strong>
+
+                </div>
+
+            @endif
+
+            <div class="cart-summary__row cart-summary__row--total">
 
                 <span>
-                    تخفیف
+                    مبلغ قابل پرداخت
                 </span>
 
-                <strong class="text-danger">
-                    -{{ number_format($discount) }}
+                <strong>
+                    {{ number_format($total) }}
                     تومان
                 </strong>
 
             </div>
-
-        @endif
-
-
-        <div class="cart-summary__row cart-summary__row--total">
-
-            <span>
-                مبلغ قابل پرداخت
-            </span>
-
-            <strong>
-                {{ number_format($total) }}
-                تومان
-            </strong>
 
         </div>
 

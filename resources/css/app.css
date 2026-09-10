@@ -1,7 +1,17 @@
 @import url("https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap");
 
 /* =========================================================
-   FARZIN — DESIGN SYSTEM / GLOBAL FOUNDATION
+   FARZIN
+   GLOBAL FOUNDATION
+   -----------------------------------------
+   Tokens
+   Reset
+   Typography
+   App Shell
+   Layout
+   Utilities
+   Accessibility
+   Responsive Foundation
 ========================================================= */
 
 :root {
@@ -10,19 +20,21 @@
     ===================================================== */
 
     --primary: #191919;
-    --primary-hover: #262626;
+    --primary-hover: #252525;
+    --primary-soft: #f0eeeb;
 
     --accent: #b38a5a;
     --accent-hover: #9d764a;
     --accent-soft: #f5eee6;
 
     /* =====================================================
-       BACKGROUNDS
+       SURFACES
     ===================================================== */
 
     --background: #f7f6f3;
     --surface: #ffffff;
     --surface-soft: #f1f0ed;
+    --surface-muted: #ebe8e2;
     --surface-dark: #191919;
 
     /* =====================================================
@@ -36,12 +48,13 @@
     --text-white: #ffffff;
 
     /* =====================================================
-       BORDER
+       BORDERS
     ===================================================== */
 
     --border: #e5e1db;
-    --border-dark: #d2cdc5;
     --border-light: #eeeae4;
+    --border-dark: #d2cdc5;
+    --border-strong: #c4beb4;
 
     /* =====================================================
        STATUS
@@ -87,6 +100,7 @@
     --weight-extrabold: 800;
 
     --leading-tight: 1.25;
+    --leading-snug: 1.4;
     --leading-normal: 1.75;
     --leading-relaxed: 2;
 
@@ -107,6 +121,24 @@
     --space-11: 80px;
     --space-12: 96px;
     --space-13: 120px;
+
+    /* =====================================================
+       LAYOUT
+    ===================================================== */
+
+    --content-narrow: 760px;
+    --content-readable: 900px;
+    --content-main: 1280px;
+    --content-wide: 1440px;
+
+    --layout-gutter: 24px;
+
+    --section-space: 96px;
+    --section-space-sm: 72px;
+    --section-space-lg: 120px;
+
+    --section-gap: 40px;
+    --grid-gap: 24px;
 
     /* =====================================================
        RADIUS
@@ -137,27 +169,6 @@
         0 24px 60px rgba(0, 0, 0, 0.10);
 
     /* =====================================================
-       LAYOUT
-    ===================================================== */
-
-    --content-max: 1280px;
-    --content-wide-max: 1440px;
-    --content-narrow-max: 960px;
-
-    --layout-gutter: 24px;
-
-    /* =====================================================
-       SECTION RHYTHM
-    ===================================================== */
-
-    --section-space: 96px;
-    --section-space-sm: 72px;
-    --section-space-lg: 120px;
-
-    --section-content-gap: 40px;
-    --section-grid-gap: 24px;
-
-    /* =====================================================
        HEADER
     ===================================================== */
 
@@ -169,15 +180,11 @@
     ===================================================== */
 
     --ease-standard: cubic-bezier(0.2, 0.8, 0.2, 1);
+    --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
 
-    --transition-fast:
-        160ms var(--ease-standard);
-
-    --transition-base:
-        260ms var(--ease-standard);
-
-    --transition-slow:
-        420ms var(--ease-standard);
+    --transition-fast: 160ms var(--ease-standard);
+    --transition-base: 260ms var(--ease-standard);
+    --transition-slow: 420ms var(--ease-standard);
 
     /* =====================================================
        Z-INDEX
@@ -203,18 +210,21 @@
 }
 
 html {
+    width: 100%;
+    min-height: 100%;
+
     direction: rtl;
     font-size: 16px;
+
     scroll-behavior: smooth;
-}
 
-html,
-body {
-    min-height: 100%;
+    -webkit-text-size-adjust: 100%;
 }
 
 body {
+    width: 100%;
     min-height: 100vh;
+
     margin: 0;
 
     background: var(--background);
@@ -227,6 +237,7 @@ body {
     line-height: var(--leading-normal);
 
     text-rendering: optimizeLegibility;
+
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
@@ -327,8 +338,8 @@ h6 {
 
 h1 {
     font-size: clamp(
-        34px,
-        4vw,
+        36px,
+        4.5vw,
         var(--font-6xl)
     );
 }
@@ -336,7 +347,7 @@ h1 {
 h2 {
     font-size: clamp(
         28px,
-        3vw,
+        3.2vw,
         var(--font-5xl)
     );
 }
@@ -375,39 +386,36 @@ small {
    APP SHELL
 ========================================================= */
 
-html,
-body {
+#app,
+.app,
+.app-main {
     width: 100%;
 }
 
-#app {
+#app,
+.app {
     min-height: 100vh;
-    width: 100%;
 }
 
 .app {
-    min-height: 100vh;
-    width: 100%;
-
     display: flex;
     flex-direction: column;
 }
 
 .app-main {
-    width: 100%;
     min-width: 0;
     flex: 1;
 }
 
 
 /* =========================================================
-   LAYOUT SYSTEM
+   CONTAINER
 ========================================================= */
 
 .container {
     width: min(
         calc(100% - (var(--layout-gutter) * 2)),
-        var(--content-max)
+        var(--content-main)
     );
 
     margin-inline: auto;
@@ -416,7 +424,7 @@ body {
 .container--wide {
     width: min(
         calc(100% - (var(--layout-gutter) * 2)),
-        var(--content-wide-max)
+        var(--content-wide)
     );
 
     margin-inline: auto;
@@ -425,19 +433,19 @@ body {
 .container--narrow {
     width: min(
         calc(100% - (var(--layout-gutter) * 2)),
-        var(--content-narrow-max)
+        var(--content-readable)
     );
 
     margin-inline: auto;
 }
 
+.container--readable {
+    width: min(
+        calc(100% - (var(--layout-gutter) * 2)),
+        var(--content-narrow)
+    );
 
-/* =========================================================
-   FULL BLEED
-========================================================= */
-
-.full-bleed {
-    width: 100%;
+    margin-inline: auto;
 }
 
 
@@ -470,40 +478,22 @@ body {
     padding-bottom: 0;
 }
 
-
-/* =========================================================
-   SECTION INNER
-========================================================= */
-
 .section__inner {
     width: 100%;
 
     display: flex;
     flex-direction: column;
 
-    gap: var(--section-content-gap);
+    gap: var(--section-gap);
 }
-
-
-/* =========================================================
-   SECTION CONTENT
-========================================================= */
 
 .section-content {
     width: 100%;
 }
 
-.section-content--narrow {
-    max-width: 960px;
-}
-
-.section-content--center {
-    margin-inline: auto;
-}
-
 
 /* =========================================================
-   CONTENT WIDTH
+   CONTENT
 ========================================================= */
 
 .content {
@@ -511,15 +501,15 @@ body {
 }
 
 .content--narrow {
-    max-width: 760px;
+    max-width: var(--content-narrow);
 }
 
-.content--medium {
-    max-width: 960px;
+.content--readable {
+    max-width: var(--content-readable);
 }
 
-.content--wide {
-    max-width: 1120px;
+.content--center {
+    margin-inline: auto;
 }
 
 
@@ -577,7 +567,7 @@ body {
 
 
 /* =========================================================
-   FLEX UTILITIES
+   FLEX
 ========================================================= */
 
 .flex {
@@ -638,7 +628,7 @@ body {
 
 
 /* =========================================================
-   GRID UTILITIES
+   GRID
 ========================================================= */
 
 .grid {
@@ -646,8 +636,7 @@ body {
 }
 
 .grid-cols-1 {
-    grid-template-columns:
-        minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr);
 }
 
 .grid-cols-2 {
@@ -680,41 +669,15 @@ body {
    GAP
 ========================================================= */
 
-.gap-1 {
-    gap: var(--space-1);
-}
-
-.gap-2 {
-    gap: var(--space-2);
-}
-
-.gap-3 {
-    gap: var(--space-3);
-}
-
-.gap-4 {
-    gap: var(--space-4);
-}
-
-.gap-5 {
-    gap: var(--space-5);
-}
-
-.gap-6 {
-    gap: var(--space-6);
-}
-
-.gap-7 {
-    gap: var(--space-7);
-}
-
-.gap-8 {
-    gap: var(--space-8);
-}
-
-.gap-9 {
-    gap: var(--space-9);
-}
+.gap-1 { gap: var(--space-1); }
+.gap-2 { gap: var(--space-2); }
+.gap-3 { gap: var(--space-3); }
+.gap-4 { gap: var(--space-4); }
+.gap-5 { gap: var(--space-5); }
+.gap-6 { gap: var(--space-6); }
+.gap-7 { gap: var(--space-7); }
+.gap-8 { gap: var(--space-8); }
+.gap-9 { gap: var(--space-9); }
 
 
 /* =========================================================
@@ -760,7 +723,7 @@ body {
 
 
 /* =========================================================
-   TEXT ALIGNMENT
+   TEXT
 ========================================================= */
 
 .text-start {
@@ -774,11 +737,6 @@ body {
 .text-end {
     text-align: end;
 }
-
-
-/* =========================================================
-   TEXT COLORS
-========================================================= */
 
 .text-primary {
     color: var(--text);
@@ -850,45 +808,16 @@ body {
    FONT SIZE
 ========================================================= */
 
-.text-xs {
-    font-size: var(--font-xs);
-}
-
-.text-sm {
-    font-size: var(--font-sm);
-}
-
-.text-md {
-    font-size: var(--font-md);
-}
-
-.text-lg {
-    font-size: var(--font-lg);
-}
-
-.text-xl {
-    font-size: var(--font-xl);
-}
-
-.text-2xl {
-    font-size: var(--font-2xl);
-}
-
-.text-3xl {
-    font-size: var(--font-3xl);
-}
-
-.text-4xl {
-    font-size: var(--font-4xl);
-}
-
-.text-5xl {
-    font-size: var(--font-5xl);
-}
-
-.text-6xl {
-    font-size: var(--font-6xl);
-}
+.text-xs { font-size: var(--font-xs); }
+.text-sm { font-size: var(--font-sm); }
+.text-md { font-size: var(--font-md); }
+.text-lg { font-size: var(--font-lg); }
+.text-xl { font-size: var(--font-xl); }
+.text-2xl { font-size: var(--font-2xl); }
+.text-3xl { font-size: var(--font-3xl); }
+.text-4xl { font-size: var(--font-4xl); }
+.text-5xl { font-size: var(--font-5xl); }
+.text-6xl { font-size: var(--font-6xl); }
 
 
 /* =========================================================
@@ -905,6 +834,10 @@ body {
 
 .bg-surface-soft {
     background: var(--surface-soft);
+}
+
+.bg-surface-dark {
+    background: var(--surface-dark);
 }
 
 .bg-primary {
@@ -934,6 +867,10 @@ body {
 
 .border-dark {
     border-color: var(--border-dark);
+}
+
+.border-strong {
+    border-color: var(--border-strong);
 }
 
 .border-none {
@@ -1037,6 +974,11 @@ body {
     scrollbar-width: thin;
 }
 
+.overflow-y-auto {
+    overflow-y: auto;
+    scrollbar-width: thin;
+}
+
 
 /* =========================================================
    VISIBILITY
@@ -1069,6 +1011,27 @@ body {
 
 
 /* =========================================================
+   ASPECT RATIO
+========================================================= */
+
+.aspect-square {
+    aspect-ratio: 1;
+}
+
+.aspect-video {
+    aspect-ratio: 16 / 9;
+}
+
+.aspect-4-3 {
+    aspect-ratio: 4 / 3;
+}
+
+.aspect-3-2 {
+    aspect-ratio: 3 / 2;
+}
+
+
+/* =========================================================
    INTERACTION
 ========================================================= */
 
@@ -1087,7 +1050,6 @@ body {
 
 .truncate {
     overflow: hidden;
-
     text-overflow: ellipsis;
     white-space: nowrap;
 }
@@ -1124,7 +1086,6 @@ body {
     margin: -1px;
 
     overflow: hidden;
-
     clip: rect(0, 0, 0, 0);
 
     white-space: nowrap;
@@ -1144,7 +1105,7 @@ body {
 
 
 /* =========================================================
-   DIVIDER
+   DIVIDERS
 ========================================================= */
 
 .divider {
@@ -1160,28 +1121,7 @@ body {
 
 
 /* =========================================================
-   ASPECT RATIO
-========================================================= */
-
-.aspect-square {
-    aspect-ratio: 1 / 1;
-}
-
-.aspect-video {
-    aspect-ratio: 16 / 9;
-}
-
-.aspect-4-3 {
-    aspect-ratio: 4 / 3;
-}
-
-.aspect-3-2 {
-    aspect-ratio: 3 / 2;
-}
-
-
-/* =========================================================
-   RESPONSIVE — 1200
+   RESPONSIVE FOUNDATION
 ========================================================= */
 
 @media (max-width: 1200px) {
@@ -1192,7 +1132,8 @@ body {
         --section-space-sm: 64px;
         --section-space-lg: 104px;
 
-        --section-content-gap: 36px;
+        --section-gap: 36px;
+        --grid-gap: 20px;
     }
 
     .grid-cols-4 {
@@ -1202,10 +1143,6 @@ body {
 }
 
 
-/* =========================================================
-   RESPONSIVE — 992
-========================================================= */
-
 @media (max-width: 992px) {
     :root {
         --layout-gutter: 18px;
@@ -1214,42 +1151,8 @@ body {
         --section-space-sm: 56px;
         --section-space-lg: 96px;
 
-        --section-content-gap: 32px;
-        --section-grid-gap: 20px;
-    }
-
-    .grid-cols-4 {
-        grid-template-columns:
-            repeat(2, minmax(0, 1fr));
-    }
-
-    .grid-cols-3 {
-        grid-template-columns:
-            repeat(2, minmax(0, 1fr));
-    }
-}
-
-
-/* =========================================================
-   RESPONSIVE — 768
-========================================================= */
-
-@media (max-width: 768px) {
-    :root {
-        --layout-gutter: 16px;
-
-        --header-height: var(--header-mobile-height);
-
-        --section-space: 64px;
-        --section-space-sm: 48px;
-        --section-space-lg: 80px;
-
-        --section-content-gap: 28px;
-        --section-grid-gap: 16px;
-    }
-
-    .section {
-        padding-block: var(--section-space);
+        --section-gap: 32px;
+        --grid-gap: 20px;
     }
 
     .grid-cols-4,
@@ -1257,20 +1160,31 @@ body {
         grid-template-columns:
             repeat(2, minmax(0, 1fr));
     }
-
-    .container--wide,
-    .container--narrow {
-        width: min(
-            calc(100% - (var(--layout-gutter) * 2)),
-            100%
-        );
-    }
 }
 
 
-/* =========================================================
-   RESPONSIVE — 576
-========================================================= */
+@media (max-width: 768px) {
+    :root {
+        --layout-gutter: 16px;
+
+        --header-height:
+            var(--header-mobile-height);
+
+        --section-space: 64px;
+        --section-space-sm: 48px;
+        --section-space-lg: 80px;
+
+        --section-gap: 28px;
+        --grid-gap: 16px;
+    }
+
+    .grid-cols-4,
+    .grid-cols-3 {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+}
+
 
 @media (max-width: 576px) {
     :root {
@@ -1288,22 +1202,14 @@ body {
         --section-space-sm: 40px;
         --section-space-lg: 68px;
 
-        --section-content-gap: 24px;
-        --section-grid-gap: 14px;
+        --section-gap: 24px;
+        --grid-gap: 14px;
     }
 
-    .section {
-        padding-block: var(--section-space);
-    }
-
-    .grid-cols-4,
+    .grid-cols-2,
     .grid-cols-3,
-    .grid-cols-2 {
+    .grid-cols-4 {
         grid-template-columns: 1fr;
-    }
-
-    .inline {
-        align-items: flex-start;
     }
 }
 

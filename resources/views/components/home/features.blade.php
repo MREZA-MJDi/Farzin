@@ -13,7 +13,6 @@
                 title-id="features-title"
             />
 
-
             <div class="section-content">
 
                 <div class="features-grid">

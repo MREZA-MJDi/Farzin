@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
+
 <head>
+
     <meta charset="UTF-8">
 
     <meta
@@ -21,20 +23,18 @@
         name="description"
         content="@yield(
             'meta_description',
-            'فروش هود و سینک با کیفیت از فرزین'
+            'فرزین؛ انتخابی حرفه‌ای برای هود و سینک مدرن با طراحی زیبا، کیفیت قابل اعتماد و تجربه خرید مطمئن.'
         )"
     >
 
     @stack('meta')
 
-    @vite([
-    'resources/css/app.css',
-    'resources/css/components.css',
-    'resources/js/app.js',
-    ])
+    @vite('resources/js/app.js')
 
     @stack('styles')
+
 </head>
+
 
 <body>
 
@@ -50,7 +50,9 @@
 
 </div>
 
+
 @stack('scripts')
 
 </body>
+
 </html>
