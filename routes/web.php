@@ -1,8 +1,16 @@
 <?php
 
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\ProductController;
+use App\Http\Controllers\Customer\CategoryController;
+use App\Http\Controllers\Customer\HomeController;
+use App\Http\Controllers\Customer\ProductController;
 use Illuminate\Support\Facades\Route;
+
+
+/*
+|--------------------------------------------------------------------------
+| Customer Storefront
+|--------------------------------------------------------------------------
+*/
 
 
 /*
@@ -17,14 +25,14 @@ Route::get('/', [HomeController::class, 'index'])
 
 /*
 |--------------------------------------------------------------------------
-| Shop / Products
+| Products
 |--------------------------------------------------------------------------
 */
 
 Route::get('/shop', [ProductController::class, 'index'])
     ->name('shop');
 
-Route::get('/product/{slug}', [ProductController::class, 'show'])
+Route::get('/product/{product:slug}', [ProductController::class, 'show'])
     ->name('product.show');
 
 
@@ -34,14 +42,31 @@ Route::get('/product/{slug}', [ProductController::class, 'show'])
 |--------------------------------------------------------------------------
 */
 
+Route::get('/categories', [CategoryController::class, 'index'])
+    ->name('categories.index');
+
+Route::get('/category/{category:slug}', [CategoryController::class, 'show'])
+    ->name('category.show');
+
+
+/*
+|--------------------------------------------------------------------------
+| Header Category Shortcuts
+|--------------------------------------------------------------------------
+|
+| Keep the clean public URLs used by the current Header.
+|
+*/
+
 Route::get('/hood', function () {
-    return redirect()->route('shop', [
+    return redirect()->route('category.show', [
         'category' => 'hood',
     ]);
 })->name('category.hood');
 
+
 Route::get('/sink', function () {
-    return redirect()->route('shop', [
+    return redirect()->route('category.show', [
         'category' => 'sink',
     ]);
 })->name('category.sink');
@@ -70,21 +95,6 @@ Route::get('/cart', function () {
 
 /*
 |--------------------------------------------------------------------------
-| Checkout
-|--------------------------------------------------------------------------
-*/
-
-Route::get('/checkout', function () {
-    return view('pages.checkout');
-})->name('checkout');
-
-Route::post('/checkout', function () {
-    return redirect()->route('payment.success');
-})->name('checkout.store');
-
-
-/*
-|--------------------------------------------------------------------------
 | Wishlist
 |--------------------------------------------------------------------------
 */
@@ -96,26 +106,44 @@ Route::get('/wishlist', function () {
 
 /*
 |--------------------------------------------------------------------------
+| Checkout
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/checkout', function () {
+    return view('pages.checkout');
+})->name('checkout');
+
+
+Route::post('/checkout', function () {
+    return redirect()->route('payment.success');
+})->name('checkout.store');
+
+
+/*
+|--------------------------------------------------------------------------
 | Payment
 |--------------------------------------------------------------------------
 */
 
 Route::get('/payment/success', function () {
     return view('pages.payment.success', [
-        'order' => [],
+        'order' => null,
     ]);
 })->name('payment.success');
 
+
 Route::get('/payment/failed', function () {
     return view('pages.payment.failed', [
-        'order' => [],
-        'payment' => [],
+        'order' => null,
+        'payment' => null,
     ]);
 })->name('payment.failed');
 
+
 Route::get('/payment/cancelled', function () {
     return view('pages.payment.cancelled', [
-        'order' => [],
+        'order' => null,
     ]);
 })->name('payment.cancelled');
 
@@ -128,15 +156,16 @@ Route::get('/payment/cancelled', function () {
 
 Route::get('/blog', function () {
     return view('pages.blog.index', [
-        'posts' => [],
+        'posts' => collect(),
     ]);
 })->name('blog.index');
+
 
 Route::get('/blog/{slug}', function (string $slug) {
     return view('pages.blog.show', [
         'slug' => $slug,
-        'post' => [],
-        'relatedPosts' => [],
+        'post' => null,
+        'relatedPosts' => collect(),
     ]);
 })->name('blog.show');
 
@@ -150,6 +179,7 @@ Route::get('/blog/{slug}', function (string $slug) {
 Route::get('/about', function () {
     return view('pages.about');
 })->name('about');
+
 
 Route::get('/contact', function () {
     return view('pages.contact');

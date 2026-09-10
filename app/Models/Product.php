@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
@@ -12,6 +13,7 @@ class Product extends Model
     use HasFactory;
 
     protected $fillable = [
+        'category_id',
         'name',
         'slug',
         'sku',
@@ -24,12 +26,12 @@ class Product extends Model
         'stock',
         'rating',
         'review_count',
-        'category',
         'is_active',
         'is_featured',
     ];
 
     protected $casts = [
+        'category_id' => 'integer',
         'price' => 'integer',
         'old_price' => 'integer',
         'discount' => 'integer',
@@ -39,6 +41,11 @@ class Product extends Model
         'is_active' => 'boolean',
         'is_featured' => 'boolean',
     ];
+
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(Category::class);
+    }
 
     public function images(): HasMany
     {
@@ -50,5 +57,17 @@ class Product extends Model
     {
         return $this->hasOne(ProductImage::class)
             ->where('is_primary', true);
+    }
+
+    public function scopeActive($query)
+    {
+        return $query->where('is_active', true);
+    }
+
+    public function scopeFeatured($query)
+    {
+        return $query
+            ->where('is_active', true)
+            ->where('is_featured', true);
     }
 }

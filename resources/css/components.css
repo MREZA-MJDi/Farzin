@@ -4798,4 +4798,20 @@
         transition: none;
     }
 }
+   .category-card__image-placeholder {
+       width: 100%;
+       height: 100%;
+
+       display: flex;
+       align-items: center;
+       justify-content: center;
+
+       background: var(--surface-soft);
+       color: var(--text-light);
+   }
+
+.category-card__image-placeholder svg {
+    width: 52px;
+    height: 52px;
+}
 

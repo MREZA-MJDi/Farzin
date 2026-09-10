@@ -1,19 +1,16 @@
 @extends('layouts.app')
 
-@section(
-    'title',
-    ($product['name'] ?? 'محصول') . ' | فرزین'
-)
+@section('title', $product->name . ' | فرزین')
 
 @section(
     'meta_description',
-    $product['meta_description']
-        ?? 'مشخصات، قیمت و اطلاعات محصول در فرزین.'
+    $product->short_description
+        ?: 'مشاهده مشخصات و قیمت ' . $product->name . ' در فروشگاه فرزین.'
 )
 
 @section('content')
 
-    <main class="product-page">
+    <main>
 
         <section class="section section--sm">
 
@@ -21,297 +18,291 @@
 
                 <div class="section__inner">
 
-                    <x-layout.breadcrumb
+                    <x-ui.breadcrumb
                         :items="[
-                            [
-                                'label' => $product['category_name'] ?? 'محصولات',
-                                'href' => $product['category_url']
-                                    ?? route('shop')
-                            ],
-                            [
-                                'label' => $product['name'] ?? 'محصول'
-                            ]
-                        ]"
+                        [
+                            'label' => $product->category->name,
+                            'href' => route(
+                                'category.show',
+                                $product->category
+                            ),
+                        ],
+                        [
+                            'label' => $product->name,
+                            'href' => route(
+                                'product.show',
+                                $product
+                            ),
+                        ],
+                    ]"
                     />
 
 
-                    <div class="grid grid-cols-2 gap-8">
+                    <div class="product-page">
 
-                        {{-- Gallery --}}
-                        <div>
+                        <div class="product-page__media">
 
                             <x-product.product-gallery
-                                :images="$product['images'] ?? []"
-                                :name="$product['name'] ?? ''"
+                                :images="$product->images"
+                                :name="$product->name"
                             />
 
                         </div>
 
 
-                        {{-- Product Info --}}
-                        <article class="card card--padded">
+                        <div class="product-page__content">
 
-                            <div class="stack stack--lg">
+                            @if($product->brand)
 
-                                @if(!empty($product['brand']))
+                                <span class="product-card__brand">
+                                {{ $product->brand }}
+                            </span>
 
-                                    <span class="text-accent text-sm font-semibold">
-                                        {{ $product['brand'] }}
+                            @endif
+
+
+                            <h1 class="product-page__title">
+                                {{ $product->name }}
+                            </h1>
+
+
+                            @if($product->short_description)
+
+                                <p class="product-page__description">
+                                    {{ $product->short_description }}
+                                </p>
+
+                            @endif
+
+
+                            @if($product->rating > 0)
+
+                                <div
+                                    class="product-card__rating"
+                                    aria-label="امتیاز {{ $product->rating }} از ۵"
+                                >
+
+                                <span
+                                    class="product-card__rating-stars"
+                                    aria-hidden="true"
+                                >
+                                    ★
+                                </span>
+
+                                    <span>
+                                    {{ $product->rating }}
+                                </span>
+
+                                    @if($product->review_count > 0)
+                                        <span class="product-card__reviews">
+                                        ({{ $product->review_count }})
                                     </span>
-
-                                @endif
-
-
-                                <div class="stack stack--sm">
-
-                                    <h1>
-                                        {{ $product['name'] ?? '' }}
-                                    </h1>
-
-                                    @if(!empty($product['short_description']))
-                                        <p>
-                                            {{ $product['short_description'] }}
-                                        </p>
                                     @endif
 
                                 </div>
 
+                            @endif
 
-                                @if(isset($product['rating']))
 
-                                    <div class="inline inline--sm">
-
-                                        <span
-                                            class="text-accent"
-                                            aria-hidden="true"
-                                        >
-                                            ★
-                                        </span>
-
-                                        <strong>
-                                            {{ $product['rating'] }}
-                                        </strong>
-
-                                        @if(isset($product['review_count']))
-                                            <span class="text-muted text-sm">
-                                                ({{ $product['review_count'] }} نظر)
-                                            </span>
-                                        @endif
-
-                                    </div>
-
-                                @endif
-
+                            <div class="product-page__price">
 
                                 <x-product.price
-                                    :price="$product['price'] ?? 0"
-                                    :old-price="$product['old_price'] ?? null"
-                                    :discount="$product['discount'] ?? null"
+                                    :price="$product->price"
+                                    :old-price="$product->old_price"
+                                    :discount="$product->discount
+                                    ? $product->discount . '%'
+                                    : null"
                                 />
 
+                            </div>
 
-                                @if(($product['in_stock'] ?? false))
+
+                            <div class="product-page__stock">
+
+                                @if($product->stock > 0)
 
                                     <x-ui.badge
                                         variant="success"
                                         dot
                                     >
-                                        موجود
+                                        موجود در انبار
                                     </x-ui.badge>
-
-                                    <div class="inline inline--md">
-
-                                        <x-product.quantity
-                                            name="quantity"
-                                            :value="1"
-                                            :min="1"
-                                            :max="$product['stock'] ?? 99"
-                                        />
-
-                                        <button
-                                            type="button"
-                                            class="btn btn--primary btn--lg"
-                                            data-add-to-cart
-                                            data-product-id="{{ $product['id'] ?? '' }}"
-                                        >
-                                            افزودن به سبد خرید
-                                        </button>
-
-                                    </div>
 
                                 @else
 
-                                    <x-ui.badge variant="danger">
+                                    <x-ui.badge
+                                        variant="danger"
+                                        dot
+                                    >
                                         ناموجود
                                     </x-ui.badge>
 
-                                    <button
-                                        type="button"
-                                        class="btn btn--outline btn--lg"
-                                        disabled
+                                @endif
+
+                            </div>
+
+
+                            <div class="product-page__actions">
+
+                                <button
+                                    type="button"
+                                    class="btn btn--primary btn--lg"
+                                    data-add-to-cart
+                                    data-product-id="{{ $product->id }}"
+                                    @disabled($product->stock < 1)
                                     >
-                                        در حال حاضر موجود نیست
-                                    </button>
-
-                                @endif
+                                    افزودن به سبد خرید
+                                </button>
 
 
-                                <div class="grid grid-cols-3 gap-4">
-
-                                    <div class="card card--padded">
-                                        <strong class="text-sm">
-                                            ارسال
-                                        </strong>
-
-                                        <span class="text-muted text-xs">
-                                            سراسر کشور
-                                        </span>
-                                    </div>
-
-                                    <div class="card card--padded">
-                                        <strong class="text-sm">
-                                            پشتیبانی
-                                        </strong>
-
-                                        <span class="text-muted text-xs">
-                                            قبل و بعد از خرید
-                                        </span>
-                                    </div>
-
-                                    <div class="card card--padded">
-                                        <strong class="text-sm">
-                                            پرداخت
-                                        </strong>
-
-                                        <span class="text-muted text-xs">
-                                            امن و آنلاین
-                                        </span>
-                                    </div>
-
-                                </div>
+                                <button
+                                    type="button"
+                                    class="icon-btn icon-btn--border icon-btn--lg"
+                                    data-wishlist
+                                    data-product-id="{{ $product->id }}"
+                                    aria-label="افزودن {{ $product->name }} به علاقه‌مندی‌ها"
+                                    aria-pressed="false"
+                                >
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="1.7"
+                                        aria-hidden="true"
+                                    >
+                                        <path
+                                            d="M20.8 8.7C20.8 13.7 12 19 12 19S3.2 13.7 3.2 8.7C3.2 6 5.2 4 7.8 4C9.5 4 11 4.9 12 6.2C13 4.9 14.5 4 16.2 4C18.8 4 20.8 6 20.8 8.7Z"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                        />
+                                    </svg>
+                                </button>
 
                             </div>
-
-                        </article>
-
-                    </div>
-
-
-                    @if(
-                        !empty($product['description'])
-                        || !empty($product['specifications'])
-                        || !empty($product['faq'])
-                    )
-
-                        <div class="grid grid-cols-2 gap-8">
-
-                            <div class="stack stack--lg">
-
-                                @if(!empty($product['description']))
-
-                                    <section class="card card--padded">
-
-                                        <div class="stack stack--md">
-
-                                            <h2>
-                                                توضیحات محصول
-                                            </h2>
-
-                                            <div>
-                                                {!! $product['description'] !!}
-                                            </div>
-
-                                        </div>
-
-                                    </section>
-
-                                @endif
-
-
-                                @if(!empty($product['faq']))
-
-                                    <section class="card card--padded">
-
-                                        <div class="stack stack--md">
-
-                                            <h2>
-                                                سوالات متداول
-                                            </h2>
-
-                                            <div class="stack stack--sm">
-
-                                                @foreach($product['faq'] as $item)
-
-                                                    <details class="card card--padded">
-
-                                                        <summary>
-                                                            {{ $item['question'] }}
-                                                        </summary>
-
-                                                        <p>
-                                                            {{ $item['answer'] }}
-                                                        </p>
-
-                                                    </details>
-
-                                                @endforeach
-
-                                            </div>
-
-                                        </div>
-
-                                    </section>
-
-                                @endif
-
-                            </div>
-
-
-                            @if(!empty($product['specifications']))
-
-                                <section class="card card--padded">
-
-                                    <div class="stack stack--md">
-
-                                        <h2>
-                                            مشخصات محصول
-                                        </h2>
-
-                                        <div class="stack stack--sm">
-
-                                            @foreach($product['specifications'] as $spec)
-
-                                                <div class="inline inline--md justify-between">
-
-                                                    <span class="text-muted">
-                                                        {{ $spec['label'] }}
-                                                    </span>
-
-                                                    <strong>
-                                                        {{ $spec['value'] }}
-                                                    </strong>
-
-                                                </div>
-
-                                            @endforeach
-
-                                        </div>
-
-                                    </div>
-
-                                </section>
-
-                            @endif
 
                         </div>
 
-                    @endif
+                    </div>
 
                 </div>
 
             </div>
 
         </section>
+
+
+        @if($product->description)
+
+            <section class="section section--top-none">
+
+                <div class="container">
+
+                    <div class="section__inner">
+
+                        <header class="section-header">
+
+                            <div class="section-header__content">
+
+                            <span class="section-header__eyebrow">
+                                معرفی محصول
+                            </span>
+
+                                <h2 class="section-header__title">
+                                    درباره {{ $product->name }}
+                                </h2>
+
+                            </div>
+
+                        </header>
+
+
+                        <div class="section-content">
+
+                            <article class="article-content">
+
+                                {!! nl2br(e($product->description)) !!}
+
+                            </article>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        @endif
+
+
+        @if($relatedProducts->isNotEmpty())
+
+            <section class="section section--top-none">
+
+                <div class="container">
+
+                    <div class="section__inner">
+
+                        <x-ui.section-header
+                            eyebrow="پیشنهاد فرزین"
+                            title="محصولات مرتبط"
+                            description="محصولات دیگری از همین دسته‌بندی را بررسی کنید."
+                        />
+
+                        <div class="section-content">
+
+                            <x-product.product-grid :columns="4">
+
+                                @foreach($relatedProducts as $relatedProduct)
+
+                                    <x-product.product-card
+                                        :id="$relatedProduct->id"
+                                        :name="$relatedProduct->name"
+
+                                        :image="$relatedProduct->primaryImage
+                                        ? asset(
+                                            'storage/' .
+                                            $relatedProduct->primaryImage->image
+                                        )
+                                        : null"
+
+                                        :alt="$relatedProduct->primaryImage?->alt"
+
+                                        :href="route(
+                                        'product.show',
+                                        $relatedProduct
+                                    )"
+
+                                        :price="$relatedProduct->price"
+
+                                        :old-price="$relatedProduct->old_price"
+
+                                        :discount="$relatedProduct->discount
+                                        ? $relatedProduct->discount . '%'
+                                        : null"
+
+                                        :brand="$relatedProduct->brand"
+
+                                        :meta="$relatedProduct->short_description"
+
+                                        :rating="$relatedProduct->rating"
+
+                                        :review-count="$relatedProduct->review_count"
+                                    />
+
+                                @endforeach
+
+                            </x-product.product-grid>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        @endif
 
     </main>
 

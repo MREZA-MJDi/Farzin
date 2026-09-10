@@ -11,6 +11,10 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
 
+            $table->foreignId('category_id')
+                ->constrained()
+                ->restrictOnDelete();
+
             $table->string('name');
             $table->string('slug')->unique();
             $table->string('sku')->unique();
@@ -30,16 +34,20 @@ return new class extends Migration
             $table->decimal('rating', 2, 1)->default(0);
             $table->unsignedInteger('review_count')->default(0);
 
-            $table->string('category')->nullable();
-
             $table->boolean('is_active')->default(true);
             $table->boolean('is_featured')->default(false);
 
             $table->timestamps();
 
-            $table->index('category');
-            $table->index('is_active');
-            $table->index('is_featured');
+            $table->index([
+                'category_id',
+                'is_active',
+            ]);
+
+            $table->index([
+                'is_active',
+                'is_featured',
+            ]);
         });
     }
 

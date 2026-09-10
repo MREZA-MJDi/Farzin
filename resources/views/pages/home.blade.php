@@ -11,20 +11,38 @@
 
     <main class="home-page">
 
+        {{-- Hero --}}
         <x-home.hero />
 
-        <x-home.categories />
 
-        <x-home.featured-products />
+        {{-- Categories --}}
+        <x-home.categories
+            :categories="$categories"
+        />
 
+
+        {{-- Featured Products --}}
+        <x-home.featured-products
+            :products="$featuredProducts"
+        />
+
+
+        {{-- Features --}}
         <x-home.features />
 
+
+        {{-- Showcase --}}
         <x-home.showcase />
 
+
+        {{-- Blog --}}
         <x-home.blog />
 
+
+        {{-- Newsletter --}}
         <x-home.newsletter />
 
     </main>
 
 @endsection
+

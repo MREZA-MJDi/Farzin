@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Customer;
 
+use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Contracts\View\View;
@@ -11,7 +12,8 @@ class HomeController extends Controller
     public function index(): View
     {
         $featuredProducts = Product::query()
-            ->featured()
+            ->active()
+            ->where('is_featured', true)
             ->with([
                 'category:id,name,slug',
                 'primaryImage:id,product_id,image,alt',
@@ -26,7 +28,7 @@ class HomeController extends Controller
                 'activeProducts',
             ])
             ->orderBy('sort_order')
-            ->orderBy('name')
+            ->orderBy('id')
             ->get();
 
         return view('pages.home', [

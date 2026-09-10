@@ -1,7 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Customer;
 
+use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
@@ -17,16 +19,17 @@ class ProductController extends Controller
                 'primaryImage:id,product_id,image,alt',
             ]);
 
-        $category = $request->query('category');
+        $categorySlug = trim(
+            (string) $request->query('category', '')
+        );
 
-        if ($category) {
+        if ($categorySlug !== '') {
             $query->whereHas(
                 'category',
                 fn ($categoryQuery) =>
-                $categoryQuery->where(
-                    'slug',
-                    $category
-                )
+                $categoryQuery
+                    ->where('slug', $categorySlug)
+                    ->where('is_active', true)
             );
         }
 
@@ -52,19 +55,27 @@ class ProductController extends Controller
             ->paginate(12)
             ->withQueryString();
 
+        $categories = Category::query()
+            ->where('is_active', true)
+            ->orderBy('sort_order')
+            ->orderBy('id')
+            ->get([
+                'id',
+                'name',
+                'slug',
+            ]);
+
         return view('pages.shop', [
             'products' => $products,
-            'category' => $category,
+            'categories' => $categories,
+            'category' => $categorySlug,
             'search' => $search,
         ]);
     }
 
     public function show(Product $product): View
     {
-        abort_unless(
-            $product->is_active,
-            404
-        );
+        abort_unless($product->is_active, 404);
 
         $product->load([
             'category:id,name,slug',
@@ -74,7 +85,7 @@ class ProductController extends Controller
         $relatedProducts = Product::query()
             ->active()
             ->where('category_id', $product->category_id)
-            ->where('id', '!=', $product->getKey())
+            ->where('id', '!=', $product->id)
             ->with([
                 'primaryImage:id,product_id,image,alt',
             ])
