@@ -1,0 +1,107 @@
+@props([
+'paginator',
+])
+
+@if($paginator->hasPages())
+
+    <nav
+        class="pagination"
+        aria-label="صفحه‌بندی"
+    >
+
+        {{-- Previous --}}
+
+        @if($paginator->onFirstPage())
+
+            <span
+                class="pagination__item"
+                aria-disabled="true"
+            >
+                ←
+            </span>
+
+        @else
+
+            <a
+                href="{{ $paginator->previousPageUrl() }}"
+                class="pagination__link"
+                rel="prev"
+                aria-label="صفحه قبلی"
+            >
+                ←
+            </a>
+
+        @endif
+
+
+        {{-- Pages --}}
+
+        @foreach($elements as $element)
+
+            @if(is_string($element))
+
+                <span class="pagination__item pagination__item--dots">
+                    {{ $element }}
+                </span>
+
+            @endif
+
+
+            @if(is_array($element))
+
+                @foreach($element as $page => $url)
+
+                    @if($page == $paginator->currentPage())
+
+                        <span
+                            class="pagination__item is-active"
+                            aria-current="page"
+                        >
+                            {{ $page }}
+                        </span>
+
+                    @else
+
+                        <a
+                            href="{{ $url }}"
+                            class="pagination__link"
+                        >
+                            {{ $page }}
+                        </a>
+
+                    @endif
+
+                @endforeach
+
+            @endif
+
+        @endforeach
+
+
+        {{-- Next --}}
+
+        @if($paginator->hasMorePages())
+
+            <a
+                href="{{ $paginator->nextPageUrl() }}"
+                class="pagination__link"
+                rel="next"
+                aria-label="صفحه بعدی"
+            >
+                →
+            </a>
+
+        @else
+
+            <span
+                class="pagination__item"
+                aria-disabled="true"
+            >
+                →
+            </span>
+
+        @endif
+
+    </nav>
+
+@endif
