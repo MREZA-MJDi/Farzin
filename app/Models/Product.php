@@ -70,4 +70,20 @@ class Product extends Model
             ->where('is_active', true)
             ->where('is_featured', true);
     }
+
+    /**
+     * @return HasMany
+     */
+    public function inventoryMovements(): HasMany
+    {
+        return $this->hasMany(InventoryMovement::class);
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(Review::class);
+    }
 }

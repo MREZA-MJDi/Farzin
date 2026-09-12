@@ -4,10 +4,82 @@
 'availability' => [],
 ])
 
+@php
+    /*
+    |--------------------------------------------------------------------------
+    | Normalize inputs
+    |--------------------------------------------------------------------------
+    */
+
+    $categories = collect($categories);
+    $brands = collect($brands);
+    $availability = collect($availability);
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Current query state
+    |--------------------------------------------------------------------------
+    */
+
+    $selectedCategories = collect(
+        request()->query('category', [])
+    );
+
+    $selectedBrands = collect(
+        request()->query('brand', [])
+    );
+
+    $selectedAvailability = collect(
+        request()->query('availability', [])
+    );
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Normalize single query values
+    |--------------------------------------------------------------------------
+    */
+
+    if (
+        $selectedCategories->isEmpty()
+        && request()->filled('category')
+    ) {
+        $selectedCategories = collect([
+            request()->query('category'),
+        ]);
+    }
+
+    if (
+        $selectedBrands->isEmpty()
+        && request()->filled('brand')
+    ) {
+        $selectedBrands = collect([
+            request()->query('brand'),
+        ]);
+    }
+
+    if (
+        $selectedAvailability->isEmpty()
+        && request()->filled('availability')
+    ) {
+        $selectedAvailability = collect([
+            request()->query('availability'),
+        ]);
+    }
+@endphp
+
+
 <aside
-    class="filters"
+    {{ $attributes->merge([
+        'class' => 'filters',
+    ]) }}
     aria-label="فیلتر محصولات"
 >
+
+    {{-- =====================================================
+         HEADER
+    ====================================================== --}}
 
     <div class="filters__header">
 
@@ -25,7 +97,11 @@
     </div>
 
 
-    @if(count($categories))
+    {{-- =====================================================
+         CATEGORY
+    ====================================================== --}}
+
+    @if($categories->isNotEmpty())
 
         <section class="filters__group">
 
@@ -37,23 +113,56 @@
 
                 @foreach($categories as $category)
 
-                    <label class="choice">
+                    @php
+                        if (is_object($category)) {
+                            $categoryValue = $category->slug
+                                ?? $category->value
+                                ?? null;
 
-                        <input
-                            type="checkbox"
-                            class="choice__input"
-                            name="category[]"
-                            value="{{ $category['value'] ?? $category }}"
-                            form="shop-filters-form"
-                        >
+                            $categoryLabel = $category->name
+                                ?? $category->label
+                                ?? $categoryValue;
+                        } elseif (is_array($category)) {
+                            $categoryValue = $category['value']
+                                ?? $category['slug']
+                                ?? null;
 
-                        <span class="choice__control"></span>
+                            $categoryLabel = $category['label']
+                                ?? $category['name']
+                                ?? $categoryValue;
+                        } else {
+                            $categoryValue = $category;
+                            $categoryLabel = $category;
+                        }
+                    @endphp
 
-                        <span class="choice__label">
-                            {{ $category['label'] ?? $category }}
-                        </span>
+                    @if(filled($categoryValue))
 
-                    </label>
+                        <label class="choice">
+
+                            <input
+                                type="checkbox"
+                                class="choice__input"
+                                name="category[]"
+                                value="{{ $categoryValue }}"
+                                form="shop-filters-form"
+
+                                @checked(
+                                $selectedCategories->contains(
+                            (string) $categoryValue
+                            )
+                            )
+                            >
+
+                            <span class="choice__control"></span>
+
+                            <span class="choice__label">
+                                {{ $categoryLabel }}
+                            </span>
+
+                        </label>
+
+                    @endif
 
                 @endforeach
 
@@ -64,7 +173,11 @@
     @endif
 
 
-    @if(count($brands))
+    {{-- =====================================================
+         BRAND
+    ====================================================== --}}
+
+    @if($brands->isNotEmpty())
 
         <section class="filters__group">
 
@@ -76,23 +189,58 @@
 
                 @foreach($brands as $brand)
 
-                    <label class="choice">
+                    @php
+                        if (is_object($brand)) {
+                            $brandValue = $brand->slug
+                                ?? $brand->value
+                                ?? $brand->name
+                                ?? null;
 
-                        <input
-                            type="checkbox"
-                            class="choice__input"
-                            name="brand[]"
-                            value="{{ $brand['value'] ?? $brand }}"
-                            form="shop-filters-form"
-                        >
+                            $brandLabel = $brand->name
+                                ?? $brand->label
+                                ?? $brandValue;
+                        } elseif (is_array($brand)) {
+                            $brandValue = $brand['value']
+                                ?? $brand['slug']
+                                ?? $brand['name']
+                                ?? null;
 
-                        <span class="choice__control"></span>
+                            $brandLabel = $brand['label']
+                                ?? $brand['name']
+                                ?? $brandValue;
+                        } else {
+                            $brandValue = $brand;
+                            $brandLabel = $brand;
+                        }
+                    @endphp
 
-                        <span class="choice__label">
-                            {{ $brand['label'] ?? $brand }}
-                        </span>
+                    @if(filled($brandValue))
 
-                    </label>
+                        <label class="choice">
+
+                            <input
+                                type="checkbox"
+                                class="choice__input"
+                                name="brand[]"
+                                value="{{ $brandValue }}"
+                                form="shop-filters-form"
+
+                                @checked(
+                                $selectedBrands->contains(
+                            (string) $brandValue
+                            )
+                            )
+                            >
+
+                            <span class="choice__control"></span>
+
+                            <span class="choice__label">
+                                {{ $brandLabel }}
+                            </span>
+
+                        </label>
+
+                    @endif
 
                 @endforeach
 
@@ -103,7 +251,11 @@
     @endif
 
 
-    @if(count($availability))
+    {{-- =====================================================
+         AVAILABILITY
+    ====================================================== --}}
+
+    @if($availability->isNotEmpty())
 
         <section class="filters__group">
 
@@ -115,23 +267,57 @@
 
                 @foreach($availability as $item)
 
-                    <label class="choice">
+                    @php
+                        if (is_object($item)) {
+                            $availabilityValue = $item->value
+                                ?? $item->slug
+                                ?? $item->id
+                                ?? null;
 
-                        <input
-                            type="checkbox"
-                            class="choice__input"
-                            name="availability[]"
-                            value="{{ $item['value'] ?? $item }}"
-                            form="shop-filters-form"
-                        >
+                            $availabilityLabel = $item->label
+                                ?? $item->name
+                                ?? $availabilityValue;
+                        } elseif (is_array($item)) {
+                            $availabilityValue = $item['value']
+                                ?? $item['slug']
+                                ?? null;
 
-                        <span class="choice__control"></span>
+                            $availabilityLabel = $item['label']
+                                ?? $item['name']
+                                ?? $availabilityValue;
+                        } else {
+                            $availabilityValue = $item;
+                            $availabilityLabel = $item;
+                        }
+                    @endphp
 
-                        <span class="choice__label">
-                            {{ $item['label'] ?? $item }}
-                        </span>
+                    @if(filled($availabilityValue))
 
-                    </label>
+                        <label class="choice">
+
+                            <input
+                                type="checkbox"
+                                class="choice__input"
+                                name="availability[]"
+                                value="{{ $availabilityValue }}"
+                                form="shop-filters-form"
+
+                                @checked(
+                                $selectedAvailability->contains(
+                            (string) $availabilityValue
+                            )
+                            )
+                            >
+
+                            <span class="choice__control"></span>
+
+                            <span class="choice__label">
+                                {{ $availabilityLabel }}
+                            </span>
+
+                        </label>
+
+                    @endif
 
                 @endforeach
 
@@ -142,3 +328,4 @@
     @endif
 
 </aside>
+

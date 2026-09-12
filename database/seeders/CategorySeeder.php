@@ -11,30 +11,46 @@ class CategorySeeder extends Seeder
     {
         $categories = [
             [
-                'name' => 'هود',
-                'slug' => 'hood',
-                'description' => 'انواع هود مدرن فرزین',
-                'image' => 'https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=1400&q=85',
+                'name' => 'لوازم دیجیتال',
+                'slug' => 'digital',
+                'description' => 'انواع محصولات و لوازم دیجیتال',
                 'sort_order' => 1,
-                'is_active' => true,
             ],
-
             [
-                'name' => 'سینک',
-                'slug' => 'sink',
-                'description' => 'انواع سینک مدرن فرزین',
-                'image' => 'https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=1400&q=85',
+                'name' => 'لوازم خانگی',
+                'slug' => 'home-appliances',
+                'description' => 'محصولات کاربردی برای خانه',
                 'sort_order' => 2,
-                'is_active' => true,
+            ],
+            [
+                'name' => 'پوشاک',
+                'slug' => 'fashion',
+                'description' => 'انواع لباس و پوشاک',
+                'sort_order' => 3,
+            ],
+            [
+                'name' => 'زیبایی و سلامت',
+                'slug' => 'beauty-health',
+                'description' => 'محصولات زیبایی و مراقبت شخصی',
+                'sort_order' => 4,
+            ],
+            [
+                'name' => 'اکسسوری',
+                'slug' => 'accessories',
+                'description' => 'اکسسوری و لوازم جانبی',
+                'sort_order' => 5,
             ],
         ];
 
         foreach ($categories as $category) {
             Category::updateOrCreate(
+                ['slug' => $category['slug']],
                 [
-                    'slug' => $category['slug'],
-                ],
-                $category
+                    'name' => $category['name'],
+                    'description' => $category['description'],
+                    'sort_order' => $category['sort_order'],
+                    'is_active' => true,
+                ]
             );
         }
     }

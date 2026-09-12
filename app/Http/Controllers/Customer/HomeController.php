@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Post;
 use App\Models\Product;
 use Illuminate\Contracts\View\View;
 
@@ -12,28 +13,41 @@ class HomeController extends Controller
     public function index(): View
     {
         $featuredProducts = Product::query()
-            ->active()
+            ->with(['primaryImage', 'category'])
+            ->where('is_active', true)
             ->where('is_featured', true)
-            ->with([
-                'category:id,name,slug',
-                'primaryImage:id,product_id,image,alt',
-            ])
-            ->latest('id')
-            ->limit(8)
+            ->latest()
+            ->take(8)
+            ->get();
+
+        $latestProducts = Product::query()
+            ->with(['primaryImage', 'category'])
+            ->where('is_active', true)
+            ->latest()
+            ->take(8)
             ->get();
 
         $categories = Category::query()
             ->where('is_active', true)
-            ->withCount([
-                'activeProducts',
-            ])
             ->orderBy('sort_order')
-            ->orderBy('id')
+            ->orderBy('name')
+            ->take(8)
             ->get();
 
-        return view('pages.home', [
-            'featuredProducts' => $featuredProducts,
-            'categories' => $categories,
-        ]);
+        $latestPosts = Post::query()
+            ->with('category')
+            ->where('status', 'published')
+            ->whereNotNull('published_at')
+            ->where('published_at', '<=', now())
+            ->latest('published_at')
+            ->take(3)
+            ->get();
+
+        return view('customer.home', compact(
+            'featuredProducts',
+            'latestProducts',
+            'categories',
+            'latestPosts'
+        ));
     }
 }

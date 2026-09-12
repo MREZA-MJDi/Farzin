@@ -1,207 +1,296 @@
-@import url("https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap");
+@import "tailwindcss";
 
-/* =========================================================
-   FARZIN
-   GLOBAL FOUNDATION
-   -----------------------------------------
-   Tokens
-   Reset
-   Typography
-   App Shell
-   Layout
-   Utilities
-   Accessibility
-   Responsive Foundation
-========================================================= */
+/*
+|--------------------------------------------------------------------------
+| Farzin Font
+|--------------------------------------------------------------------------
+*/
+
+@font-face {
+    font-family: "Vazirmatn";
+    src: url("../fonts/webfonts/Vazirmatn-Regular.woff2") format("woff2");
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Vazirmatn";
+    src: url("../fonts/webfonts/Vazirmatn-Medium.woff2") format("woff2");
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Vazirmatn";
+    src: url("../fonts/webfonts/Vazirmatn-SemiBold.woff2") format("woff2");
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Vazirmatn";
+    src: url("../fonts/webfonts/Vazirmatn-Bold.woff2") format("woff2");
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Vazirmatn";
+    src: url("../fonts/webfonts/Vazirmatn-ExtraBold.woff2") format("woff2");
+    font-style: normal;
+    font-weight: 800;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Vazirmatn";
+    src: url("../fonts/webfonts/Vazirmatn-Black.woff2") format("woff2");
+    font-style: normal;
+    font-weight: 900;
+    font-display: swap;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Farzin Design Tokens
+|--------------------------------------------------------------------------
+|
+| Brand:
+|   Navy = primary identity
+|   Red  = action / emphasis
+|   Neutral = supporting UI
+|
+|--------------------------------------------------------------------------
+*/
 
 :root {
-    /* =====================================================
-       BRAND
-    ===================================================== */
 
-    --primary: #191919;
-    --primary-hover: #252525;
-    --primary-soft: #f0eeeb;
+    /*
+    |--------------------------------------------------------------------------
+    | Brand Navy
+    |--------------------------------------------------------------------------
+    */
 
-    --accent: #b38a5a;
-    --accent-hover: #9d764a;
-    --accent-soft: #f5eee6;
+    --color-brand-50: #f3f5f9;
+    --color-brand-100: #e8ecf3;
+    --color-brand-200: #d3dae7;
+    --color-brand-300: #b4bfd3;
+    --color-brand-400: #8796b4;
+    --color-brand-500: #5f7095;
+    --color-brand-600: #405477;
+    --color-brand-700: #2b4167;
+    --color-brand-800: #1c3157;
+    --color-brand-900: #0d1b3d;
+    --color-brand-950: #071126;
 
-    /* =====================================================
-       SURFACES
-    ===================================================== */
 
-    --background: #f7f6f3;
-    --surface: #ffffff;
-    --surface-soft: #f1f0ed;
-    --surface-muted: #ebe8e2;
-    --surface-dark: #191919;
+    /*
+    |--------------------------------------------------------------------------
+    | Farzin Red
+    |--------------------------------------------------------------------------
+    */
 
-    /* =====================================================
-       TEXT
-    ===================================================== */
+    --color-accent-50: #fff3f4;
+    --color-accent-100: #ffe3e6;
+    --color-accent-200: #ffcbd0;
+    --color-accent-300: #f9a6ae;
+    --color-accent-400: #f47884;
+    --color-accent-500: #ed4b59;
+    --color-accent-600: #e21f2f;
+    --color-accent-700: #c91929;
+    --color-accent-800: #a91725;
+    --color-accent-900: #8f1722;
+    --color-accent-950: #500910;
 
-    --text: #171717;
-    --text-secondary: #55524e;
-    --text-muted: #7e7a74;
-    --text-light: #aaa59d;
-    --text-white: #ffffff;
 
-    /* =====================================================
-       BORDERS
-    ===================================================== */
+    /*
+    |--------------------------------------------------------------------------
+    | Neutral
+    |--------------------------------------------------------------------------
+    */
 
-    --border: #e5e1db;
-    --border-light: #eeeae4;
-    --border-dark: #d2cdc5;
-    --border-strong: #c4beb4;
+    --color-neutral-0: #ffffff;
 
-    /* =====================================================
-       STATUS
-    ===================================================== */
+    --color-neutral-50: #f7f8fa;
+    --color-neutral-100: #f0f2f5;
+    --color-neutral-200: #e3e6eb;
+    --color-neutral-300: #d2d7df;
+    --color-neutral-400: #aab1bd;
+    --color-neutral-500: #89919d;
+    --color-neutral-600: #697280;
+    --color-neutral-700: #4d5665;
+    --color-neutral-800: #323b4a;
+    --color-neutral-900: #1c2432;
+    --color-neutral-950: #101722;
 
-    --success: #198754;
-    --success-soft: #eaf7f0;
 
-    --danger: #dc3545;
-    --danger-soft: #fff0f1;
+    /*
+    |--------------------------------------------------------------------------
+    | Semantic Colors
+    |--------------------------------------------------------------------------
+    */
 
-    --warning: #d89a24;
-    --warning-soft: #fff7e8;
+    --color-success-50: #ecfdf5;
+    --color-success-100: #d1fae5;
+    --color-success-600: #059669;
+    --color-success-700: #047857;
 
-    --info: #3478c9;
-    --info-soft: #edf5ff;
+    --color-warning-50: #fffbeb;
+    --color-warning-100: #fef3c7;
+    --color-warning-600: #d97706;
+    --color-warning-700: #b45309;
 
-    /* =====================================================
-       TYPOGRAPHY
-    ===================================================== */
+    --color-danger-50: #fff1f2;
+    --color-danger-100: #ffe4e6;
+    --color-danger-600: #e11d48;
+    --color-danger-700: #be123c;
 
-    --font-family:
+    --color-info-50: #eff6ff;
+    --color-info-100: #dbeafe;
+    --color-info-600: #2563eb;
+    --color-info-700: #1d4ed8;
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Text
+    |--------------------------------------------------------------------------
+    */
+
+    --color-text-primary: #101722;
+    --color-text-secondary: #4d5665;
+    --color-text-muted: #697280;
+    --color-text-soft: #aab1bd;
+    --color-text-inverse: #ffffff;
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Surfaces
+    |--------------------------------------------------------------------------
+    */
+
+    --color-surface: #ffffff;
+    --color-surface-soft: #fbfcfd;
+    --color-surface-muted: #f7f8fa;
+    --color-surface-dark: #0d1b3d;
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Borders
+    |--------------------------------------------------------------------------
+    */
+
+    --color-border: #e3e6eb;
+    --color-border-strong: #d2d7df;
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Shadows
+    |--------------------------------------------------------------------------
+    */
+
+    --shadow-xs:
+        0 1px 2px rgb(16 23 34 / 0.04);
+
+    --shadow-sm:
+        0 2px 8px rgb(16 23 34 / 0.05),
+        0 1px 2px rgb(16 23 34 / 0.03);
+
+    --shadow-md:
+        0 10px 30px rgb(16 23 34 / 0.07),
+        0 2px 8px rgb(16 23 34 / 0.04);
+
+    --shadow-lg:
+        0 20px 50px rgb(16 23 34 / 0.10),
+        0 8px 20px rgb(16 23px 34 / 0.05);
+
+    --shadow-xl:
+        0 30px 80px rgb(16 23 34 / 0.13),
+        0 10px 30px rgb(16 23 34 / 0.06);
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Motion
+    |--------------------------------------------------------------------------
+    */
+
+    --transition-fast: 150ms ease;
+    --transition-base: 220ms ease;
+    --transition-slow: 350ms ease;
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Layout
+    |--------------------------------------------------------------------------
+    */
+
+    --container-width: 80rem;
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Radius
+    |--------------------------------------------------------------------------
+    */
+
+    --radius-sm: 0.75rem;
+    --radius-md: 1rem;
+    --radius-lg: 1.5rem;
+    --radius-xl: 2rem;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Backward Compatibility
+|--------------------------------------------------------------------------
+|
+| Existing Blade files may still use:
+| --color-brand-*
+|
+| Those variables are intentionally mapped to the new Farzin navy system.
+|
+|--------------------------------------------------------------------------
+*/
+
+
+/*
+|--------------------------------------------------------------------------
+| Base
+|--------------------------------------------------------------------------
+*/
+
+html {
+    scroll-behavior: smooth;
+    text-rendering: optimizeLegibility;
+
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    min-height: 100vh;
+    margin: 0;
+
+    background: var(--color-neutral-50);
+    color: var(--color-text-primary);
+
+    font-family:
         "Vazirmatn",
         Tahoma,
         Arial,
         sans-serif;
-
-    --font-xs: 12px;
-    --font-sm: 14px;
-    --font-md: 16px;
-    --font-lg: 18px;
-    --font-xl: 20px;
-    --font-2xl: 24px;
-    --font-3xl: 32px;
-    --font-4xl: 40px;
-    --font-5xl: 48px;
-    --font-6xl: 60px;
-
-    --weight-regular: 400;
-    --weight-medium: 500;
-    --weight-semibold: 600;
-    --weight-bold: 700;
-    --weight-extrabold: 800;
-
-    --leading-tight: 1.25;
-    --leading-snug: 1.4;
-    --leading-normal: 1.75;
-    --leading-relaxed: 2;
-
-    /* =====================================================
-       SPACING
-    ===================================================== */
-
-    --space-1: 4px;
-    --space-2: 8px;
-    --space-3: 12px;
-    --space-4: 16px;
-    --space-5: 20px;
-    --space-6: 24px;
-    --space-7: 32px;
-    --space-8: 40px;
-    --space-9: 48px;
-    --space-10: 64px;
-    --space-11: 80px;
-    --space-12: 96px;
-    --space-13: 120px;
-
-    /* =====================================================
-       LAYOUT
-    ===================================================== */
-
-    --content-narrow: 760px;
-    --content-readable: 900px;
-    --content-main: 1280px;
-    --content-wide: 1440px;
-
-    --layout-gutter: 24px;
-
-    --section-space: 96px;
-    --section-space-sm: 72px;
-    --section-space-lg: 120px;
-
-    --section-gap: 40px;
-    --grid-gap: 24px;
-
-    /* =====================================================
-       RADIUS
-    ===================================================== */
-
-    --radius-xs: 6px;
-    --radius-sm: 10px;
-    --radius-md: 14px;
-    --radius-lg: 18px;
-    --radius-xl: 24px;
-    --radius-2xl: 32px;
-    --radius-full: 999px;
-
-    /* =====================================================
-       SHADOW
-    ===================================================== */
-
-    --shadow-xs:
-        0 2px 8px rgba(0, 0, 0, 0.035);
-
-    --shadow-sm:
-        0 6px 18px rgba(0, 0, 0, 0.05);
-
-    --shadow-md:
-        0 12px 32px rgba(0, 0, 0, 0.07);
-
-    --shadow-lg:
-        0 24px 60px rgba(0, 0, 0, 0.10);
-
-    /* =====================================================
-       HEADER
-    ===================================================== */
-
-    --header-height: 76px;
-    --header-mobile-height: 64px;
-
-    /* =====================================================
-       MOTION
-    ===================================================== */
-
-    --ease-standard: cubic-bezier(0.2, 0.8, 0.2, 1);
-    --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
-
-    --transition-fast: 160ms var(--ease-standard);
-    --transition-base: 260ms var(--ease-standard);
-    --transition-slow: 420ms var(--ease-standard);
-
-    /* =====================================================
-       Z-INDEX
-    ===================================================== */
-
-    --z-base: 1;
-    --z-dropdown: 100;
-    --z-sticky: 200;
-    --z-overlay: 300;
-    --z-modal: 400;
-    --z-toast: 500;
 }
-
-
-/* =========================================================
-   RESET
-========================================================= */
 
 *,
 *::before,
@@ -209,83 +298,27 @@
     box-sizing: border-box;
 }
 
-html {
-    width: 100%;
-    min-height: 100%;
-
-    direction: rtl;
-    font-size: 16px;
-
-    scroll-behavior: smooth;
-
-    -webkit-text-size-adjust: 100%;
-}
-
-body {
-    width: 100%;
-    min-height: 100vh;
-
-    margin: 0;
-
-    background: var(--background);
-    color: var(--text);
-
-    font-family: var(--font-family);
-    font-size: var(--font-md);
-    font-weight: var(--weight-regular);
-
-    line-height: var(--leading-normal);
-
-    text-rendering: optimizeLegibility;
-
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
-
-body,
-button,
-input,
-textarea,
-select {
-    -webkit-tap-highlight-color: transparent;
-}
-
 img,
-picture,
+svg,
 video,
-canvas,
-svg {
-    display: block;
+canvas {
     max-width: 100%;
 }
 
-img,
-video {
-    height: auto;
+img {
+    display: block;
 }
 
 button,
 input,
 textarea,
 select {
-    margin: 0;
     font: inherit;
 }
 
-button {
-    border: 0;
-    background: transparent;
-    cursor: pointer;
-}
-
-input,
-textarea,
-select {
-    outline: none;
-}
-
-textarea {
-    resize: vertical;
+button,
+a {
+    -webkit-tap-highlight-color: transparent;
 }
 
 a {
@@ -293,941 +326,929 @@ a {
     text-decoration: none;
 }
 
-ul,
-ol {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-}
-
-figure,
-blockquote {
-    margin: 0;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-::selection {
-    background: var(--primary);
-    color: var(--text-white);
-}
-
-
-/* =========================================================
-   TYPOGRAPHY
-========================================================= */
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    margin: 0;
-
-    color: var(--text);
-
-    font-weight: var(--weight-bold);
-    line-height: var(--leading-tight);
-
-    text-wrap: balance;
-}
-
-h1 {
-    font-size: clamp(
-        36px,
-        4.5vw,
-        var(--font-6xl)
-    );
-}
-
-h2 {
-    font-size: clamp(
-        28px,
-        3.2vw,
-        var(--font-5xl)
-    );
-}
-
-h3 {
-    font-size: clamp(
-        22px,
-        2.2vw,
-        var(--font-3xl)
-    );
-}
-
-h4 {
-    font-size: var(--font-2xl);
-}
-
-h5 {
-    font-size: var(--font-xl);
-}
-
-h6 {
-    font-size: var(--font-lg);
-}
-
-p {
-    margin: 0;
-    color: var(--text-secondary);
-}
-
-small {
-    font-size: var(--font-sm);
-}
-
-
-/* =========================================================
-   APP SHELL
-========================================================= */
-
-#app,
-.app,
-.app-main {
-    width: 100%;
-}
-
-#app,
-.app {
-    min-height: 100vh;
-}
-
-.app {
-    display: flex;
-    flex-direction: column;
-}
-
-.app-main {
-    min-width: 0;
-    flex: 1;
-}
-
-
-/* =========================================================
-   CONTAINER
-========================================================= */
-
-.container {
-    width: min(
-        calc(100% - (var(--layout-gutter) * 2)),
-        var(--content-main)
-    );
-
-    margin-inline: auto;
-}
-
-.container--wide {
-    width: min(
-        calc(100% - (var(--layout-gutter) * 2)),
-        var(--content-wide)
-    );
-
-    margin-inline: auto;
-}
-
-.container--narrow {
-    width: min(
-        calc(100% - (var(--layout-gutter) * 2)),
-        var(--content-readable)
-    );
-
-    margin-inline: auto;
-}
-
-.container--readable {
-    width: min(
-        calc(100% - (var(--layout-gutter) * 2)),
-        var(--content-narrow)
-    );
-
-    margin-inline: auto;
-}
-
-
-/* =========================================================
-   SECTION SYSTEM
-========================================================= */
-
-.section {
-    width: 100%;
-    padding-block: var(--section-space);
-}
-
-.section--sm {
-    padding-block: var(--section-space-sm);
-}
-
-.section--lg {
-    padding-block: var(--section-space-lg);
-}
-
-.section--flush {
-    padding-block: 0;
-}
-
-.section--top-none {
-    padding-top: 0;
-}
-
-.section--bottom-none {
-    padding-bottom: 0;
-}
-
-.section__inner {
-    width: 100%;
-
-    display: flex;
-    flex-direction: column;
-
-    gap: var(--section-gap);
-}
-
-.section-content {
-    width: 100%;
-}
-
-
-/* =========================================================
-   CONTENT
-========================================================= */
-
-.content {
-    width: 100%;
-}
-
-.content--narrow {
-    max-width: var(--content-narrow);
-}
-
-.content--readable {
-    max-width: var(--content-readable);
-}
-
-.content--center {
-    margin-inline: auto;
-}
-
-
-/* =========================================================
-   STACK
-========================================================= */
-
-.stack {
-    display: flex;
-    flex-direction: column;
-}
-
-.stack--xs {
-    gap: var(--space-2);
-}
-
-.stack--sm {
-    gap: var(--space-4);
-}
-
-.stack--md {
-    gap: var(--space-6);
-}
-
-.stack--lg {
-    gap: var(--space-8);
-}
-
-.stack--xl {
-    gap: var(--space-10);
-}
-
-
-/* =========================================================
-   INLINE
-========================================================= */
-
-.inline {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-}
-
-.inline--sm {
-    gap: var(--space-3);
-}
-
-.inline--md {
-    gap: var(--space-5);
-}
-
-.inline--lg {
-    gap: var(--space-7);
-}
-
-
-/* =========================================================
-   FLEX
-========================================================= */
-
-.flex {
-    display: flex;
-}
-
-.inline-flex {
-    display: inline-flex;
-}
-
-.flex-column {
-    flex-direction: column;
-}
-
-.flex-row {
-    flex-direction: row;
-}
-
-.flex-wrap {
-    flex-wrap: wrap;
-}
-
-.flex-nowrap {
-    flex-wrap: nowrap;
-}
-
-.items-start {
-    align-items: flex-start;
-}
-
-.items-center {
-    align-items: center;
-}
-
-.items-end {
-    align-items: flex-end;
-}
-
-.items-stretch {
-    align-items: stretch;
-}
-
-.justify-start {
-    justify-content: flex-start;
-}
-
-.justify-center {
-    justify-content: center;
-}
-
-.justify-end {
-    justify-content: flex-end;
-}
-
-.justify-between {
-    justify-content: space-between;
-}
-
-
-/* =========================================================
-   GRID
-========================================================= */
-
-.grid {
-    display: grid;
-}
-
-.grid-cols-1 {
-    grid-template-columns: minmax(0, 1fr);
-}
-
-.grid-cols-2 {
-    grid-template-columns:
-        repeat(2, minmax(0, 1fr));
-}
-
-.grid-cols-3 {
-    grid-template-columns:
-        repeat(3, minmax(0, 1fr));
-}
-
-.grid-cols-4 {
-    grid-template-columns:
-        repeat(4, minmax(0, 1fr));
-}
-
-.grid-auto-fit {
-    grid-template-columns:
-        repeat(auto-fit, minmax(240px, 1fr));
-}
-
-.grid-auto-fill {
-    grid-template-columns:
-        repeat(auto-fill, minmax(240px, 1fr));
-}
-
-
-/* =========================================================
-   GAP
-========================================================= */
-
-.gap-1 { gap: var(--space-1); }
-.gap-2 { gap: var(--space-2); }
-.gap-3 { gap: var(--space-3); }
-.gap-4 { gap: var(--space-4); }
-.gap-5 { gap: var(--space-5); }
-.gap-6 { gap: var(--space-6); }
-.gap-7 { gap: var(--space-7); }
-.gap-8 { gap: var(--space-8); }
-.gap-9 { gap: var(--space-9); }
-
-
-/* =========================================================
-   WIDTH / HEIGHT
-========================================================= */
-
-.w-full {
-    width: 100%;
-}
-
-.w-fit {
-    width: fit-content;
-}
-
-.max-w-full {
-    max-width: 100%;
-}
-
-.h-full {
-    height: 100%;
-}
-
-.min-h-screen {
-    min-height: 100vh;
-}
-
-
-/* =========================================================
-   MARGIN
-========================================================= */
-
-.mx-auto {
-    margin-inline: auto;
-}
-
-.mt-auto {
-    margin-top: auto;
-}
-
-.mb-auto {
-    margin-bottom: auto;
-}
-
-
-/* =========================================================
-   TEXT
-========================================================= */
-
-.text-start {
-    text-align: start;
-}
-
-.text-center {
-    text-align: center;
-}
-
-.text-end {
-    text-align: end;
-}
-
-.text-primary {
-    color: var(--text);
-}
-
-.text-secondary {
-    color: var(--text-secondary);
-}
-
-.text-muted {
-    color: var(--text-muted);
-}
-
-.text-light {
-    color: var(--text-light);
-}
-
-.text-accent {
-    color: var(--accent);
-}
-
-.text-success {
-    color: var(--success);
-}
-
-.text-danger {
-    color: var(--danger);
-}
-
-.text-warning {
-    color: var(--warning);
-}
-
-.text-info {
-    color: var(--info);
-}
-
-.text-white {
-    color: var(--text-white);
-}
-
-
-/* =========================================================
-   FONT WEIGHT
-========================================================= */
-
-.font-regular {
-    font-weight: var(--weight-regular);
-}
-
-.font-medium {
-    font-weight: var(--weight-medium);
-}
-
-.font-semibold {
-    font-weight: var(--weight-semibold);
-}
-
-.font-bold {
-    font-weight: var(--weight-bold);
-}
-
-.font-extrabold {
-    font-weight: var(--weight-extrabold);
-}
-
-
-/* =========================================================
-   FONT SIZE
-========================================================= */
-
-.text-xs { font-size: var(--font-xs); }
-.text-sm { font-size: var(--font-sm); }
-.text-md { font-size: var(--font-md); }
-.text-lg { font-size: var(--font-lg); }
-.text-xl { font-size: var(--font-xl); }
-.text-2xl { font-size: var(--font-2xl); }
-.text-3xl { font-size: var(--font-3xl); }
-.text-4xl { font-size: var(--font-4xl); }
-.text-5xl { font-size: var(--font-5xl); }
-.text-6xl { font-size: var(--font-6xl); }
-
-
-/* =========================================================
-   BACKGROUND
-========================================================= */
-
-.bg-background {
-    background: var(--background);
-}
-
-.bg-surface {
-    background: var(--surface);
-}
-
-.bg-surface-soft {
-    background: var(--surface-soft);
-}
-
-.bg-surface-dark {
-    background: var(--surface-dark);
-}
-
-.bg-primary {
-    background: var(--primary);
-}
-
-.bg-accent {
-    background: var(--accent);
-}
-
-.bg-transparent {
-    background: transparent;
-}
-
-
-/* =========================================================
-   BORDER
-========================================================= */
-
-.border {
-    border: 1px solid var(--border);
-}
-
-.border-light {
-    border-color: var(--border-light);
-}
-
-.border-dark {
-    border-color: var(--border-dark);
-}
-
-.border-strong {
-    border-color: var(--border-strong);
-}
-
-.border-none {
-    border: 0;
-}
-
-
-/* =========================================================
-   RADIUS
-========================================================= */
-
-.rounded-xs {
-    border-radius: var(--radius-xs);
-}
-
-.rounded-sm {
-    border-radius: var(--radius-sm);
-}
-
-.rounded-md {
-    border-radius: var(--radius-md);
-}
-
-.rounded-lg {
-    border-radius: var(--radius-lg);
-}
-
-.rounded-xl {
-    border-radius: var(--radius-xl);
-}
-
-.rounded-2xl {
-    border-radius: var(--radius-2xl);
-}
-
-.rounded-full {
-    border-radius: var(--radius-full);
-}
-
-
-/* =========================================================
-   SHADOW
-========================================================= */
-
-.shadow-none {
-    box-shadow: none;
-}
-
-.shadow-xs {
-    box-shadow: var(--shadow-xs);
-}
-
-.shadow-sm {
-    box-shadow: var(--shadow-sm);
-}
-
-.shadow-md {
-    box-shadow: var(--shadow-md);
-}
-
-.shadow-lg {
-    box-shadow: var(--shadow-lg);
-}
-
-
-/* =========================================================
-   POSITION
-========================================================= */
-
-.relative {
-    position: relative;
-}
-
-.absolute {
-    position: absolute;
-}
-
-.fixed {
-    position: fixed;
-}
-
-.sticky {
-    position: sticky;
-}
-
-
-/* =========================================================
-   OVERFLOW
-========================================================= */
-
-.overflow-hidden {
-    overflow: hidden;
-}
-
-.overflow-auto {
-    overflow: auto;
-}
-
-.overflow-x-auto {
-    overflow-x: auto;
-    scrollbar-width: thin;
-}
-
-.overflow-y-auto {
-    overflow-y: auto;
-    scrollbar-width: thin;
-}
-
-
-/* =========================================================
-   VISIBILITY
-========================================================= */
-
-.hidden {
-    display: none !important;
-}
-
-.visible {
-    visibility: visible;
-}
-
-.invisible {
-    visibility: hidden;
-}
-
-
-/* =========================================================
-   OBJECT
-========================================================= */
-
-.object-cover {
-    object-fit: cover;
-}
-
-.object-contain {
-    object-fit: contain;
-}
-
-
-/* =========================================================
-   ASPECT RATIO
-========================================================= */
-
-.aspect-square {
-    aspect-ratio: 1;
-}
-
-.aspect-video {
-    aspect-ratio: 16 / 9;
-}
-
-.aspect-4-3 {
-    aspect-ratio: 4 / 3;
-}
-
-.aspect-3-2 {
-    aspect-ratio: 3 / 2;
-}
-
-
-/* =========================================================
-   INTERACTION
-========================================================= */
-
-.pointer {
+button {
     cursor: pointer;
 }
 
-.select-none {
-    user-select: none;
+button:disabled {
+    cursor: not-allowed;
 }
 
 
-/* =========================================================
-   TEXT OVERFLOW
-========================================================= */
+/*
+|--------------------------------------------------------------------------
+| Alpine
+|--------------------------------------------------------------------------
+*/
 
-.truncate {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-.line-clamp-2,
-.line-clamp-3 {
-    display: -webkit-box;
-
-    overflow: hidden;
-
-    -webkit-box-orient: vertical;
-}
-
-.line-clamp-2 {
-    -webkit-line-clamp: 2;
-}
-
-.line-clamp-3 {
-    -webkit-line-clamp: 3;
+[x-cloak] {
+    display: none !important;
 }
 
 
-/* =========================================================
-   ACCESSIBILITY
-========================================================= */
+/*
+|--------------------------------------------------------------------------
+| Selection
+|--------------------------------------------------------------------------
+*/
 
-.sr-only {
-    position: absolute;
-
-    width: 1px;
-    height: 1px;
-
-    padding: 0;
-    margin: -1px;
-
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-
-    white-space: nowrap;
-
-    border: 0;
+::selection {
+    background: rgb(226 31 47 / 0.16);
+    color: var(--color-brand-950);
 }
 
 
-/* =========================================================
-   FOCUS
-========================================================= */
+/*
+|--------------------------------------------------------------------------
+| Focus
+|--------------------------------------------------------------------------
+*/
 
 :focus-visible {
-    outline: 2px solid var(--accent);
+    outline: 2px solid var(--color-accent-600);
     outline-offset: 3px;
 }
 
 
-/* =========================================================
-   DIVIDERS
-========================================================= */
+/*
+|--------------------------------------------------------------------------
+| Scrollbar
+|--------------------------------------------------------------------------
+*/
 
-.divider {
+* {
+    scrollbar-width: thin;
+    scrollbar-color:
+        var(--color-neutral-300)
+        transparent;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--color-neutral-300);
+    border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--color-neutral-400);
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Forms
+|--------------------------------------------------------------------------
+*/
+
+input,
+textarea,
+select {
+    color: var(--color-text-primary);
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: var(--color-text-soft);
+    opacity: 1;
+}
+
+textarea {
+    min-height: 120px;
+}
+
+input[type="number"] {
+    appearance: textfield;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    margin: 0;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+    accent-color: var(--color-accent-600);
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Shared Cards
+|--------------------------------------------------------------------------
+*/
+
+.farzin-card {
+    border:
+        1px solid var(--color-border);
+
+    background:
+        var(--color-surface);
+
+    border-radius:
+        var(--radius-xl);
+
+    box-shadow:
+        var(--shadow-xs);
+}
+
+.farzin-card-hover {
+    transition:
+        transform var(--transition-base),
+        box-shadow var(--transition-base),
+        border-color var(--transition-base);
+}
+
+.farzin-card-hover:hover {
+    border-color:
+        var(--color-border-strong);
+
+    box-shadow:
+        var(--shadow-md);
+
+    transform:
+        translateY(-2px);
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Glass
+|--------------------------------------------------------------------------
+*/
+
+.farzin-glass {
+    background:
+        rgb(255 255 255 / 0.78);
+
+    border:
+        1px solid rgb(255 255 255 / 0.62);
+
+    backdrop-filter:
+        blur(16px);
+
+    -webkit-backdrop-filter:
+        blur(16px);
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Brand Gradient
+|--------------------------------------------------------------------------
+*/
+
+.farzin-gradient {
+    background:
+        radial-gradient(
+            circle at 82% 12%,
+            rgb(226 31 47 / 0.17),
+            transparent 34%
+        ),
+        radial-gradient(
+            circle at 18% 88%,
+            rgb(64 84 119 / 0.18),
+            transparent 38%
+        ),
+        linear-gradient(
+            135deg,
+            var(--color-brand-950) 0%,
+            var(--color-brand-900) 55%,
+            #14284f 100%
+        );
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Navy Hero
+|--------------------------------------------------------------------------
+*/
+
+.farzin-hero {
+    position: relative;
+    overflow: hidden;
+
+    color:
+        var(--color-text-inverse);
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--color-brand-950),
+            var(--color-brand-900)
+        );
+}
+
+.farzin-hero::before {
+    content: "";
+
+    position: absolute;
+
+    width: 28rem;
+    height: 28rem;
+
+    right: -10rem;
+    top: -12rem;
+
+    border-radius: 999px;
+
+    background:
+        rgb(226 31 47 / 0.13);
+
+    filter:
+        blur(70px);
+}
+
+.farzin-hero::after {
+    content: "";
+
+    position: absolute;
+
+    width: 24rem;
+    height: 24rem;
+
+    left: -10rem;
+    bottom: -10rem;
+
+    border-radius: 999px;
+
+    background:
+        rgb(255 255 255 / 0.05);
+
+    filter:
+        blur(65px);
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Red Accent
+|--------------------------------------------------------------------------
+*/
+
+.farzin-accent {
+    color:
+        var(--color-accent-600);
+}
+
+.farzin-accent-bg {
+    background:
+        var(--color-accent-600);
+    color:
+        var(--color-text-inverse);
+}
+
+.farzin-accent-bg:hover {
+    background:
+        var(--color-accent-700);
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Shared Buttons
+|--------------------------------------------------------------------------
+*/
+
+.farzin-btn {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+
+    min-height: 2.75rem;
+
+    border-radius:
+        var(--radius-md);
+
+    padding-inline:
+        1rem;
+
+    font-weight:
+        800;
+
+    transition:
+        transform var(--transition-fast),
+        background-color var(--transition-fast),
+        border-color var(--transition-fast),
+        color var(--transition-fast),
+        box-shadow var(--transition-fast);
+}
+
+.farzin-btn:hover {
+    transform:
+        translateY(-1px);
+}
+
+.farzin-btn:active {
+    transform:
+        translateY(0);
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Primary Button
+|--------------------------------------------------------------------------
+*/
+
+.farzin-btn-primary {
+    background:
+        var(--color-brand-900);
+
+    color:
+        #ffffff;
+
+    box-shadow:
+        0 8px 20px rgb(13 27 61 / 0.15);
+}
+
+.farzin-btn-primary:hover {
+    background:
+        var(--color-brand-950);
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Red CTA Button
+|--------------------------------------------------------------------------
+*/
+
+.farzin-btn-accent {
+    background:
+        var(--color-accent-600);
+
+    color:
+        #ffffff;
+
+    box-shadow:
+        0 8px 20px rgb(226 31 47 / 0.15);
+}
+
+.farzin-btn-accent:hover {
+    background:
+        var(--color-accent-700);
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Outline Button
+|--------------------------------------------------------------------------
+*/
+
+.farzin-btn-outline {
+    border:
+        1px solid var(--color-border);
+
+    background:
+        var(--color-surface);
+
+    color:
+        var(--color-text-secondary);
+}
+
+.farzin-btn-outline:hover {
+    border-color:
+        var(--color-brand-300);
+
+    background:
+        var(--color-brand-50);
+
+    color:
+        var(--color-brand-900);
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Dark Outline Button
+|--------------------------------------------------------------------------
+*/
+
+.farzin-btn-dark-outline {
+    border:
+        1px solid rgb(255 255 255 / 0.14);
+
+    background:
+        rgb(255 255 255 / 0.05);
+
+    color:
+        #ffffff;
+}
+
+.farzin-btn-dark-outline:hover {
+    background:
+        rgb(255 255 255 / 0.10);
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Container
+|--------------------------------------------------------------------------
+*/
+
+.farzin-container {
+    width:
+        min(
+            calc(100% - 2rem),
+            var(--container-width)
+        );
+
+    margin-inline:
+        auto;
+}
+
+@media (min-width: 640px) {
+    .farzin-container {
+        width:
+            min(
+                calc(100% - 3rem),
+                var(--container-width)
+            );
+    }
+}
+
+@media (min-width: 1024px) {
+    .farzin-container {
+        width:
+            min(
+                calc(100% - 4rem),
+                var(--container-width)
+            );
+    }
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Admin
+|--------------------------------------------------------------------------
+*/
+
+.admin-card {
+    border:
+        1px solid var(--color-border);
+
+    background:
+        var(--color-surface);
+
+    border-radius:
+        var(--radius-lg);
+
+    box-shadow:
+        var(--shadow-xs);
+}
+
+.admin-section-title {
+    color:
+        var(--color-text-primary);
+
+    font-weight:
+        900;
+}
+
+.admin-muted {
+    color:
+        var(--color-text-muted);
+}
+
+.admin-table-wrap {
+    overflow-x: auto;
+
+    border:
+        1px solid var(--color-border);
+
+    border-radius:
+        var(--radius-lg);
+
+    background:
+        var(--color-surface);
+}
+
+.admin-table {
     width: 100%;
-    height: 1px;
 
-    background: var(--border);
+    border-collapse:
+        collapse;
 }
 
-.divider--dark {
-    background: var(--border-dark);
+.admin-table th {
+    background:
+        var(--color-neutral-50);
+
+    color:
+        var(--color-text-secondary);
+
+    font-size:
+        0.75rem;
+
+    font-weight:
+        800;
+
+    white-space:
+        nowrap;
 }
 
+.admin-table td,
+.admin-table th {
+    padding:
+        0.875rem 1rem;
 
-/* =========================================================
-   RESPONSIVE FOUNDATION
-========================================================= */
+    border-bottom:
+        1px solid var(--color-border);
 
-@media (max-width: 1200px) {
-    :root {
-        --layout-gutter: 20px;
-
-        --section-space: 88px;
-        --section-space-sm: 64px;
-        --section-space-lg: 104px;
-
-        --section-gap: 36px;
-        --grid-gap: 20px;
-    }
-
-    .grid-cols-4 {
-        grid-template-columns:
-            repeat(3, minmax(0, 1fr));
-    }
+    text-align:
+        right;
 }
 
+.admin-table tbody tr {
+    transition:
+        background-color var(--transition-fast);
+}
 
-@media (max-width: 992px) {
-    :root {
-        --layout-gutter: 18px;
-
-        --section-space: 80px;
-        --section-space-sm: 56px;
-        --section-space-lg: 96px;
-
-        --section-gap: 32px;
-        --grid-gap: 20px;
-    }
-
-    .grid-cols-4,
-    .grid-cols-3 {
-        grid-template-columns:
-            repeat(2, minmax(0, 1fr));
-    }
+.admin-table tbody tr:hover {
+    background:
+        var(--color-neutral-50);
 }
 
 
-@media (max-width: 768px) {
-    :root {
-        --layout-gutter: 16px;
+/*
+|--------------------------------------------------------------------------
+| Pagination
+|--------------------------------------------------------------------------
+*/
 
-        --header-height:
-            var(--header-mobile-height);
+.pagination {
+    display: flex;
 
-        --section-space: 64px;
-        --section-space-sm: 48px;
-        --section-space-lg: 80px;
+    flex-wrap: wrap;
 
-        --section-gap: 28px;
-        --grid-gap: 16px;
-    }
+    align-items: center;
 
-    .grid-cols-4,
-    .grid-cols-3 {
-        grid-template-columns:
-            repeat(2, minmax(0, 1fr));
-    }
+    gap: 0.375rem;
+}
+
+.pagination a,
+.pagination span {
+    display: inline-flex;
+
+    min-width:
+        2.5rem;
+
+    height:
+        2.5rem;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border:
+        1px solid var(--color-border);
+
+    border-radius:
+        0.75rem;
+
+    background:
+        var(--color-surface);
+
+    padding-inline:
+        0.75rem;
+
+    font-size:
+        0.8125rem;
+
+    font-weight:
+        700;
+
+    color:
+        var(--color-text-secondary);
+
+    transition:
+        color var(--transition-fast),
+        background-color var(--transition-fast),
+        border-color var(--transition-fast);
+}
+
+.pagination a:hover {
+    border-color:
+        var(--color-brand-300);
+
+    background:
+        var(--color-brand-50);
+
+    color:
+        var(--color-brand-900);
 }
 
 
-@media (max-width: 576px) {
-    :root {
-        --layout-gutter: 14px;
+/*
+|--------------------------------------------------------------------------
+| Status
+|--------------------------------------------------------------------------
+*/
 
-        --space-7: 28px;
-        --space-8: 32px;
-        --space-9: 36px;
-        --space-10: 40px;
-        --space-11: 48px;
-        --space-12: 56px;
-        --space-13: 72px;
+.farzin-status {
+    display: inline-flex;
 
-        --section-space: 52px;
-        --section-space-sm: 40px;
-        --section-space-lg: 68px;
+    align-items: center;
+    justify-content: center;
 
-        --section-gap: 24px;
-        --grid-gap: 14px;
-    }
+    border-radius:
+        999px;
 
-    .grid-cols-2,
-    .grid-cols-3,
-    .grid-cols-4 {
-        grid-template-columns: 1fr;
-    }
+    padding:
+        0.375rem 0.75rem;
+
+    font-size:
+        0.6875rem;
+
+    font-weight:
+        800;
+
+    line-height:
+        1;
+}
+
+.farzin-status-success {
+    background:
+        var(--color-success-50);
+
+    color:
+        var(--color-success-700);
+}
+
+.farzin-status-warning {
+    background:
+        var(--color-warning-50);
+
+    color:
+        var(--color-warning-700);
+}
+
+.farzin-status-danger {
+    background:
+        var(--color-danger-50);
+
+    color:
+        var(--color-danger-700);
+}
+
+.farzin-status-info {
+    background:
+        var(--color-info-50);
+
+    color:
+        var(--color-info-700);
+}
+
+.farzin-status-brand {
+    background:
+        var(--color-brand-100);
+
+    color:
+        var(--color-brand-900);
 }
 
 
-/* =========================================================
-   REDUCED MOTION
-========================================================= */
+/*
+|--------------------------------------------------------------------------
+| Content
+|--------------------------------------------------------------------------
+*/
+
+.prose-farzin {
+    color:
+        var(--color-text-secondary);
+
+    line-height:
+        2;
+}
+
+.prose-farzin h1,
+.prose-farzin h2,
+.prose-farzin h3,
+.prose-farzin h4 {
+    color:
+        var(--color-text-primary);
+
+    font-weight:
+        900;
+
+    line-height:
+        1.5;
+}
+
+.prose-farzin p {
+    margin:
+        1rem 0;
+}
+
+.prose-farzin a {
+    color:
+        var(--color-brand-700);
+
+    font-weight:
+        700;
+
+    transition:
+        color var(--transition-fast);
+}
+
+.prose-farzin a:hover {
+    color:
+        var(--color-accent-600);
+}
+
+.prose-farzin ul,
+.prose-farzin ol {
+    margin:
+        1rem 0;
+
+    padding-right:
+        1.5rem;
+}
+
+.prose-farzin img {
+    width:
+        100%;
+
+    margin:
+        2rem 0;
+
+    border-radius:
+        var(--radius-lg);
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Utilities
+|--------------------------------------------------------------------------
+*/
+
+.text-balance {
+    text-wrap:
+        balance;
+}
+
+.text-pretty {
+    text-wrap:
+        pretty;
+}
+
+.overflow-wrap-anywhere {
+    overflow-wrap:
+        anywhere;
+}
+
+.no-scrollbar {
+    -ms-overflow-style:
+        none;
+
+    scrollbar-width:
+        none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+    display:
+        none;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Motion
+|--------------------------------------------------------------------------
+*/
+
+@keyframes farzin-fade-up {
+
+    from {
+        opacity:
+            0;
+
+        transform:
+            translateY(12px);
+    }
+
+    to {
+        opacity:
+            1;
+
+        transform:
+            translateY(0);
+    }
+}
+
+@keyframes farzin-fade-in {
+
+    from {
+        opacity:
+            0;
+    }
+
+    to {
+        opacity:
+            1;
+    }
+}
+
+@keyframes farzin-pulse-soft {
+
+    0%,
+    100% {
+        opacity:
+            0.55;
+    }
+
+    50% {
+        opacity:
+            1;
+    }
+}
+
+.farzin-fade-up {
+    animation:
+        farzin-fade-up
+        0.55s
+        cubic-bezier(0.22, 1, 0.36, 1)
+        both;
+}
+
+.farzin-fade-in {
+    animation:
+        farzin-fade-in
+        0.4s
+        ease
+        both;
+}
+
+.farzin-pulse-soft {
+    animation:
+        farzin-pulse-soft
+        2.2s
+        ease-in-out
+        infinite;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Reduced Motion
+|--------------------------------------------------------------------------
+*/
 
 @media (prefers-reduced-motion: reduce) {
+
     html {
-        scroll-behavior: auto;
+        scroll-behavior:
+            auto;
     }
 
     *,
     *::before,
     *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
+        animation-duration:
+            0.01ms !important;
+
+        animation-iteration-count:
+            1 !important;
+
+        transition-duration:
+            0.01ms !important;
+    }
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Mobile Polish
+|--------------------------------------------------------------------------
+*/
+
+@media (max-width: 767px) {
+
+    body {
+        overflow-x:
+            hidden;
+    }
+
+    textarea {
+        min-height:
+            110px;
     }
 }
