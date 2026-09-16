@@ -181,6 +181,15 @@ Route::post('/logout', [AuthController::class, 'logout'])
 |
 */
 
+/*
+|--------------------------------------------------------------------------
+| Customer
+|--------------------------------------------------------------------------
+|
+| Everything inside this group requires an authenticated customer.
+|
+*/
+
 Route::prefix('customer')
     ->name('customer.')
     ->middleware(['auth', 'customer'])
@@ -289,8 +298,14 @@ Route::prefix('customer')
         Route::get('/addresses', [AddressController::class, 'index'])
             ->name('addresses.index');
 
+        Route::get('/addresses/create', [AddressController::class, 'create'])
+            ->name('addresses.create');
+
         Route::post('/addresses', [AddressController::class, 'store'])
             ->name('addresses.store');
+
+        Route::get('/addresses/{address}/edit', [AddressController::class, 'edit'])
+            ->name('addresses.edit');
 
         Route::put('/addresses/{address}', [AddressController::class, 'update'])
             ->name('addresses.update');

@@ -8,7 +8,7 @@ class CheckoutRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return $this->user()?->isCustomer() === true;
+        return $this->user() !== null;
     }
 
     public function rules(): array
@@ -25,22 +25,6 @@ class CheckoutRequest extends FormRequest
                 'string',
                 'max:2000',
             ],
-
-            'payment_method' => [
-                'required',
-                'string',
-                'in:gateway',
-            ],
         ];
-    }
-
-    protected function passedValidation(): void
-    {
-        $this->merge([
-            'address_id' => $this->integer('address_id'),
-            'notes' => $this->filled('notes')
-                ? trim($this->input('notes'))
-                : null,
-        ]);
     }
 }

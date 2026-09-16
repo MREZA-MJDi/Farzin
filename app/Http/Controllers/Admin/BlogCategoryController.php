@@ -33,7 +33,7 @@ class BlogCategoryController extends Controller
             ->paginate(15);
 
         return view(
-            'admin.blog.categories.index',
+            'admin.blog-categories.index',
             compact('categories')
         );
     }
@@ -41,7 +41,7 @@ class BlogCategoryController extends Controller
     public function create(): View
     {
         return view(
-            'admin.blog.categories.create'
+            'admin.blog-categories.create'
         );
     }
 

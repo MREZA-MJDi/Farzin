@@ -36,4 +36,31 @@ class RegisterRequest extends FormRequest
             ],
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'name.required' => 'وارد کردن نام الزامی است.',
+            'name.string' => 'نام وارد شده معتبر نیست.',
+            'name.max' => 'نام نمی‌تواند بیشتر از :max کاراکتر باشد.',
+
+            'email.required' => 'وارد کردن ایمیل الزامی است.',
+            'email.string' => 'ایمیل وارد شده معتبر نیست.',
+            'email.email' => 'لطفاً یک ایمیل معتبر وارد کنید.',
+            'email.max' => 'ایمیل نمی‌تواند بیشتر از :max کاراکتر باشد.',
+            'email.unique' => 'این ایمیل قبلاً ثبت شده است.',
+
+            'password.required' => 'وارد کردن رمز عبور الزامی است.',
+            'password.confirmed' => 'تکرار رمز عبور با رمز عبور مطابقت ندارد.',
+        ];
+    }
+
+    public function attributes(): array
+    {
+        return [
+            'name' => 'نام',
+            'email' => 'ایمیل',
+            'password' => 'رمز عبور',
+        ];
+    }
 }

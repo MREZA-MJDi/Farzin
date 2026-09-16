@@ -1,351 +1,262 @@
 @extends('layouts.app')
 
-@section('title', 'تکمیل سفارش | Farzin')
+@section('title', 'تکمیل سفارش | فرزین')
 
-@section(
-    'meta_description',
-    'تکمیل سفارش و انتخاب آدرس و روش پرداخت در Farzin'
-)
+@section('meta_description', 'تکمیل سفارش و ثبت اطلاعات ارسال در فرزین')
 
 @section('content')
 
-    <div
-        x-data="{
-        selectedAddress: @js(
-            old(
-                'address_id',
-                $addresses->firstWhere('is_default', true)?->id
-                    ?? $addresses->first()?->id
-            )
-        ),
-        paymentMethod: @js(
-            old('payment_method', 'gateway')
-        )
-    }"
-        class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8"
-    >
+    @php
+        /*
+        |--------------------------------------------------------------------------
+        | Summary
+        |--------------------------------------------------------------------------
+        */
 
-        {{-- =========================================================
-            HEADER
-        ========================================================== --}}
-        <div class="mb-10">
+        $summarySubtotal = (int) ($summary['subtotal'] ?? 0);
 
-            <div class="text-xs font-bold uppercase tracking-[0.25em] text-[#7b20df]">
-                Checkout
-            </div>
+        $summaryDiscount = (int) ($summary['discount'] ?? 0);
 
-            <h1 class="mt-3 text-3xl font-black tracking-tight text-gray-950 sm:text-4xl">
-                تکمیل سفارش
-            </h1>
+        $summaryShipping = (int) ($summary['shipping'] ?? 0);
 
-            <p class="mt-2 text-sm leading-7 text-gray-500">
-                آدرس ارسال و روش پرداخت را انتخاب کن تا سفارشت ثبت شود.
-            </p>
+        $summaryTotal = (int) ($summary['total'] ?? 0);
 
-        </div>
+        $summaryItemCount = (int) (
+            $summary['item_count']
+            ?? $itemCount
+            ?? 0
+        );
 
 
-        {{-- =========================================================
-            PROGRESS
-        ========================================================== --}}
-        <div class="mb-10 overflow-hidden rounded-[1.75rem] border border-gray-200 bg-white p-4 sm:p-5">
+        /*
+        |--------------------------------------------------------------------------
+        | Selected address
+        |--------------------------------------------------------------------------
+        */
 
-            <div class="grid grid-cols-3 gap-3">
+        $defaultAddress = $addresses
+            ->firstWhere('is_default', true)
+            ?: $addresses->first();
 
-                <div class="flex items-center gap-3 rounded-2xl bg-[#f3edfb] px-4 py-3">
+        $selectedAddressId = old(
+            'address_id',
+            $defaultAddress?->id
+        );
+    @endphp
 
-                    <div class="flex size-9 shrink-0 items-center justify-center rounded-full bg-[#3f207e] text-xs font-black text-white">
-                        01
-                    </div>
 
-                    <div class="hidden sm:block">
-                        <div class="text-[10px] font-bold text-gray-400">
-                            مرحله اول
-                        </div>
+    <div class="min-h-screen bg-[var(--color-neutral-50)]">
 
-                        <div class="mt-0.5 text-xs font-black text-gray-900">
-                            آدرس ارسال
-                        </div>
-                    </div>
+        <section class="mx-auto max-w-6xl px-4 py-7 sm:px-6 sm:py-9 lg:px-8 lg:py-11">
+
+            {{-- =========================================================
+                HEADER
+            ========================================================== --}}
+
+            <header class="mb-7">
+
+                <div class="inline-flex items-center gap-2 text-[9px] font-black uppercase tracking-[0.2em] text-[var(--color-accent-600)] sm:text-[10px]">
+
+                    <span class="h-1.5 w-1.5 rounded-full bg-[var(--color-accent-600)]"></span>
+
+                    Checkout
 
                 </div>
 
 
-                <div class="flex items-center gap-3 rounded-2xl bg-gray-50 px-4 py-3">
+                <div class="mt-2 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
 
-                    <div class="flex size-9 shrink-0 items-center justify-center rounded-full border border-gray-200 bg-white text-xs font-black text-gray-500">
-                        02
+                    <div>
+
+                        <h1 class="text-2xl font-black tracking-tight text-[var(--color-text-primary)] sm:text-3xl">
+                            تکمیل سفارش
+                        </h1>
+
+                        <p class="mt-1.5 max-w-2xl text-xs leading-6 text-[var(--color-text-secondary)] sm:text-sm">
+                            آدرس تحویل و اطلاعات سفارش را بررسی کنید و سفارش خود را ثبت کنید.
+                        </p>
+
                     </div>
 
-                    <div class="hidden sm:block">
-                        <div class="text-[10px] font-bold text-gray-400">
-                            مرحله دوم
+
+                    <a
+                        href="{{ route('customer.cart.index') }}"
+                        class="inline-flex w-fit items-center gap-2 rounded-xl border border-[var(--color-border)] bg-white px-3.5 py-2.5 text-[10px] font-black text-[var(--color-text-secondary)] transition hover:border-[var(--color-brand-300)] hover:text-[var(--color-brand-700)]"
+                    >
+
+                        <svg
+                            class="h-3.5 w-3.5"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                        >
+                            <path d="m15 18-6-6 6-6"/>
+                        </svg>
+
+                        بازگشت به سبد
+
+                    </a>
+
+                </div>
+
+            </header>
+
+
+            {{-- =========================================================
+                SUCCESS
+            ========================================================== --}}
+
+            @if(session('success'))
+
+                <div class="mb-5 rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3">
+
+                    <div class="flex items-start gap-3">
+
+                        <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-emerald-100 text-emerald-700">
+
+                            <svg
+                                class="h-4 w-4"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                            >
+                                <path d="m5 12 4 4L19 6"/>
+                            </svg>
+
                         </div>
 
-                        <div class="mt-0.5 text-xs font-black text-gray-900">
-                            پرداخت
+
+                        <div>
+
+                            <div class="text-xs font-black text-emerald-800">
+                                عملیات موفق
+                            </div>
+
+                            <p class="mt-0.5 text-[11px] font-bold leading-6 text-emerald-700">
+                                {{ session('success') }}
+                            </p>
+
                         </div>
+
                     </div>
 
                 </div>
 
+            @endif
 
-                <div class="flex items-center gap-3 rounded-2xl bg-gray-50 px-4 py-3">
 
-                    <div class="flex size-9 shrink-0 items-center justify-center rounded-full border border-gray-200 bg-white text-xs font-black text-gray-500">
-                        03
-                    </div>
+            {{-- =========================================================
+                ERROR
+            ========================================================== --}}
 
-                    <div class="hidden sm:block">
-                        <div class="text-[10px] font-bold text-gray-400">
-                            مرحله سوم
+            @if(session('error'))
+
+                <div class="mb-5 rounded-2xl border border-red-200 bg-red-50 px-4 py-3">
+
+                    <div class="flex items-start gap-3">
+
+                        <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-red-100 text-red-700">
+
+                            <svg
+                                class="h-4 w-4"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                            >
+                                <circle cx="12" cy="12" r="9"/>
+                                <path d="M12 8v5"/>
+                                <path d="M12 16h.01"/>
+                            </svg>
+
                         </div>
 
-                        <div class="mt-0.5 text-xs font-black text-gray-900">
-                            تأیید
+
+                        <div>
+
+                            <div class="text-xs font-black text-red-800">
+                                خطا در ثبت سفارش
+                            </div>
+
+                            <p class="mt-0.5 text-[11px] font-bold leading-6 text-red-700">
+                                {{ session('error') }}
+                            </p>
+
                         </div>
+
                     </div>
 
                 </div>
 
-            </div>
-
-        </div>
+            @endif
 
 
-        {{-- =========================================================
-            CHECKOUT FORM
-        ========================================================== --}}
-        <form
-            action="{{ route('customer.checkout.store') }}"
-            method="POST"
-        >
-            @csrf
+            {{-- =========================================================
+                VALIDATION
+            ========================================================== --}}
 
-            <div class="grid gap-8 xl:grid-cols-[minmax(0,1fr)_380px]">
+            @if($errors->any())
 
-                {{-- =================================================
-                    LEFT COLUMN
-                ================================================== --}}
-                <div class="space-y-8">
+                <div class="mb-5 rounded-2xl border border-red-200 bg-red-50 px-4 py-4">
+
+                    <div class="text-xs font-black text-red-700">
+                        لطفاً اطلاعات سفارش را بررسی کنید.
+                    </div>
+
+                    <ul class="mt-2 space-y-1 text-[11px] leading-5 text-red-600">
+
+                        @foreach($errors->all() as $error)
+
+                            <li>
+                                {{ $error }}
+                            </li>
+
+                        @endforeach
+
+                    </ul>
+
+                </div>
+
+            @endif
+
+
+            {{-- =========================================================
+                CHECKOUT FORM
+            ========================================================== --}}
+
+            <form
+                id="checkoutOrderForm"
+                action="{{ route('customer.checkout.store') }}"
+                method="POST"
+            >
+
+                @csrf
+
+
+                <div class="grid items-start gap-5 xl:grid-cols-[minmax(0,1fr)_350px]">
 
 
                     {{-- =================================================
-                        ADDRESSES
+                        LEFT COLUMN
                     ================================================== --}}
-                    <section class="overflow-hidden rounded-[2rem] border border-gray-200 bg-white">
 
-                        <div class="border-b border-gray-100 px-6 py-6 sm:px-8">
+                    <div class="space-y-5">
 
-                            <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
 
-                                <div>
+                        {{-- =================================================
+                            SHIPPING ADDRESS
+                        ================================================== --}}
 
-                                    <div class="text-xs font-bold uppercase tracking-[0.2em] text-[#7b20df]">
-                                        Delivery
-                                    </div>
+                        <section class="overflow-hidden rounded-2xl border border-[var(--color-border)] bg-white shadow-[var(--shadow-xs)]">
 
-                                    <h2 class="mt-2 text-xl font-black text-gray-950">
-                                        آدرس ارسال
-                                    </h2>
+                            {{-- Header --}}
+                            <div class="border-b border-[var(--color-border)] px-5 py-5 sm:px-6">
 
-                                    <p class="mt-1 text-xs leading-6 text-gray-400">
-                                        یکی از آدرس‌های ذخیره‌شده را برای ارسال سفارش انتخاب کن.
-                                    </p>
+                                <div class="flex items-start gap-3">
 
-                                </div>
-
-                                <a
-                                    href="{{ route('customer.addresses.index') }}"
-                                    class="inline-flex items-center justify-center rounded-xl border border-gray-200 px-4 py-2.5 text-xs font-bold text-gray-700 transition hover:border-[#7b20df] hover:text-[#7b20df]"
-                                >
-                                    مدیریت آدرس‌ها
-                                </a>
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="p-6 sm:p-8">
-
-                            @if($addresses->isNotEmpty())
-
-                                <div class="grid gap-4 md:grid-cols-2">
-
-                                    @foreach($addresses as $address)
-
-                                        <label class="group block cursor-pointer">
-
-                                            <input
-                                                type="radio"
-                                                name="address_id"
-                                                value="{{ $address->id }}"
-                                                x-model="selectedAddress"
-                                                class="peer sr-only"
-                                            >
-
-                                            <div
-                                                class="relative h-full rounded-[1.5rem] border-2 border-gray-200 bg-gray-50/70 p-5 transition duration-300 peer-checked:border-[#3f207e] peer-checked:bg-[#f8f4fc] peer-checked:shadow-lg peer-checked:shadow-[#3f207e]/5 group-hover:border-gray-300"
-                                            >
-
-                                                {{-- Selected Indicator --}}
-                                                <div
-                                                    class="absolute left-4 top-4 flex size-6 items-center justify-center rounded-full border border-gray-300 bg-white text-white transition"
-                                                    :class="selectedAddress == {{ $address->id }}
-                                                        ? 'border-[#3f207e] bg-[#3f207e]'
-                                                        : 'border-gray-300 bg-white'"
-                                                >
-                                                <span
-                                                    x-show="selectedAddress == {{ $address->id }}"
-                                                    x-transition
-                                                    class="text-xs font-black"
-                                                >
-                                                    ✓
-                                                </span>
-                                                </div>
-
-
-                                                {{-- Default Badge --}}
-                                                @if($address->is_default)
-
-                                                    <div class="mb-4 inline-flex rounded-full bg-emerald-50 px-3 py-1.5 text-[10px] font-bold text-emerald-700">
-                                                        آدرس پیش‌فرض
-                                                    </div>
-
-                                                @else
-
-                                                    <div class="mb-4 h-6"></div>
-
-                                                @endif
-
-
-                                                <div class="pl-8">
-
-                                                    <div class="text-sm font-black text-gray-950">
-                                                        {{ $address->title ?: 'آدرس ارسال' }}
-                                                    </div>
-
-                                                    <div class="mt-2 text-xs font-bold text-gray-700">
-                                                        {{ $address->full_name }}
-                                                    </div>
-
-                                                    <div class="mt-1 text-xs text-gray-400">
-                                                        {{ $address->phone }}
-                                                    </div>
-
-                                                    <div class="mt-4 text-xs leading-7 text-gray-500">
-
-                                                        {{ $address->province }}
-                                                        ،
-                                                        {{ $address->city }}
-
-                                                        <br>
-
-                                                        {{ $address->address }}
-
-                                                    </div>
-
-                                                    @if($address->postal_code)
-
-                                                        <div class="mt-3 text-[11px] text-gray-400">
-
-                                                            کد پستی:
-
-                                                            <span class="font-mono font-bold text-gray-600">
-                                                            {{ $address->postal_code }}
-                                                        </span>
-
-                                                        </div>
-
-                                                    @endif
-
-                                                </div>
-
-                                            </div>
-
-                                        </label>
-
-                                    @endforeach
-
-                                </div>
-
-                            @else
-
-                                <div class="rounded-[1.5rem] border border-dashed border-gray-300 bg-gray-50 px-6 py-12 text-center">
-
-                                    <div class="mx-auto flex size-14 items-center justify-center rounded-2xl bg-[#f3edfb] text-2xl font-black text-[#3f207e]">
-                                        +
-                                    </div>
-
-                                    <h3 class="mt-4 text-base font-black text-gray-950">
-                                        هنوز آدرسی نداری
-                                    </h3>
-
-                                    <p class="mx-auto mt-2 max-w-md text-xs leading-7 text-gray-500">
-                                        برای ادامه ثبت سفارش، ابتدا یک آدرس ارسال اضافه کن.
-                                    </p>
-
-                                    <a
-                                        href="{{ route('customer.addresses.index') }}"
-                                        class="mt-5 inline-flex rounded-xl bg-[#3f207e] px-5 py-3 text-xs font-bold text-white transition hover:bg-[#321866]"
-                                    >
-                                        افزودن آدرس
-                                    </a>
-
-                                </div>
-
-                            @endif
-
-
-                            @error('address_id')
-
-                            <div class="mt-4 rounded-xl bg-red-50 px-4 py-3 text-xs font-bold text-red-700">
-                                {{ $message }}
-                            </div>
-
-                            @enderror
-
-                        </div>
-
-                    </section>
-
-
-                    {{-- =================================================
-                        PAYMENT METHOD
-                    ================================================== --}}
-                    <section class="overflow-hidden rounded-[2rem] border border-gray-200 bg-white">
-
-                        <div class="border-b border-gray-100 px-6 py-6 sm:px-8">
-
-                            <div class="text-xs font-bold uppercase tracking-[0.2em] text-[#7b20df]">
-                                Payment
-                            </div>
-
-                            <h2 class="mt-2 text-xl font-black text-gray-950">
-                                روش پرداخت
-                            </h2>
-
-                        </div>
-
-
-                        <div class="p-6 sm:p-8">
-
-                            <label class="group block cursor-pointer">
-
-                                <input
-                                    type="radio"
-                                    name="payment_method"
-                                    value="gateway"
-                                    x-model="paymentMethod"
-                                    class="peer sr-only"
-                                >
-
-                                <div
-                                    class="flex items-center gap-4 rounded-[1.5rem] border-2 border-gray-200 bg-gray-50/70 p-5 transition duration-300 peer-checked:border-[#3f207e] peer-checked:bg-[#f8f4fc]"
-                                >
-
-                                    <div class="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-white text-[#3f207e] shadow-sm">
+                                    <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[var(--color-brand-50)] text-[var(--color-brand-700)]">
 
                                         <svg
                                             class="h-5 w-5"
@@ -354,331 +265,857 @@
                                             stroke="currentColor"
                                             stroke-width="1.7"
                                         >
-                                            <rect
-                                                x="3"
-                                                y="5"
-                                                width="18"
-                                                height="14"
-                                                rx="2"
-                                            />
-
-                                            <path d="M3 10h18"/>
-
-                                            <path d="M7 15h4"/>
+                                            <path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"/>
+                                            <circle cx="12" cy="10" r="2.5"/>
                                         </svg>
-
-                                    </div>
-
-
-                                    <div class="flex-1">
-
-                                        <div class="flex items-center justify-between gap-4">
-
-                                            <div>
-
-                                                <div class="text-sm font-black text-gray-950">
-                                                    پرداخت آنلاین
-                                                </div>
-
-                                                <div class="mt-1 text-xs leading-6 text-gray-400">
-                                                    پرداخت امن از طریق درگاه آنلاین
-                                                </div>
-
-                                            </div>
-
-
-                                            <div
-                                                class="flex size-6 items-center justify-center rounded-full border bg-white text-white transition"
-                                                :class="paymentMethod === 'gateway'
-                                                ? 'border-[#3f207e] bg-[#3f207e]'
-                                                : 'border-gray-300'"
-                                            >
-
-                                            <span
-                                                x-show="paymentMethod === 'gateway'"
-                                                class="text-xs font-black"
-                                            >
-                                                ✓
-                                            </span>
-
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-
-                                </div>
-
-                            </label>
-
-
-                            @error('payment_method')
-
-                            <div class="mt-4 rounded-xl bg-red-50 px-4 py-3 text-xs font-bold text-red-700">
-                                {{ $message }}
-                            </div>
-
-                            @enderror
-
-                        </div>
-
-                    </section>
-
-
-                    {{-- =================================================
-                        ORDER NOTES
-                    ================================================== --}}
-                    <section class="overflow-hidden rounded-[2rem] border border-gray-200 bg-white">
-
-                        <div class="border-b border-gray-100 px-6 py-6 sm:px-8">
-
-                            <div class="text-xs font-bold uppercase tracking-[0.2em] text-[#7b20df]">
-                                Optional
-                            </div>
-
-                            <h2 class="mt-2 text-xl font-black text-gray-950">
-                                توضیحات سفارش
-                            </h2>
-
-                        </div>
-
-
-                        <div class="p-6 sm:p-8">
-
-                            <label
-                                for="notes"
-                                class="text-xs font-bold text-gray-700"
-                            >
-                                توضیحات
-                            </label>
-
-                            <textarea
-                                id="notes"
-                                name="notes"
-                                rows="5"
-                                maxlength="2000"
-                                placeholder="مثلاً زمان مناسب برای تحویل یا توضیحی برای سفارش..."
-                                class="mt-3 w-full resize-none rounded-2xl border border-gray-200 bg-gray-50 px-5 py-4 text-sm leading-7 outline-none transition placeholder:text-gray-400 focus:border-[#7b20df] focus:bg-white focus:ring-4 focus:ring-[#7b20df]/10"
-                            >{{ old('notes') }}</textarea>
-
-                            @error('notes')
-
-                            <div class="mt-2 text-xs font-bold text-red-600">
-                                {{ $message }}
-                            </div>
-
-                            @enderror
-
-                        </div>
-
-                    </section>
-
-                </div>
-
-
-                {{-- =================================================
-                    RIGHT COLUMN / SUMMARY
-                ================================================== --}}
-                <aside class="xl:sticky xl:top-28 xl:self-start">
-
-                    <div class="overflow-hidden rounded-[2rem] border border-gray-200 bg-white">
-
-
-                        {{-- Header --}}
-                        <div class="border-b border-gray-100 px-6 py-6">
-
-                            <div class="text-xs font-bold uppercase tracking-[0.2em] text-[#7b20df]">
-                                Order Summary
-                            </div>
-
-                            <h2 class="mt-2 text-xl font-black text-gray-950">
-                                خلاصه سفارش
-                            </h2>
-
-                        </div>
-
-
-                        {{-- Items --}}
-                        <div class="max-h-[360px] overflow-y-auto border-b border-gray-100 px-6 py-2">
-
-                            @foreach($items as $item)
-
-                                @php
-                                    $product = $item->product;
-                                    $image = $product?->primaryImage?->image;
-                                    $lineTotal = (int) $item->unit_price * (int) $item->quantity;
-                                @endphp
-
-                                <div class="flex gap-4 py-5">
-
-                                    <div class="relative h-16 w-16 shrink-0 overflow-hidden rounded-xl bg-[#f5f2f8]">
-
-                                        @if($image)
-
-                                            <img
-                                                src="{{ asset('storage/' . $image) }}"
-                                                alt="{{ $product?->name }}"
-                                                class="h-full w-full object-cover"
-                                                loading="lazy"
-                                            >
-
-                                        @else
-
-                                            <div class="flex h-full w-full items-center justify-center text-gray-300">
-
-                                                <svg
-                                                    class="h-7 w-7"
-                                                    viewBox="0 0 24 24"
-                                                    fill="none"
-                                                    stroke="currentColor"
-                                                    stroke-width="1.2"
-                                                >
-                                                    <path d="M3 5h18v14H3z"/>
-                                                    <circle cx="8" cy="10" r="1.5"/>
-                                                    <path d="m21 16-5-5-4 4-2-2-7 7"/>
-                                                </svg>
-
-                                            </div>
-
-                                        @endif
-
-
-                                        <span class="absolute bottom-1 left-1 flex size-5 items-center justify-center rounded-md bg-gray-900/80 text-[9px] font-bold text-white">
-                                        {{ $item->quantity }}
-                                    </span>
 
                                     </div>
 
 
                                     <div class="min-w-0 flex-1">
 
-                                        <div class="line-clamp-2 text-xs font-bold leading-6 text-gray-900">
-                                            {{ $item->product_name ?? $product?->name }}
+                                        <div class="flex flex-wrap items-center gap-2">
+
+                                            <h2 class="text-base font-black text-[var(--color-text-primary)] sm:text-lg">
+                                                آدرس ارسال
+                                            </h2>
+
+
+                                            <span class="rounded-full bg-[var(--color-neutral-100)] px-2 py-1 text-[8px] font-black text-[var(--color-text-muted)]">
+                                                {{ number_format($addresses->count()) }} آدرس
+                                            </span>
+
                                         </div>
 
-                                        <div class="mt-1 text-[11px] text-gray-400">
-                                            {{ number_format($item->unit_price) }}
-                                            تومان
-                                        </div>
 
-                                    </div>
-
-
-                                    <div class="shrink-0 text-left text-xs font-black text-gray-950">
-
-                                        {{ number_format($lineTotal) }}
-
-                                        <span class="text-[9px] font-normal text-gray-400">
-                                        تومان
-                                    </span>
+                                        <p class="mt-1 text-xs leading-6 text-[var(--color-text-secondary)]">
+                                            آدرس موردنظر برای تحویل سفارش را انتخاب کنید.
+                                        </p>
 
                                     </div>
 
                                 </div>
 
-                            @endforeach
-
-                        </div>
-
-
-                        {{-- =================================================
-                            TOTALS
-                        ================================================== --}}
-                        <div class="space-y-5 px-6 py-6">
-
-                            {{-- Subtotal --}}
-                            <div class="flex items-center justify-between gap-4 text-sm">
-
-                            <span class="text-gray-500">
-                                مبلغ کالاها
-                            </span>
-
-                                <span class="font-bold text-gray-900">
-                                {{ number_format($summary['subtotal']) }}
-                                تومان
-                            </span>
-
                             </div>
 
 
-                            {{-- Discount --}}
-                            <div class="flex items-center justify-between gap-4 text-sm">
+                            {{-- Saved addresses --}}
+                            <div class="px-5 py-5 sm:px-6">
 
-                            <span class="text-gray-500">
-                                تخفیف
-                            </span>
+                                @if($addresses->isNotEmpty())
 
-                                @if($summary['discount'] > 0)
+                                    <div class="space-y-3">
 
-                                    <span class="font-bold text-emerald-600">
-                                    − {{ number_format($summary['discount']) }}
-                                    تومان
-                                </span>
+                                        @foreach($addresses as $address)
 
-                                @else
+                                            @php
 
-                                    <span class="font-bold text-gray-400">
-                                    —
-                                </span>
-
-                                @endif
-
-                            </div>
+                                                $addressLabel = collect([
+                                                    $address->country ?? null,
+                                                    $address->province ?? null,
+                                                    $address->city ?? null,
+                                                    $address->address ?? null,
+                                                ])
+                                                    ->filter()
+                                                    ->implode('، ');
 
 
-                            {{-- Shipping --}}
-                            <div class="flex items-center justify-between gap-4 text-sm">
+                                                $isChecked =
+                                                    (string) $selectedAddressId ===
+                                                    (string) $address->id;
 
-                            <span class="text-gray-500">
-                                هزینه ارسال
-                            </span>
-
-                                @if($summary['shipping'] > 0)
-
-                                    <span class="font-bold text-gray-900">
-                                    {{ number_format($summary['shipping']) }}
-                                    تومان
-                                </span>
-
-                                @else
-
-                                    <span class="font-bold text-emerald-600">
-                                    رایگان
-                                </span>
-
-                                @endif
-
-                            </div>
+                                            @endphp
 
 
-                            {{-- Final Total --}}
-                            <div class="border-t border-dashed border-gray-200 pt-5">
+                                            <label
+                                                for="address-{{ $address->id }}"
+                                                class="group block cursor-pointer"
+                                            >
 
-                                <div class="flex items-end justify-between gap-4">
+                                                <input
+                                                    type="radio"
+                                                    id="address-{{ $address->id }}"
+                                                    name="address_id"
+                                                    value="{{ $address->id }}"
+                                                    form="checkoutOrderForm"
+                                                    @checked($isChecked)
+                                                    required
+                                                    class="peer sr-only"
+                                                >
 
-                                    <div>
 
-                                        <div class="text-xs text-gray-400">
-                                            مبلغ نهایی
-                                        </div>
+                                                <div class="rounded-xl border border-[var(--color-border)] bg-white p-4 transition peer-checked:border-[var(--color-brand-600)] peer-checked:bg-[var(--color-brand-50)]/40 peer-checked:ring-4 peer-checked:ring-[var(--color-brand-100)] group-hover:border-[var(--color-brand-300)]">
 
-                                        <div class="mt-1 text-2xl font-black text-gray-950">
+                                                    <div class="flex items-start gap-3">
 
-                                            {{ number_format($summary['total']) }}
+                                                        {{-- Radio --}}
+                                                        <div class="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 border-[var(--color-border-strong)] transition peer-checked:border-[var(--color-brand-600)]">
 
-                                            <span class="text-xs font-semibold text-gray-400">
-                                            تومان
-                                        </span>
+                                                            <span class="h-2.5 w-2.5 rounded-full bg-[var(--color-brand-600)] opacity-0 transition peer-checked:opacity-100"></span>
 
-                                        </div>
+                                                        </div>
+
+
+                                                        {{-- Address content --}}
+                                                        <div class="min-w-0 flex-1">
+
+                                                            <div class="flex flex-wrap items-center gap-2">
+
+                                                                <span class="text-xs font-black text-[var(--color-text-primary)]">
+                                                                    {{ $address->title ?: 'آدرس تحویل' }}
+                                                                </span>
+
+
+                                                                @if($address->is_default)
+
+                                                                    <span class="rounded-full bg-emerald-50 px-2 py-1 text-[8px] font-black text-emerald-700">
+                                                                        پیش‌فرض
+                                                                    </span>
+
+                                                                @endif
+
+                                                            </div>
+
+
+                                                            @if($addressLabel)
+
+                                                                <p class="mt-2 text-xs leading-7 text-[var(--color-text-secondary)]">
+                                                                    {{ $addressLabel }}
+                                                                </p>
+
+                                                            @endif
+
+
+                                                            <div class="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-[10px] text-[var(--color-text-muted)]">
+
+                                                                @if($address->full_name)
+
+                                                                    <span>
+
+                                                                        گیرنده:
+
+                                                                        <strong class="font-bold text-[var(--color-text-secondary)]">
+                                                                            {{ $address->full_name }}
+                                                                        </strong>
+
+                                                                    </span>
+
+                                                                @endif
+
+
+                                                                @if($address->phone)
+
+                                                                    <span dir="ltr">
+                                                                        {{ $address->phone }}
+                                                                    </span>
+
+                                                                @endif
+
+                                                            </div>
+
+
+                                                            <div class="mt-2 flex flex-wrap items-center gap-2">
+
+                                                                @if($address->postal_code)
+
+                                                                    <span class="inline-flex items-center gap-1.5 rounded-full bg-[var(--color-neutral-100)] px-2 py-1 text-[8px] font-bold text-[var(--color-text-muted)]">
+
+                                                                        کد پستی:
+
+                                                                        <span
+                                                                            dir="ltr"
+                                                                            class="font-mono text-[var(--color-text-secondary)]"
+                                                                        >
+                                                                            {{ $address->postal_code }}
+                                                                        </span>
+
+                                                                    </span>
+
+                                                                @endif
+
+
+                                                                @if(
+                                                                    $address->latitude !== null &&
+                                                                    $address->longitude !== null
+                                                                )
+
+                                                                    <span class="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-2 py-1 text-[8px] font-bold text-emerald-700">
+
+                                                                        <span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+
+                                                                        موقعیت روی نقشه ثبت شده
+
+                                                                    </span>
+
+                                                                @endif
+
+                                                            </div>
+
+                                                        </div>
+
+
+                                                        {{-- Edit --}}
+                                                        <a
+                                                            href="{{ route('customer.addresses.edit', $address) }}"
+                                                            class="shrink-0 rounded-lg border border-transparent px-2 py-1.5 text-[9px] font-black text-[var(--color-brand-600)] opacity-100 transition hover:border-[var(--color-brand-100)] hover:bg-[var(--color-brand-50)] hover:text-[var(--color-brand-700)]"
+                                                            onclick="event.stopPropagation();"
+                                                        >
+                                                            ویرایش
+                                                        </a>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </label>
+
+                                        @endforeach
 
                                     </div>
 
 
-                                    @if($summary['shipping'] === 0)
+                                    {{-- Address actions --}}
+                                    <div class="mt-5 flex flex-col gap-3 border-t border-[var(--color-border)] pt-5 sm:flex-row sm:items-center sm:justify-between">
 
-                                        <div class="rounded-full bg-emerald-50 px-3 py-1.5 text-[10px] font-bold text-emerald-700">
-                                            ارسال رایگان
+                                        <div>
+
+                                            <div class="text-xs font-black text-[var(--color-text-primary)]">
+                                                آدرس دیگری نیاز دارید؟
+                                            </div>
+
+                                            <p class="mt-1 text-[10px] leading-5 text-[var(--color-text-muted)]">
+                                                یک آدرس جدید همراه با موقعیت دقیق روی نقشه ثبت کنید.
+                                            </p>
+
+                                        </div>
+
+
+                                        <a
+                                            href="{{ route('customer.addresses.create') }}"
+                                            class="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-[var(--color-brand-200)] bg-[var(--color-brand-50)] px-4 py-3 text-[10px] font-black text-[var(--color-brand-700)] transition hover:border-[var(--color-brand-300)] hover:bg-[var(--color-brand-100)] sm:w-auto"
+                                        >
+
+                                            <svg
+                                                class="h-4 w-4"
+                                                viewBox="0 0 24 24"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                stroke-width="1.8"
+                                            >
+                                                <path d="M12 5v14"/>
+                                                <path d="M5 12h14"/>
+                                            </svg>
+
+                                            افزودن آدرس جدید
+
+                                        </a>
+
+                                    </div>
+
+                                @else
+
+                                    {{-- Empty address --}}
+                                    <div class="rounded-xl border border-dashed border-[var(--color-border-strong)] bg-[var(--color-neutral-50)] px-5 py-10 text-center">
+
+                                        <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-white text-[var(--color-text-muted)] shadow-sm">
+
+                                            <svg
+                                                class="h-5 w-5"
+                                                viewBox="0 0 24 24"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                stroke-width="1.7"
+                                            >
+                                                <path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"/>
+                                                <circle cx="12" cy="10" r="2.5"/>
+                                            </svg>
+
+                                        </div>
+
+
+                                        <h3 class="mt-3 text-sm font-black text-[var(--color-text-primary)]">
+                                            هنوز آدرس ارسالی ثبت نشده است
+                                        </h3>
+
+
+                                        <p class="mx-auto mt-1.5 max-w-md text-[10px] leading-6 text-[var(--color-text-muted)]">
+                                            برای ادامه سفارش، ابتدا یک آدرس همراه با موقعیت دقیق روی نقشه ثبت کنید.
+                                        </p>
+
+
+                                        <a
+                                            href="{{ route('customer.addresses.create') }}"
+                                            class="mt-4 inline-flex items-center gap-2 rounded-xl bg-[var(--color-brand-600)] px-4 py-3 text-[10px] font-black text-white transition hover:bg-[var(--color-brand-700)]"
+                                        >
+
+                                            <svg
+                                                class="h-4 w-4"
+                                                viewBox="0 0 24 24"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                stroke-width="1.8"
+                                            >
+                                                <path d="M12 5v14"/>
+                                                <path d="M5 12h14"/>
+                                            </svg>
+
+                                            ثبت آدرس ارسال
+
+                                        </a>
+
+                                    </div>
+
+                                @endif
+
+
+                                @error('address_id')
+
+                                <p class="mt-3 text-xs font-bold text-red-600">
+                                    {{ $message }}
+                                </p>
+
+                                @enderror
+
+                            </div>
+
+                        </section>
+
+
+                        {{-- =================================================
+                            ORDER NOTES
+                        ================================================== --}}
+
+                        <section class="rounded-2xl border border-[var(--color-border)] bg-white p-5 shadow-[var(--shadow-xs)] sm:p-6">
+
+                            <div class="mb-5">
+
+                                <h2 class="text-base font-black text-[var(--color-text-primary)] sm:text-lg">
+                                    توضیحات سفارش
+                                </h2>
+
+                                <p class="mt-1 text-xs leading-6 text-[var(--color-text-secondary)]">
+                                    توضیحات اختیاری مربوط به سفارش یا نحوه تحویل.
+                                </p>
+
+                            </div>
+
+
+                            <textarea
+                                id="notes"
+                                name="notes"
+                                rows="4"
+                                maxlength="2000"
+                                placeholder="مثلاً زمان مناسب تحویل، توضیحات ورود به ساختمان و..."
+                                class="w-full resize-y rounded-xl border border-[var(--color-border)] bg-white px-4 py-3 text-xs leading-7 text-[var(--color-text-primary)] outline-none transition placeholder:text-[var(--color-text-muted)] focus:border-[var(--color-brand-600)] focus:ring-4 focus:ring-[var(--color-brand-100)] @error('notes') border-red-400 @enderror"
+                            >{{ old('notes') }}</textarea>
+
+
+                            <div class="mt-2 flex items-center justify-between gap-3">
+
+                                <span class="text-[10px] text-[var(--color-text-muted)]">
+                                    اختیاری
+                                </span>
+
+                                <span class="text-[10px] text-[var(--color-text-muted)]">
+                                    حداکثر ۲۰۰۰ کاراکتر
+                                </span>
+
+                            </div>
+
+
+                            @error('notes')
+
+                            <p class="mt-2 text-[10px] font-bold text-red-600">
+                                {{ $message }}
+                            </p>
+
+                            @enderror
+
+                        </section>
+
+
+                        {{-- =================================================
+                            ORDER ITEMS
+                        ================================================== --}}
+
+                        <section class="rounded-2xl border border-[var(--color-border)] bg-white p-5 shadow-[var(--shadow-xs)] sm:p-6">
+
+                            <div class="mb-5 flex items-end justify-between gap-3">
+
+                                <div>
+
+                                    <div class="text-[9px] font-black uppercase tracking-[0.2em] text-[var(--color-accent-600)]">
+                                        Order
+                                    </div>
+
+                                    <h2 class="mt-1.5 text-base font-black text-[var(--color-text-primary)] sm:text-lg">
+                                        اقلام سفارش
+                                    </h2>
+
+                                </div>
+
+
+                                <span class="rounded-full bg-[var(--color-neutral-100)] px-2.5 py-1.5 text-[9px] font-black text-[var(--color-text-secondary)]">
+
+                                    {{ number_format($summaryItemCount) }}
+
+                                    آیتم
+
+                                </span>
+
+                            </div>
+
+
+                            <div class="divide-y divide-[var(--color-border)]">
+
+                                @foreach($items as $item)
+
+                                    @php
+
+                                        $product = $item['product'] ?? null;
+
+                                        $quantity = (int) (
+                                            $item['quantity'] ?? 0
+                                        );
+
+                                        $unitPrice = (int) (
+                                            $item['unit_price'] ?? 0
+                                        );
+
+                                        $lineTotal = (int) (
+                                            $item['total']
+                                            ?? (
+                                                $unitPrice *
+                                                $quantity
+                                            )
+                                        );
+
+
+                                        $imageModel = null;
+
+                                        if ($product) {
+
+                                            $imageModel =
+                                                $product->primaryImage
+                                                ?? null;
+
+
+                                            if (
+                                                !$imageModel &&
+                                                $product->relationLoaded('images')
+                                            ) {
+
+                                                $imageModel =
+                                                    $product->images->first();
+
+                                            }
+
+                                        }
+
+
+                                        $imageUrl =
+                                            $imageModel?->image
+                                                ? asset(
+                                                    'storage/' .
+                                                    ltrim(
+                                                        $imageModel->image,
+                                                        '/'
+                                                    )
+                                                )
+                                                : null;
+
+                                    @endphp
+
+
+                                    @if($product)
+
+                                        <div class="flex gap-3 py-4 first:pt-0 last:pb-0">
+
+                                            {{-- Image --}}
+                                            <a
+                                                href="{{ route('products.show', $product) }}"
+                                                class="h-16 w-16 shrink-0 overflow-hidden rounded-xl bg-[var(--color-neutral-100)]"
+                                            >
+
+                                                @if($imageUrl)
+
+                                                    <img
+                                                        src="{{ $imageUrl }}"
+                                                        alt="{{ $imageModel?->alt ?: $product->name }}"
+                                                        class="h-full w-full object-cover"
+                                                        loading="lazy"
+                                                        decoding="async"
+                                                    >
+
+                                                @else
+
+                                                    <div class="flex h-full w-full items-center justify-center text-[var(--color-text-muted)]">
+
+                                                        <svg
+                                                            class="h-6 w-6"
+                                                            viewBox="0 0 24 24"
+                                                            fill="none"
+                                                            stroke="currentColor"
+                                                            stroke-width="1.5"
+                                                        >
+                                                            <rect
+                                                                x="3"
+                                                                y="4"
+                                                                width="18"
+                                                                height="16"
+                                                                rx="2"
+                                                            />
+                                                            <circle
+                                                                cx="8.5"
+                                                                cy="9"
+                                                                r="1.4"
+                                                            />
+                                                            <path d="m21 15-5-5-4 4-2-2-7 7"/>
+                                                        </svg>
+
+                                                    </div>
+
+                                                @endif
+
+                                            </a>
+
+
+                                            {{-- Info --}}
+                                            <div class="min-w-0 flex-1">
+
+                                                <a
+                                                    href="{{ route('products.show', $product) }}"
+                                                    class="block truncate text-xs font-black text-[var(--color-text-primary)] transition hover:text-[var(--color-brand-700)] sm:text-sm"
+                                                >
+                                                    {{ $product->name }}
+                                                </a>
+
+
+                                                @if($product->sku)
+
+                                                    <div class="mt-1 text-[9px] text-[var(--color-text-muted)]">
+
+                                                        SKU:
+
+                                                        <span
+                                                            dir="ltr"
+                                                            class="font-mono font-bold"
+                                                        >
+                                                            {{ $product->sku }}
+                                                        </span>
+
+                                                    </div>
+
+                                                @endif
+
+
+                                                <div class="mt-1.5 text-[10px] text-[var(--color-text-muted)]">
+
+                                                    {{ number_format($quantity) }}
+
+                                                    عدد
+
+                                                    <span class="mx-1">
+                                                        ×
+                                                    </span>
+
+                                                    {{ number_format($unitPrice) }}
+
+                                                    تومان
+
+                                                </div>
+
+                                            </div>
+
+
+                                            {{-- Total --}}
+                                            <div class="shrink-0 text-left">
+
+                                                <div class="text-xs font-black text-[var(--color-text-primary)]">
+                                                    {{ number_format($lineTotal) }}
+                                                </div>
+
+                                                <div class="mt-0.5 text-[9px] text-[var(--color-text-muted)]">
+                                                    تومان
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                    @endif
+
+                                @endforeach
+
+                            </div>
+
+                        </section>
+
+                    </div>
+
+
+                    {{-- =================================================
+                        RIGHT SUMMARY
+                    ================================================== --}}
+
+                    <aside class="xl:sticky xl:top-24 xl:self-start">
+
+                        <div class="overflow-hidden rounded-2xl border border-[var(--color-border)] bg-white shadow-[var(--shadow-sm)]">
+
+                            {{-- Header --}}
+                            <div class="border-b border-[var(--color-border)] px-5 py-5">
+
+                                <div class="text-[9px] font-black uppercase tracking-[0.2em] text-[var(--color-accent-600)]">
+                                    Order Summary
+                                </div>
+
+                                <h2 class="mt-1.5 text-lg font-black text-[var(--color-text-primary)] sm:text-xl">
+                                    خلاصه سفارش
+                                </h2>
+
+                            </div>
+
+
+                            {{-- Body --}}
+                            <div class="space-y-4 px-5 py-5">
+
+                                {{-- Item count --}}
+                                <div class="flex items-center justify-between gap-4 text-xs">
+
+                                    <span class="text-[var(--color-text-secondary)]">
+                                        تعداد اقلام
+                                    </span>
+
+                                    <span class="font-black text-[var(--color-text-primary)]">
+                                        {{ number_format($summaryItemCount) }}
+                                    </span>
+
+                                </div>
+
+
+                                {{-- Subtotal --}}
+                                <div class="flex items-center justify-between gap-4 text-xs">
+
+                                    <span class="text-[var(--color-text-secondary)]">
+                                        مبلغ کالاها
+                                    </span>
+
+                                    <span class="font-black text-[var(--color-text-primary)]">
+
+                                        {{ number_format($summarySubtotal) }}
+
+                                        <span class="text-[9px] font-bold text-[var(--color-text-muted)]">
+                                            تومان
+                                        </span>
+
+                                    </span>
+
+                                </div>
+
+
+                                {{-- Discount --}}
+                                @if($summaryDiscount > 0)
+
+                                    <div class="flex items-center justify-between gap-4 text-xs">
+
+                                        <span class="text-[var(--color-text-secondary)]">
+                                            تخفیف
+                                        </span>
+
+                                        <span class="font-black text-emerald-700">
+
+                                            -
+
+                                            {{ number_format($summaryDiscount) }}
+
+                                            <span class="text-[9px]">
+                                                تومان
+                                            </span>
+
+                                        </span>
+
+                                    </div>
+
+                                @endif
+
+
+                                {{-- Shipping --}}
+                                <div class="flex items-center justify-between gap-4 text-xs">
+
+                                    <span class="text-[var(--color-text-secondary)]">
+                                        هزینه ارسال
+                                    </span>
+
+
+                                    @if($summaryShipping > 0)
+
+                                        <span class="font-black text-[var(--color-text-primary)]">
+
+                                            {{ number_format($summaryShipping) }}
+
+                                            <span class="text-[9px] text-[var(--color-text-muted)]">
+                                                تومان
+                                            </span>
+
+                                        </span>
+
+                                    @else
+
+                                        <span class="rounded-full bg-emerald-50 px-2 py-1 text-[9px] font-black text-emerald-700">
+                                            رایگان
+                                        </span>
+
+                                    @endif
+
+                                </div>
+
+
+                                {{-- Total --}}
+                                <div class="border-t border-dashed border-[var(--color-border)] pt-4">
+
+                                    <div class="flex items-end justify-between gap-4">
+
+                                        <div>
+
+                                            <div class="text-[10px] text-[var(--color-text-muted)]">
+                                                مبلغ نهایی
+                                            </div>
+
+                                            <div class="mt-1 flex items-baseline gap-1.5">
+
+                                                <span class="text-xl font-black tracking-tight text-[var(--color-brand-950)] sm:text-2xl">
+                                                    {{ number_format($summaryTotal) }}
+                                                </span>
+
+                                                <span class="text-[10px] font-bold text-[var(--color-text-muted)]">
+                                                    تومان
+                                                </span>
+
+                                            </div>
+
+                                        </div>
+
+
+                                        <span class="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 py-1.5 text-[9px] font-black text-emerald-700">
+
+                                            <span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+
+                                            امن
+
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+
+                                {{-- Submit --}}
+                                <button
+                                    type="submit"
+                                    @disabled($addresses->isEmpty())
+                                    class="group flex w-full items-center justify-center gap-2.5 rounded-xl bg-[var(--color-accent-600)] px-4 py-3.5 text-xs font-black text-white shadow-md shadow-[var(--color-accent-600)]/15 transition duration-300 hover:-translate-y-0.5 hover:bg-[var(--color-accent-700)] focus:outline-none focus:ring-4 focus:ring-[var(--color-accent-100)] disabled:cursor-not-allowed disabled:bg-[var(--color-neutral-300)] disabled:shadow-none disabled:hover:translate-y-0"
+                                    >
+
+                                    ثبت سفارش و ادامه پرداخت
+
+                                    <svg
+                                        class="h-4 w-4 transition duration-300 group-hover:-translate-x-1"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="1.8"
+                                    >
+                                        <path d="m9 18 6-6-6-6"/>
+                                    </svg>
+
+                                </button>
+
+
+                                <p class="text-center text-[9px] leading-5 text-[var(--color-text-muted)]">
+                                    پس از ثبت سفارش به مرحله پرداخت منتقل خواهید شد.
+                                </p>
+
+                            </div>
+
+
+                            {{-- Trust --}}
+                            <div class="border-t border-[var(--color-border)] bg-[var(--color-neutral-50)] px-5 py-4">
+
+                                <div class="space-y-3">
+
+                                    <div class="flex items-center gap-2.5">
+
+                                        <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white text-[var(--color-brand-900)] shadow-sm">
+
+                                            <svg
+                                                class="h-3.5 w-3.5"
+                                                viewBox="0 0 24 24"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                stroke-width="1.8"
+                                            >
+                                                <path d="M12 3 5 6v5c0 5 3 8.5 7 10 4-1.5 7-5 7-10V6l-7-3Z"/>
+                                                <path d="m9 12 2 2 4-4"/>
+                                            </svg>
+
+                                        </div>
+
+                                        <span class="text-[10px] font-bold text-[var(--color-text-secondary)]">
+                                            پرداخت امن و محافظت‌شده
+                                        </span>
+
+                                    </div>
+
+
+                                    <div class="flex items-center gap-2.5">
+
+                                        <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white text-[var(--color-brand-900)] shadow-sm">
+
+                                            <svg
+                                                class="h-3.5 w-3.5"
+                                                viewBox="0 0 24 24"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                stroke-width="1.8"
+                                            >
+                                                <path d="M3 7h11v10H3z"/>
+                                                <path d="M14 10h3l4 4v3h-7z"/>
+                                                <circle cx="7" cy="19" r="1.5"/>
+                                                <circle cx="18" cy="19" r="1.5"/>
+                                            </svg>
+
+                                        </div>
+
+                                        <span class="text-[10px] font-bold text-[var(--color-text-secondary)]">
+                                            ارسال مطمئن سفارش
+                                        </span>
+
+                                    </div>
+
+
+                                    @if($addresses->isNotEmpty())
+
+                                        <div class="flex items-center gap-2.5">
+
+                                            <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white text-[var(--color-accent-600)] shadow-sm">
+
+                                                <svg
+                                                    class="h-3.5 w-3.5"
+                                                    viewBox="0 0 24 24"
+                                                    fill="none"
+                                                    stroke="currentColor"
+                                                    stroke-width="1.8"
+                                                >
+                                                    <path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"/>
+                                                    <circle cx="12" cy="10" r="2.5"/>
+                                                </svg>
+
+                                            </div>
+
+                                            <span class="text-[10px] font-bold text-[var(--color-text-secondary)]">
+                                                آدرس آماده ارسال است
+                                            </span>
+
                                         </div>
 
                                     @endif
@@ -687,93 +1124,15 @@
 
                             </div>
 
-
-                            {{-- Submit --}}
-                            <button
-                                type="submit"
-                                @disabled($addresses->isEmpty())
-                                class="group flex w-full items-center justify-center gap-3 rounded-2xl bg-[#3f207e] px-5 py-4 text-sm font-bold text-white shadow-lg shadow-[#3f207e]/15 transition duration-300 hover:-translate-y-0.5 hover:bg-[#321866] disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:translate-y-0"
-                                >
-
-                                ثبت سفارش و ادامه پرداخت
-
-                                <span class="transition-transform duration-300 group-hover:-translate-x-1">
-                                ←
-                            </span>
-
-                            </button>
-
-
-                            {{-- Back --}}
-                            <a
-                                href="{{ route('customer.cart.index') }}"
-                                class="flex w-full items-center justify-center rounded-2xl border border-gray-200 px-5 py-4 text-sm font-bold text-gray-700 transition hover:border-[#7b20df] hover:text-[#7b20df]"
-                            >
-                                بازگشت به سبد خرید
-                            </a>
-
                         </div>
 
+                    </aside>
 
-                        {{-- =================================================
-                            TRUST
-                        ================================================== --}}
-                        <div class="border-t border-gray-100 bg-gray-50/70 px-6 py-5">
+                </div>
 
-                            <div class="space-y-4">
+            </form>
 
-                                <div class="flex items-start gap-3">
-
-                                    <div class="flex size-9 shrink-0 items-center justify-center rounded-xl bg-white text-[#3f207e] shadow-sm">
-                                        ✓
-                                    </div>
-
-                                    <div>
-
-                                        <div class="text-xs font-bold text-gray-900">
-                                            پرداخت امن
-                                        </div>
-
-                                        <p class="mt-1 text-[11px] leading-6 text-gray-400">
-                                            اطلاعات پرداخت شما در محیط امن درگاه انجام می‌شود.
-                                        </p>
-
-                                    </div>
-
-                                </div>
-
-
-                                <div class="flex items-start gap-3">
-
-                                    <div class="flex size-9 shrink-0 items-center justify-center rounded-xl bg-white text-[#3f207e] shadow-sm">
-                                        ✓
-                                    </div>
-
-                                    <div>
-
-                                        <div class="text-xs font-bold text-gray-900">
-                                            قیمت شفاف
-                                        </div>
-
-                                        <p class="mt-1 text-[11px] leading-6 text-gray-400">
-                                            مبلغ نهایی بر اساس قیمت فعلی محصولات محاسبه می‌شود.
-                                        </p>
-
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </aside>
-
-            </div>
-
-        </form>
+        </section>
 
     </div>
 

@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductImage;
 use App\Services\SeoService;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -19,11 +20,13 @@ class ProductController extends Controller
     public function index(Request $request): View
     {
         $products = Product::query()
-            ->with('category')
+            ->with([
+                'category',
+                'primaryImage',
+            ])
             ->when(
                 $request->filled('search'),
-                fn (Builder $query) =>
-                $query->where(function (Builder $query) use ($request) {
+                fn (Builder $query) => $query->where(function (Builder $query) use ($request) {
                     $search = $request->string('search')->toString();
 
                     $query
@@ -33,8 +36,10 @@ class ProductController extends Controller
             )
             ->when(
                 $request->filled('category_id'),
-                fn (Builder $query) =>
-                $query->where('category_id', $request->integer('category_id'))
+                fn (Builder $query) => $query->where(
+                    'category_id',
+                    $request->integer('category_id')
+                )
             )
             ->latest()
             ->paginate(20)
@@ -49,6 +54,7 @@ class ProductController extends Controller
             'categories' => $categories,
         ]);
     }
+
     public function create(): View
     {
         $categories = Category::query()
@@ -60,7 +66,10 @@ class ProductController extends Controller
                 'name',
             ]);
 
-        return view('admin.products.create', compact('categories'));
+        return view(
+            'admin.products.create',
+            compact('categories')
+        );
     }
 
     public function store(
@@ -73,7 +82,7 @@ class ProductController extends Controller
 
         unset($validated['images']);
 
-        $product = DB::transaction(function () use (
+        DB::transaction(function () use (
             $validated,
             $imageFiles,
             $seoService
@@ -100,13 +109,14 @@ class ProductController extends Controller
                 $product,
                 $imageFiles
             );
-
-            return $product;
         });
 
         return redirect()
             ->route('admin.products.index')
-            ->with('success', 'Product created successfully.');
+            ->with(
+                'success',
+                'محصول با موفقیت ایجاد شد.'
+            );
     }
 
     public function edit(Product $product): View
@@ -119,20 +129,21 @@ class ProductController extends Controller
         ]);
 
         $categories = Category::query()
-            ->where('is_active', true)
-            ->when(
-                $product->category_id,
-                fn ($query) => $query->orWhereKey(
-                    $product->category_id
-                )
-            )
+            ->where(function ($query) use ($product) {
+                $query
+                    ->where('is_active', true)
+                    ->orWhere('id', $product->category_id);
+            })
             ->orderBy('sort_order')
             ->orderBy('name')
             ->get();
 
         return view(
             'admin.products.edit',
-            compact('product', 'categories')
+            compact(
+                'product',
+                'categories'
+            )
         );
     }
 
@@ -179,7 +190,10 @@ class ProductController extends Controller
 
         return redirect()
             ->route('admin.products.index')
-            ->with('success', 'Product updated successfully.');
+            ->with(
+                'success',
+                'محصول با موفقیت بروزرسانی شد.'
+            );
     }
 
     public function destroy(Product $product): RedirectResponse
@@ -196,20 +210,60 @@ class ProductController extends Controller
 
         return redirect()
             ->route('admin.products.index')
-            ->with('success', 'Product deleted successfully.');
+            ->with(
+                'success',
+                'محصول با موفقیت حذف شد.'
+            );
     }
 
-    public function destroyImage(ProductImage $productImage): RedirectResponse
-    {
-        $product = $productImage->product;
+public function destroyImage(
+    int $productImage
+): RedirectResponse {
+    $image = ProductImage::query()
+        ->with('product')
+        ->findOrFail($productImage);
 
-        $wasPrimary = $productImage->is_primary;
+    $product = $image->product;
 
-        $this->deleteImageFile($productImage);
+    if (!$product) {
+        abort(404);
+    }
 
-        $productImage->delete();
+    $wasPrimary = (bool) $image->is_primary;
+
+    DB::transaction(function () use (
+        $image,
+        $product,
+        $wasPrimary
+    ) {
+
+        /*
+        |--------------------------------------------------------------------------
+        | Delete physical file
+        |--------------------------------------------------------------------------
+        */
+
+        $this->deleteImageFile($image);
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Delete database record
+        |--------------------------------------------------------------------------
+        */
+
+        $image->delete();
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | If deleted image was primary,
+        | choose the next available image.
+        |--------------------------------------------------------------------------
+        */
 
         if ($wasPrimary) {
+
             $nextImage = $product
                 ->images()
                 ->orderBy('sort_order')
@@ -217,17 +271,24 @@ class ProductController extends Controller
                 ->first();
 
             if ($nextImage) {
+
                 $nextImage->update([
                     'is_primary' => true,
                 ]);
+
             }
         }
 
-        return back()->with(
+    });
+
+    return redirect()
+        ->route('admin.products.edit', $product)
+        ->with(
             'success',
-            'Product image deleted successfully.'
+            'تصویر محصول با موفقیت حذف شد.'
         );
-    }
+}
+
 
     public function setPrimaryImage(
         ProductImage $productImage
@@ -238,9 +299,12 @@ class ProductController extends Controller
             $product,
             $productImage
         ) {
-            $product->images()->update([
-                'is_primary' => false,
-            ]);
+            $product
+                ->images()
+                ->whereKeyNot($productImage->id)
+                ->update([
+                    'is_primary' => false,
+                ]);
 
             $productImage->update([
                 'is_primary' => true,
@@ -249,10 +313,9 @@ class ProductController extends Controller
 
         return back()->with(
             'success',
-            'Primary image updated successfully.'
+            'تصویر اصلی محصول تغییر کرد.'
         );
     }
-
     private function storeImages(
         Product $product,
         array $files
@@ -266,19 +329,23 @@ class ProductController extends Controller
             ->where('is_primary', true)
             ->exists();
 
-        $nextSortOrder = (int) (
-                $product->images()->max('sort_order') ?? -1
-            ) + 1;
+        $nextSortOrder = ((int) (
+                $product->images()->max('sort_order') ?? 0
+            )) + 1;
 
         foreach ($files as $index => $file) {
+            if (!$file || !$file->isValid()) {
+                continue;
+            }
+
             $path = $file->store(
-                'products',
+                "products/{$product->id}",
                 'public'
             );
 
-            $isPrimary = ! $hasPrimaryImage && $index === 0;
+            $isPrimary = !$hasPrimaryImage && $index === 0;
 
-            $image = ProductImage::create([
+            ProductImage::create([
                 'product_id' => $product->id,
                 'image' => $path,
                 'alt' => $product->name,

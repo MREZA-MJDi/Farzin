@@ -1,10 +1,15 @@
-<header class="site-header">
+<header
+    class="site-header"
+    x-data="{ accountOpen: false }"
+>
 
     <div class="site-header__main">
 
         <div class="container site-header__inner">
 
-            {{-- Logo --}}
+            {{-- =====================================================
+                 Logo
+            ====================================================== --}}
             <a
                 href="{{ route('home') }}"
                 class="site-header__logo"
@@ -27,10 +32,12 @@
                             d="M31.8 5H43L33.8 15.2H24.7L31.8 5Z"
                             fill="currentColor"
                         />
+
                         <path
                             d="M24.8 18.8H37.8L28.4 29H15.5L24.8 18.8Z"
                             fill="currentColor"
                         />
+
                         <path
                             d="M15.5 32.6H28.4L19.2 42.9H6.2L15.5 32.6Z"
                             fill="currentColor"
@@ -40,7 +47,9 @@
             </a>
 
 
-            {{-- Desktop Navigation --}}
+            {{-- =====================================================
+                 Desktop Navigation
+            ====================================================== --}}
             <nav
                 class="site-header__nav"
                 aria-label="منوی اصلی"
@@ -98,7 +107,9 @@
             </nav>
 
 
-            {{-- Actions --}}
+            {{-- =====================================================
+                 Actions
+            ====================================================== --}}
             <div class="site-header__actions">
 
                 {{-- Search --}}
@@ -121,6 +132,7 @@
                             cy="11"
                             r="6.5"
                         />
+
                         <path d="M16 16L21 21" />
                     </svg>
                 </button>
@@ -146,33 +158,70 @@
                 </a>
 
 
-                {{-- Account --}}
-                <a
-                    href="#"
-                    class="icon-btn site-header__action"
-                    aria-label="حساب کاربری"
-                >
-                    <svg
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="1.8"
-                        aria-hidden="true"
+                {{-- =================================================
+                     Account
+                ================================================== --}}
+                @auth
+
+                    <button
+                        type="button"
+                        class="icon-btn site-header__action"
+                        aria-label="حساب کاربری"
+                        aria-haspopup="dialog"
+                        :aria-expanded="accountOpen ? 'true' : 'false'"
+                        @click="accountOpen = true"
                     >
-                        <circle
-                            cx="12"
-                            cy="8"
-                            r="3.2"
-                        />
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            aria-hidden="true"
+                        >
+                            <circle
+                                cx="12"
+                                cy="8"
+                                r="3.2"
+                            />
 
-                        <path
-                            d="M5.2 20C5.9 16.6 8.4 14.8 12 14.8C15.6 14.8 18.1 16.6 18.8 20"
-                        />
-                    </svg>
-                </a>
+                            <path
+                                d="M5.2 20C5.9 16.6 8.4 14.8 12 14.8C15.6 14.8 18.1 16.6 18.8 20"
+                            />
+                        </svg>
+                    </button>
+
+                @else
+
+                    <a
+                        href="{{ route('login') }}"
+                        class="icon-btn site-header__action"
+                        aria-label="ورود"
+                    >
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            aria-hidden="true"
+                        >
+                            <circle
+                                cx="12"
+                                cy="8"
+                                r="3.2"
+                            />
+
+                            <path
+                                d="M5.2 20C5.9 16.6 8.4 14.8 12 14.8C15.6 14.8 18.1 16.6 18.8 20"
+                            />
+                        </svg>
+                    </a>
+
+                @endauth
 
 
-                {{-- Cart --}}
+                {{-- =================================================
+                     Cart
+                ================================================== --}}
                 <a
                     href="{{ route('cart') }}"
                     class="site-header__cart"
@@ -206,7 +255,9 @@
                 </a>
 
 
-                {{-- Mobile menu --}}
+                {{-- =================================================
+                     Mobile Menu
+                ================================================== --}}
                 <button
                     type="button"
                     class="icon-btn site-header__menu-toggle"
@@ -235,7 +286,9 @@
     </div>
 
 
-    {{-- Search Panel --}}
+    {{-- =============================================================
+         Search Panel
+    ============================================================== --}}
     <div
         class="site-header__search"
         data-search-panel
@@ -296,6 +349,179 @@
     </div>
 
 
+    {{-- =============================================================
+         Account Modal
+    ============================================================== --}}
+    @auth
+
+        <div
+            x-cloak
+            x-show="accountOpen"
+            x-transition.opacity
+            @keydown.escape.window="accountOpen = false"
+            class="fixed inset-0 z-[9999] flex items-center justify-center bg-black/40 px-4 backdrop-blur-sm"
+            role="dialog"
+            aria-modal="true"
+            aria-label="حساب کاربری"
+        >
+
+            {{-- Backdrop --}}
+            <button
+                type="button"
+                class="absolute inset-0 h-full w-full cursor-default"
+                aria-label="بستن"
+                @click="accountOpen = false"
+            ></button>
+
+
+            {{-- Modal --}}
+            <div
+                x-show="accountOpen"
+                x-transition:enter="transition ease-out duration-200"
+                x-transition:enter-start="translate-y-2 scale-95 opacity-0"
+                x-transition:enter-end="translate-y-0 scale-100 opacity-100"
+                x-transition:leave="transition ease-in duration-150"
+                x-transition:leave-start="translate-y-0 scale-100 opacity-100"
+                x-transition:leave-end="translate-y-2 scale-95 opacity-0"
+                @click.stop
+                class="relative z-10 w-full max-w-md overflow-hidden rounded-3xl border border-[var(--color-border)] bg-white shadow-2xl"
+            >
+
+                {{-- Modal Header --}}
+                <div
+                    class="flex items-center justify-between border-b border-[var(--color-border)] px-6 py-5"
+                >
+
+                    <div class="flex items-center gap-3">
+
+                        <div
+                            class="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--color-brand-50)] text-[var(--color-brand-700)]"
+                        >
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                                class="h-5 w-5"
+                                aria-hidden="true"
+                            >
+                                <circle
+                                    cx="12"
+                                    cy="8"
+                                    r="3.2"
+                                />
+
+                                <path
+                                    d="M5.2 20C5.9 16.6 8.4 14.8 12 14.8C15.6 14.8 18.1 16.6 18.8 20"
+                                />
+                            </svg>
+                        </div>
+
+
+                        <div>
+                            <h3 class="text-sm font-black text-[var(--color-text-primary)]">
+                                حساب کاربری
+                            </h3>
+
+                            <p class="mt-1 text-xs text-[var(--color-text-muted)]">
+                                {{ auth()->user()->name }}
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    {{-- Close --}}
+                    <button
+                        type="button"
+                        @click="accountOpen = false"
+                        class="flex h-9 w-9 items-center justify-center rounded-xl text-[var(--color-text-muted)] transition hover:bg-[var(--color-neutral-100)] hover:text-[var(--color-text-primary)]"
+                        aria-label="بستن"
+                    >
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            class="h-5 w-5"
+                            aria-hidden="true"
+                        >
+                            <path d="M6 6L18 18" />
+                            <path d="M18 6L6 18" />
+                        </svg>
+                    </button>
+
+                </div>
+
+
+                {{-- Modal Body --}}
+                <div class="space-y-3 p-6">
+
+                    {{-- User Info --}}
+                    <div
+                        class="rounded-2xl bg-[var(--color-neutral-50)] p-4"
+                    >
+                        <p class="text-xs text-[var(--color-text-muted)]">
+                            حساب واردشده
+                        </p>
+
+                        <p class="mt-1 text-sm font-bold text-[var(--color-text-primary)]">
+                            {{ auth()->user()->email }}
+                        </p>
+                    </div>
+
+
+                    {{-- Home --}}
+                    <a
+                        href="{{ route('home') }}"
+                        @click="accountOpen = false"
+                        class="flex w-full items-center justify-center rounded-2xl border border-[var(--color-border)] px-4 py-3 text-sm font-bold text-[var(--color-text-primary)] transition hover:bg-[var(--color-neutral-50)]"
+                    >
+                        بازگشت به فروشگاه
+                    </a>
+
+
+                    {{-- Logout --}}
+                    <form
+                        method="POST"
+                        action="{{ route('logout') }}"
+                    >
+                        @csrf
+
+                        <button
+                            type="submit"
+                            class="flex w-full items-center justify-center gap-2 rounded-2xl bg-red-50 px-4 py-3.5 text-sm font-black text-red-600 transition hover:bg-red-100"
+                        >
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                                class="h-5 w-5"
+                                aria-hidden="true"
+                            >
+                                <path d="M10 17L15 12L10 7" />
+                                <path d="M15 12H3" />
+                                <path d="M21 4V20" />
+                            </svg>
+
+                            خروج از حساب کاربری
+
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    @endauth
+
+
+    {{-- Mobile Menu --}}
     <x-layout.mobile-menu />
 
 </header>

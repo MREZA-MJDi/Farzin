@@ -14,8 +14,14 @@ class ProductController extends Controller
 
         $product->load([
             'category',
-            'images',
+
+            'images' => fn ($query) => $query
+                ->orderByDesc('is_primary')
+                ->orderBy('sort_order')
+                ->orderBy('id'),
+
             'primaryImage',
+
             'reviews' => fn ($query) => $query
                 ->with('user:id,name')
                 ->where('status', 'approved')
@@ -23,17 +29,22 @@ class ProductController extends Controller
         ]);
 
         $relatedProducts = Product::query()
-            ->with(['primaryImage', 'category'])
+            ->with([
+                'category',
+                'primaryImage',
+            ])
             ->where('is_active', true)
             ->where('category_id', $product->category_id)
-            ->whereKeyNot($product->id)
+            ->where('id', '!=', $product->id)
             ->latest()
             ->take(4)
             ->get();
 
-        return view('products.show', compact(
-            'product',
-            'relatedProducts'
-        ));
-    }
-}
+        return view(
+            'products.show',
+            compact(
+                'product',
+                'relatedProducts'
+            )
+        );
+    }}

@@ -6,29 +6,34 @@
 
 @section('content')
 
-    <div class="bg-[var(--color-neutral-50)]">
+    <div class="min-h-screen bg-[var(--color-neutral-50)]">
 
-        <section class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
+        <section class="mx-auto max-w-6xl px-4 py-7 sm:px-6 sm:py-9 lg:px-8 lg:py-11">
 
             {{-- =========================================================
                 HEADER
             ========================================================== --}}
 
-            <div class="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+            <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
 
-                <div>
+                <div class="min-w-0">
 
-                    <div class="inline-flex items-center gap-2 text-[11px] font-black uppercase tracking-[0.24em] text-[var(--color-accent-600)]">
+                    <div class="inline-flex items-center gap-2 text-[9px] font-black uppercase tracking-[0.22em] text-[var(--color-accent-600)] sm:text-[10px]">
+
                         <span class="h-1.5 w-1.5 rounded-full bg-[var(--color-accent-600)]"></span>
+
                         Your Cart
+
                     </div>
 
-                    <h1 class="mt-3 text-3xl font-black tracking-tight text-[var(--color-text-primary)] sm:text-4xl">
+
+                    <h1 class="mt-2 text-2xl font-black tracking-tight text-[var(--color-text-primary)] sm:text-3xl">
                         سبد خرید شما
                     </h1>
 
-                    <p class="mt-2 max-w-2xl text-sm leading-7 text-[var(--color-text-secondary)]">
-                        محصولات انتخاب‌شده‌ات را بررسی کن و برای ثبت سفارش ادامه بده.
+
+                    <p class="mt-1.5 max-w-2xl text-xs leading-6 text-[var(--color-text-secondary)] sm:text-sm">
+                        محصولات انتخاب‌شده را بررسی کنید و برای ثبت سفارش ادامه دهید.
                     </p>
 
                 </div>
@@ -36,10 +41,10 @@
 
                 @if($itemCount > 0)
 
-                    <div class="inline-flex w-fit items-center gap-2 rounded-full bg-[var(--color-brand-50)] px-4 py-2 text-xs font-black text-[var(--color-brand-900)]">
+                    <div class="inline-flex w-fit items-center gap-2 rounded-full bg-[var(--color-brand-50)] px-3.5 py-2 text-[10px] font-black text-[var(--color-brand-900)]">
 
                         <svg
-                            class="h-4 w-4"
+                            class="h-3.5 w-3.5"
                             viewBox="0 0 24 24"
                             fill="none"
                             stroke="currentColor"
@@ -52,6 +57,7 @@
                         </svg>
 
                         {{ number_format($itemCount) }}
+
                         آیتم
 
                     </div>
@@ -62,25 +68,98 @@
 
 
             {{-- =========================================================
+                FLASH MESSAGE
+            ========================================================== --}}
+
+            @if(session('success'))
+
+                <div class="mt-5 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3">
+
+                    <div class="flex items-center gap-2.5">
+
+                        <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-emerald-100 text-emerald-700">
+
+                            <svg
+                                class="h-4 w-4"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                            >
+                                <path d="m5 12 4 4L19 6"/>
+                            </svg>
+
+                        </div>
+
+                        <p class="text-xs font-bold text-emerald-700">
+                            {{ session('success') }}
+                        </p>
+
+                    </div>
+
+                </div>
+
+            @endif
+
+
+            {{-- =========================================================
+                ERROR MESSAGE
+            ========================================================== --}}
+
+            @if(session('error'))
+
+                <div class="mt-5 rounded-xl border border-red-200 bg-red-50 px-4 py-3">
+
+                    <div class="flex items-center gap-2.5">
+
+                        <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-red-100 text-red-700">
+
+                            <svg
+                                class="h-4 w-4"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                            >
+                                <circle cx="12" cy="12" r="9"/>
+                                <path d="M12 8v5"/>
+                                <path d="M12 16h.01"/>
+                            </svg>
+
+                        </div>
+
+                        <p class="text-xs font-bold text-red-700">
+                            {{ session('error') }}
+                        </p>
+
+                    </div>
+
+                </div>
+
+            @endif
+
+
+            {{-- =========================================================
                 EMPTY CART
             ========================================================== --}}
 
             @if($items->isEmpty())
 
-                <div class="mt-10 overflow-hidden rounded-[2rem] border border-[var(--color-border)] bg-white shadow-[var(--shadow-xs)]">
+                <div class="mt-7 overflow-hidden rounded-2xl border border-[var(--color-border)] bg-white shadow-[var(--shadow-xs)]">
 
-                    <div class="relative flex flex-col items-center overflow-hidden px-6 py-20 text-center sm:py-28">
+                    <div class="relative flex flex-col items-center overflow-hidden px-5 py-16 text-center sm:py-20">
 
                         {{-- Decorative --}}
-                        <div class="pointer-events-none absolute -right-20 -top-20 h-52 w-52 rounded-full bg-[var(--color-accent-600)]/5 blur-3xl"></div>
+                        <div class="pointer-events-none absolute -right-16 -top-16 h-44 w-44 rounded-full bg-[var(--color-accent-600)]/5 blur-3xl"></div>
 
-                        <div class="pointer-events-none absolute -bottom-24 -left-20 h-56 w-56 rounded-full bg-[var(--color-brand-900)]/5 blur-3xl"></div>
+                        <div class="pointer-events-none absolute -bottom-20 -left-16 h-48 w-48 rounded-full bg-[var(--color-brand-900)]/5 blur-3xl"></div>
 
 
-                        <div class="relative flex h-20 w-20 items-center justify-center rounded-[1.75rem] bg-[var(--color-brand-50)] text-[var(--color-brand-900)]">
+                        {{-- Icon --}}
+                        <div class="relative flex h-16 w-16 items-center justify-center rounded-2xl bg-[var(--color-brand-50)] text-[var(--color-brand-900)] sm:h-18 sm:w-18">
 
                             <svg
-                                class="h-9 w-9"
+                                class="h-7 w-7 sm:h-8 sm:w-8"
                                 viewBox="0 0 24 24"
                                 fill="none"
                                 stroke="currentColor"
@@ -95,20 +174,22 @@
                         </div>
 
 
-                        <h2 class="relative mt-6 text-2xl font-black text-[var(--color-text-primary)]">
+                        <h2 class="relative mt-5 text-xl font-black text-[var(--color-text-primary)] sm:text-2xl">
                             سبد خریدت خالیه
                         </h2>
 
-                        <p class="relative mt-3 max-w-md text-sm leading-7 text-[var(--color-text-secondary)]">
-                            هنوز چیزی به سبد خرید اضافه نکردی.
-                            چند محصول خوب منتظرته تا انتخابشان کنی.
+
+                        <p class="relative mt-2.5 max-w-md text-xs leading-7 text-[var(--color-text-secondary)] sm:text-sm">
+                            هنوز محصولی به سبد خرید اضافه نکردی.
+                            چند محصول خوب منتظرته.
                         </p>
 
 
                         <a
                             href="{{ route('shop.index') }}"
-                            class="relative mt-7 inline-flex items-center gap-3 rounded-2xl bg-[var(--color-accent-600)] px-6 py-4 text-sm font-black text-white shadow-lg shadow-[var(--color-accent-600)]/15 transition duration-300 hover:-translate-y-0.5 hover:bg-[var(--color-accent-700)]"
+                            class="relative mt-6 inline-flex items-center gap-2.5 rounded-xl bg-[var(--color-accent-600)] px-5 py-3 text-xs font-black text-white shadow-md shadow-[var(--color-accent-600)]/15 transition duration-300 hover:-translate-y-0.5 hover:bg-[var(--color-accent-700)]"
                         >
+
                             رفتن به فروشگاه
 
                             <svg
@@ -117,10 +198,10 @@
                                 fill="none"
                                 stroke="currentColor"
                                 stroke-width="1.8"
-                                aria-hidden="true"
                             >
                                 <path d="m9 18 6-6-6-6"/>
                             </svg>
+
                         </a>
 
                     </div>
@@ -133,41 +214,103 @@
                     CART CONTENT
                 ====================================================== --}}
 
-                <div class="mt-10 grid gap-8 xl:grid-cols-[minmax(0,1fr)_380px]">
-
+                <div class="mt-7 grid items-start gap-5 xl:grid-cols-[minmax(0,1fr)_350px] xl:gap-7">
 
                     {{-- =================================================
-                        ITEMS
+                        CART ITEMS
                     ================================================== --}}
 
-                    <div class="space-y-4">
+                    <div class="space-y-3.5">
 
                         @foreach($items as $item)
 
                             @php
                                 $product = $item->product;
-                                $image = $product?->primaryImage?->image;
+
+                                /*
+                                |--------------------------------------------------------------------------
+                                | Image priority
+                                |--------------------------------------------------------------------------
+                                | 1. Primary image
+                                | 2. First gallery image
+                                | 3. Placeholder
+                                |--------------------------------------------------------------------------
+                                */
+
+                                $imageModel = $product?->primaryImage;
+
+                                if (
+                                    !$imageModel &&
+                                    $product &&
+                                    $product->relationLoaded('images')
+                                ) {
+                                    $imageModel = $product->images->first();
+                                }
+
+                                /*
+                                |--------------------------------------------------------------------------
+                                | Fallback lazy relation
+                                |--------------------------------------------------------------------------
+                                */
+
+                                if (!$imageModel && $product) {
+                                    $imageModel = $product->images
+                                        ->sortBy('sort_order')
+                                        ->sortBy('id')
+                                        ->first();
+                                }
+
+                                $image = $imageModel?->image;
+
+                                $imageUrl = $image
+                                    ? asset('storage/' . ltrim($image, '/'))
+                                    : null;
+
+
+                                /*
+                                |--------------------------------------------------------------------------
+                                | Line total
+                                |--------------------------------------------------------------------------
+                                */
 
                                 $lineTotal =
-                                    $item->unit_price * $item->quantity;
+                                    (int) $item->unit_price *
+                                    (int) $item->quantity;
+
+
+                                /*
+                                |--------------------------------------------------------------------------
+                                | Quantity
+                                |--------------------------------------------------------------------------
+                                */
 
                                 $maxQuantity =
-                                    min($product?->stock ?? 1, 99);
+                                    min(
+                                        max((int) ($product?->stock ?? 1), 1),
+                                        99
+                                    );
+
+
+                                /*
+                                |--------------------------------------------------------------------------
+                                | Availability
+                                |--------------------------------------------------------------------------
+                                */
 
                                 $isAvailable =
                                     $product &&
                                     $product->is_active &&
-                                    $product->stock > 0;
+                                    (int) $product->stock > 0;
                             @endphp
 
 
                             @if($product)
 
                                 <article
-                                    class="group rounded-[2rem] border border-[var(--color-border)] bg-white p-4 shadow-[var(--shadow-xs)] transition duration-300 hover:-translate-y-0.5 hover:border-[var(--color-border-strong)] hover:shadow-[var(--shadow-sm)] sm:p-5"
+                                    class="group rounded-2xl border border-[var(--color-border)] bg-white p-3.5 shadow-[var(--shadow-xs)] transition duration-300 hover:border-[var(--color-border-strong)] hover:shadow-[var(--shadow-sm)] sm:p-4"
                                 >
 
-                                    <div class="flex flex-col gap-5 sm:flex-row">
+                                    <div class="flex gap-3.5 sm:gap-4">
 
 
                                         {{-- =================================================
@@ -179,16 +322,16 @@
                                             class="block shrink-0"
                                         >
 
-                                            <div class="relative h-28 w-28 overflow-hidden rounded-2xl bg-[#eef0f3] sm:h-32 sm:w-32">
+                                            <div class="relative h-24 w-24 overflow-hidden rounded-xl bg-[#eef0f3] sm:h-28 sm:w-28">
 
-                                                {{-- subtle surface --}}
-                                                <div class="pointer-events-none absolute -right-5 -top-5 z-[1] h-20 w-20 rounded-full bg-white/60 blur-2xl"></div>
+                                                <div class="pointer-events-none absolute -right-4 -top-4 z-[1] h-16 w-16 rounded-full bg-white/60 blur-2xl"></div>
 
-                                                @if($image)
+
+                                                @if($imageUrl)
 
                                                     <img
-                                                        src="{{ asset('storage/' . $image) }}"
-                                                        alt="{{ $product->name }}"
+                                                        src="{{ $imageUrl }}"
+                                                        alt="{{ $imageModel?->alt ?: $product->name }}"
                                                         class="relative h-full w-full object-cover transition duration-500 group-hover:scale-105"
                                                         loading="lazy"
                                                         decoding="async"
@@ -199,7 +342,7 @@
                                                     <div class="flex h-full w-full items-center justify-center text-[var(--color-neutral-400)]">
 
                                                         <svg
-                                                            class="h-10 w-10"
+                                                            class="h-8 w-8"
                                                             viewBox="0 0 24 24"
                                                             fill="none"
                                                             stroke="currentColor"
@@ -220,9 +363,9 @@
 
                                                     <div class="absolute inset-0 z-10 flex items-center justify-center bg-[var(--color-brand-950)]/10">
 
-                                                    <span class="rounded-full bg-white/95 px-3 py-1.5 text-[9px] font-black text-[var(--color-brand-950)] shadow-sm backdrop-blur">
-                                                        ناموجود
-                                                    </span>
+                                                        <span class="rounded-full bg-white/95 px-2.5 py-1 text-[8px] font-black text-[var(--color-brand-950)] shadow-sm backdrop-blur">
+                                                            ناموجود
+                                                        </span>
 
                                                     </div>
 
@@ -234,22 +377,20 @@
 
 
                                         {{-- =================================================
-                                            PRODUCT INFO
+                                            PRODUCT DETAILS
                                         ================================================== --}}
 
-                                        <div class="flex min-w-0 flex-1 flex-col">
+                                        <div class="min-w-0 flex-1">
 
-                                            <div class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                                            <div class="flex items-start justify-between gap-3">
 
-
-                                                {{-- Product Identity --}}
                                                 <div class="min-w-0">
 
                                                     @if($product->category)
 
                                                         <a
                                                             href="{{ route('categories.show', $product->category) }}"
-                                                            class="inline-block truncate text-[11px] font-black text-[var(--color-accent-600)] transition hover:text-[var(--color-accent-700)]"
+                                                            class="inline-block max-w-full truncate text-[9px] font-black text-[var(--color-accent-600)] transition hover:text-[var(--color-accent-700)] sm:text-[10px]"
                                                         >
                                                             {{ $product->category->name }}
                                                         </a>
@@ -261,26 +402,28 @@
                                                         href="{{ route('products.show', $product) }}"
                                                         class="mt-1 block"
                                                     >
+
                                                         <h2
-                                                            class="line-clamp-2 text-base font-black leading-7 text-[var(--color-text-primary)] transition hover:text-[var(--color-brand-900)]"
+                                                            class="line-clamp-2 text-sm font-black leading-6 text-[var(--color-text-primary)] transition hover:text-[var(--color-brand-900)] sm:text-base sm:leading-7"
                                                         >
                                                             {{ $item->product_name ?? $product->name }}
                                                         </h2>
+
                                                     </a>
 
 
                                                     @if($item->product_sku)
 
-                                                        <div class="mt-1.5 text-xs text-[var(--color-text-muted)]">
+                                                        <div class="mt-1 text-[10px] text-[var(--color-text-muted)] sm:text-[11px]">
 
-                                                            کد کالا:
+                                                            کد:
 
                                                             <span
-                                                                class="font-mono font-bold text-[var(--color-text-secondary)]"
                                                                 dir="ltr"
+                                                                class="font-mono font-bold text-[var(--color-text-secondary)]"
                                                             >
-                                                            {{ $item->product_sku }}
-                                                        </span>
+                                                                {{ $item->product_sku }}
+                                                            </span>
 
                                                         </div>
 
@@ -294,13 +437,15 @@
                                                     action="{{ route('customer.cart.remove', $product) }}"
                                                     method="POST"
                                                     class="shrink-0"
+                                                    onsubmit="return confirm('آیا از حذف این محصول از سبد خرید مطمئن هستید؟');"
                                                 >
+
                                                     @csrf
                                                     @method('DELETE')
 
                                                     <button
                                                         type="submit"
-                                                        class="inline-flex items-center gap-2 rounded-xl px-3 py-2 text-xs font-bold text-[var(--color-text-muted)] transition hover:bg-[var(--color-danger-50)] hover:text-[var(--color-danger-700)]"
+                                                        class="flex h-8 w-8 items-center justify-center rounded-lg text-[var(--color-text-muted)] transition hover:bg-red-50 hover:text-red-600"
                                                         title="حذف از سبد"
                                                         aria-label="حذف {{ $product->name }} از سبد خرید"
                                                     >
@@ -311,7 +456,6 @@
                                                             fill="none"
                                                             stroke="currentColor"
                                                             stroke-width="1.7"
-                                                            aria-hidden="true"
                                                         >
                                                             <path d="M3 6h18"/>
                                                             <path d="M8 6V4h8v2"/>
@@ -319,8 +463,6 @@
                                                             <path d="M10 11v6"/>
                                                             <path d="M14 11v6"/>
                                                         </svg>
-
-                                                        حذف
 
                                                     </button>
 
@@ -330,18 +472,19 @@
 
 
                                             {{-- =================================================
-                                                BOTTOM ROW
+                                                ITEM FOOTER
                                             ================================================== --}}
 
-                                            <div class="mt-6 flex flex-col gap-5 sm:mt-auto sm:flex-row sm:items-end sm:justify-between">
+                                            <div class="mt-4 flex flex-col gap-3.5 sm:flex-row sm:items-end sm:justify-between">
 
 
                                                 {{-- Quantity --}}
                                                 <form
                                                     action="{{ route('customer.cart.update', $product) }}"
                                                     method="POST"
-                                                    class="flex items-center gap-3"
+                                                    class="flex items-center gap-2.5"
                                                 >
+
                                                     @csrf
                                                     @method('PATCH')
 
@@ -351,21 +494,17 @@
                                                         value="{{ $product->id }}"
                                                     >
 
-                                                    <span
-                                                        class="text-xs font-bold text-[var(--color-text-muted)]"
-                                                    >
-                                                    تعداد
-                                                </span>
+                                                    <span class="text-[10px] font-bold text-[var(--color-text-muted)] sm:text-[11px]">
+                                                        تعداد
+                                                    </span>
 
 
-                                                    <div
-                                                        class="flex h-11 items-center overflow-hidden rounded-xl border border-[var(--color-border)] bg-white"
-                                                    >
+                                                    <div class="flex h-9 items-center overflow-hidden rounded-lg border border-[var(--color-border)] bg-white">
 
                                                         <button
                                                             type="button"
                                                             onclick="changeCartQuantity(this, -1)"
-                                                            class="flex h-full w-10 items-center justify-center text-[var(--color-text-muted)] transition hover:bg-[var(--color-neutral-50)] hover:text-[var(--color-brand-900)]"
+                                                            class="flex h-full w-8 items-center justify-center text-sm text-[var(--color-text-muted)] transition hover:bg-[var(--color-neutral-50)] hover:text-[var(--color-brand-900)]"
                                                             aria-label="کاهش تعداد"
                                                         >
                                                             −
@@ -377,8 +516,8 @@
                                                             name="quantity"
                                                             value="{{ $item->quantity }}"
                                                             min="1"
-                                                            max="{{ max(1, $maxQuantity) }}"
-                                                            class="h-full w-12 border-x border-[var(--color-border)] bg-transparent text-center text-sm font-black text-[var(--color-text-primary)] outline-none"
+                                                            max="{{ $maxQuantity }}"
+                                                            class="h-full w-10 border-x border-[var(--color-border)] bg-transparent text-center text-xs font-black text-[var(--color-text-primary)] outline-none"
                                                             onchange="this.form.submit()"
                                                             aria-label="تعداد {{ $product->name }}"
                                                         >
@@ -387,7 +526,7 @@
                                                         <button
                                                             type="button"
                                                             onclick="changeCartQuantity(this, 1)"
-                                                            class="flex h-full w-10 items-center justify-center text-[var(--color-text-muted)] transition hover:bg-[var(--color-neutral-50)] hover:text-[var(--color-brand-900)]"
+                                                            class="flex h-full w-8 items-center justify-center text-sm text-[var(--color-text-muted)] transition hover:bg-[var(--color-neutral-50)] hover:text-[var(--color-brand-900)]"
                                                             aria-label="افزایش تعداد"
                                                         >
                                                             +
@@ -398,26 +537,31 @@
                                                 </form>
 
 
-                                                {{-- Prices --}}
+                                                {{-- Price --}}
                                                 <div class="text-right sm:text-left">
 
-                                                    <div
-                                                        class="text-xs text-[var(--color-text-muted)]"
-                                                    >
-                                                        {{ number_format($item->unit_price) }}
+                                                    <div class="text-[10px] text-[var(--color-text-muted)] sm:text-[11px]">
+
+                                                        {{ number_format((int) $item->unit_price) }}
                                                         تومان
-                                                        ×
-                                                        {{ $item->quantity }}
+
+                                                        <span class="mx-0.5">
+                                                            ×
+                                                        </span>
+
+                                                        {{ number_format((int) $item->quantity) }}
+
                                                     </div>
 
-                                                    <div
-                                                        class="mt-1 text-lg font-black text-[var(--color-brand-950)]"
-                                                    >
+
+                                                    <div class="mt-0.5 text-base font-black text-[var(--color-brand-950)] sm:text-lg">
+
                                                         {{ number_format($lineTotal) }}
 
-                                                        <span class="text-[10px] font-bold text-[var(--color-text-muted)]">
-                                                        تومان
-                                                    </span>
+                                                        <span class="text-[9px] font-bold text-[var(--color-text-muted)] sm:text-[10px]">
+                                                            تومان
+                                                        </span>
+
                                                     </div>
 
                                                 </div>
@@ -439,28 +583,28 @@
                             CLEAR CART
                         ================================================== --}}
 
-                        <div class="flex justify-end pt-1">
+                        <div class="flex justify-end">
 
                             <form
                                 action="{{ route('customer.cart.clear') }}"
                                 method="POST"
                                 onsubmit="return confirm('از خالی کردن سبد خرید مطمئنی؟');"
                             >
+
                                 @csrf
                                 @method('DELETE')
 
                                 <button
                                     type="submit"
-                                    class="inline-flex items-center gap-2 rounded-xl px-3 py-2 text-xs font-bold text-[var(--color-text-muted)] transition hover:bg-[var(--color-danger-50)] hover:text-[var(--color-danger-700)]"
+                                    class="inline-flex items-center gap-2 rounded-lg px-3 py-2 text-[10px] font-bold text-[var(--color-text-muted)] transition hover:bg-red-50 hover:text-red-600 sm:text-[11px]"
                                 >
 
                                     <svg
-                                        class="h-4 w-4"
+                                        class="h-3.5 w-3.5"
                                         viewBox="0 0 24 24"
                                         fill="none"
                                         stroke="currentColor"
                                         stroke-width="1.7"
-                                        aria-hidden="true"
                                     >
                                         <path d="M3 6h18"/>
                                         <path d="M8 6V4h8v2"/>
@@ -469,7 +613,7 @@
                                         <path d="M14 11v6"/>
                                     </svg>
 
-                                    خالی کردن سبد خرید
+                                    خالی کردن سبد
 
                                 </button>
 
@@ -484,106 +628,105 @@
                         SUMMARY
                     ================================================== --}}
 
-                    <aside class="xl:sticky xl:top-28 xl:self-start">
+                    <aside class="xl:sticky xl:top-24 xl:self-start">
 
-                        <div
-                            class="overflow-hidden rounded-[2rem] border border-[var(--color-border)] bg-white shadow-[var(--shadow-sm)]"
-                        >
+                        <div class="overflow-hidden rounded-2xl border border-[var(--color-border)] bg-white shadow-[var(--shadow-sm)]">
 
                             {{-- Summary Header --}}
-                            <div class="border-b border-[var(--color-border)] px-6 py-6">
+                            <div class="border-b border-[var(--color-border)] px-5 py-5">
 
-                                <div class="text-[11px] font-black uppercase tracking-[0.24em] text-[var(--color-accent-600)]">
+                                <div class="text-[9px] font-black uppercase tracking-[0.2em] text-[var(--color-accent-600)]">
                                     Order Summary
                                 </div>
 
-                                <h2 class="mt-2 text-xl font-black text-[var(--color-text-primary)]">
+                                <h2 class="mt-1.5 text-lg font-black text-[var(--color-text-primary)] sm:text-xl">
                                     خلاصه سفارش
                                 </h2>
 
                             </div>
 
 
-                            <div class="space-y-5 px-6 py-6">
+                            <div class="space-y-4 px-5 py-5">
 
-                                {{-- Items --}}
-                                <div class="flex items-center justify-between gap-4 text-sm">
+                                {{-- Count --}}
+                                <div class="flex items-center justify-between gap-4 text-xs">
 
-                                <span class="text-[var(--color-text-secondary)]">
-                                    تعداد اقلام
-                                </span>
+                                    <span class="text-[var(--color-text-secondary)]">
+                                        تعداد اقلام
+                                    </span>
 
                                     <span class="font-black text-[var(--color-text-primary)]">
-                                    {{ number_format($itemCount) }}
-                                </span>
+                                        {{ number_format($itemCount) }}
+                                    </span>
 
                                 </div>
 
 
                                 {{-- Subtotal --}}
-                                <div class="flex items-center justify-between gap-4 text-sm">
+                                <div class="flex items-center justify-between gap-4 text-xs">
 
-                                <span class="text-[var(--color-text-secondary)]">
-                                    مبلغ کالاها
-                                </span>
+                                    <span class="text-[var(--color-text-secondary)]">
+                                        مبلغ کالاها
+                                    </span>
 
                                     <span class="font-black text-[var(--color-text-primary)]">
-                                    {{ number_format($subtotal) }}
-                                    <span class="text-[10px] font-bold text-[var(--color-text-muted)]">
-                                        تومان
+
+                                        {{ number_format($subtotal) }}
+
+                                        <span class="text-[9px] font-bold text-[var(--color-text-muted)]">
+                                            تومان
+                                        </span>
+
                                     </span>
-                                </span>
 
                                 </div>
 
 
                                 {{-- Shipping --}}
-                                <div class="flex items-center justify-between gap-4 text-sm">
+                                <div class="flex items-center justify-between gap-4 text-xs">
 
-                                <span class="text-[var(--color-text-secondary)]">
-                                    هزینه ارسال
-                                </span>
+                                    <span class="text-[var(--color-text-secondary)]">
+                                        هزینه ارسال
+                                    </span>
 
-                                    <span class="rounded-full bg-[var(--color-neutral-100)] px-2.5 py-1 text-[10px] font-black text-[var(--color-text-muted)]">
-                                    در مرحله بعد
-                                </span>
+                                    <span class="rounded-full bg-[var(--color-neutral-100)] px-2 py-1 text-[9px] font-black text-[var(--color-text-muted)]">
+                                        در مرحله بعد
+                                    </span>
 
                                 </div>
 
 
                                 {{-- Total --}}
-                                <div class="border-t border-dashed border-[var(--color-border)] pt-5">
+                                <div class="border-t border-dashed border-[var(--color-border)] pt-4">
 
                                     <div class="flex items-end justify-between gap-4">
 
                                         <div>
 
-                                            <div class="text-xs text-[var(--color-text-muted)]">
+                                            <div class="text-[10px] text-[var(--color-text-muted)]">
                                                 مبلغ فعلی سبد
                                             </div>
 
                                             <div class="mt-1 flex items-baseline gap-1.5">
 
-                                            <span
-                                                class="text-2xl font-black tracking-tight text-[var(--color-brand-950)]"
-                                            >
-                                                {{ number_format($subtotal) }}
-                                            </span>
+                                                <span class="text-xl font-black tracking-tight text-[var(--color-brand-950)] sm:text-2xl">
+                                                    {{ number_format($subtotal) }}
+                                                </span>
 
-                                                <span class="text-xs font-bold text-[var(--color-text-muted)]">
-                                                تومان
-                                            </span>
+                                                <span class="text-[10px] font-bold text-[var(--color-text-muted)]">
+                                                    تومان
+                                                </span>
 
                                             </div>
 
                                         </div>
 
 
-                                        <div class="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-3 py-1.5 text-[10px] font-black text-emerald-700">
+                                        <div class="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 py-1.5 text-[9px] font-black text-emerald-700">
 
                                             <span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
 
-                                            امن و مطمئن
+                                            امن
 
                                         </div>
 
@@ -595,8 +738,9 @@
                                 {{-- Checkout --}}
                                 <a
                                     href="{{ route('customer.checkout.index') }}"
-                                    class="group flex w-full items-center justify-center gap-3 rounded-2xl bg-[var(--color-accent-600)] px-5 py-4 text-sm font-black text-white shadow-lg shadow-[var(--color-accent-600)]/15 transition duration-300 hover:-translate-y-0.5 hover:bg-[var(--color-accent-700)]"
+                                    class="group flex w-full items-center justify-center gap-2.5 rounded-xl bg-[var(--color-accent-600)] px-4 py-3.5 text-xs font-black text-white shadow-md shadow-[var(--color-accent-600)]/15 transition duration-300 hover:-translate-y-0.5 hover:bg-[var(--color-accent-700)]"
                                 >
+
                                     ادامه و ثبت سفارش
 
                                     <svg
@@ -605,7 +749,6 @@
                                         fill="none"
                                         stroke="currentColor"
                                         stroke-width="1.8"
-                                        aria-hidden="true"
                                     >
                                         <path d="m9 18 6-6-6-6"/>
                                     </svg>
@@ -616,8 +759,9 @@
                                 {{-- Continue shopping --}}
                                 <a
                                     href="{{ route('shop.index') }}"
-                                    class="flex w-full items-center justify-center gap-2 rounded-2xl border border-[var(--color-border)] px-5 py-4 text-sm font-black text-[var(--color-text-secondary)] transition duration-200 hover:border-[var(--color-brand-300)] hover:bg-[var(--color-brand-50)] hover:text-[var(--color-brand-900)]"
+                                    class="flex w-full items-center justify-center gap-2 rounded-xl border border-[var(--color-border)] px-4 py-3.5 text-xs font-black text-[var(--color-text-secondary)] transition hover:border-[var(--color-brand-300)] hover:bg-[var(--color-brand-50)] hover:text-[var(--color-brand-900)]"
                                 >
+
                                     ادامه خرید
 
                                     <svg
@@ -626,7 +770,6 @@
                                         fill="none"
                                         stroke="currentColor"
                                         stroke-width="1.8"
-                                        aria-hidden="true"
                                     >
                                         <path d="m9 18 6-6-6-6"/>
                                     </svg>
@@ -636,39 +779,35 @@
                             </div>
 
 
-                            {{-- =================================================
-                                TRUST
-                            ================================================== --}}
+                            {{-- Trust --}}
+                            <div class="border-t border-[var(--color-border)] bg-[var(--color-neutral-50)] px-5 py-4">
 
-                            <div class="border-t border-[var(--color-border)] bg-[var(--color-neutral-50)] px-6 py-5">
+                                <div class="space-y-3.5">
 
-                                <div class="space-y-4">
+                                    <div class="flex items-start gap-2.5">
 
-                                    <div class="flex items-start gap-3">
+                                        <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white text-[var(--color-brand-900)] shadow-sm">
 
-                                        <div
-                                            class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white text-[var(--color-brand-900)] shadow-sm"
-                                        >
                                             <svg
-                                                class="h-4 w-4"
+                                                class="h-3.5 w-3.5"
                                                 viewBox="0 0 24 24"
                                                 fill="none"
                                                 stroke="currentColor"
                                                 stroke-width="1.8"
-                                                aria-hidden="true"
                                             >
                                                 <path d="M12 3 5 6v5c0 5 3 8.5 7 10 4-1.5 7-5 7-10V6l-7-3Z"/>
                                                 <path d="m9 12 2 2 4-4"/>
                                             </svg>
+
                                         </div>
 
                                         <div>
 
-                                            <div class="text-xs font-black text-[var(--color-text-primary)]">
+                                            <div class="text-[10px] font-black text-[var(--color-text-primary)]">
                                                 پرداخت امن
                                             </div>
 
-                                            <div class="mt-1 text-[11px] leading-5 text-[var(--color-text-muted)]">
+                                            <div class="mt-0.5 text-[9px] leading-5 text-[var(--color-text-muted)]">
                                                 اطلاعات پرداخت شما محافظت می‌شود.
                                             </div>
 
@@ -677,34 +816,33 @@
                                     </div>
 
 
-                                    <div class="flex items-start gap-3">
+                                    <div class="flex items-start gap-2.5">
 
-                                        <div
-                                            class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white text-[var(--color-brand-900)] shadow-sm"
-                                        >
+                                        <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white text-[var(--color-brand-900)] shadow-sm">
+
                                             <svg
-                                                class="h-4 w-4"
+                                                class="h-3.5 w-3.5"
                                                 viewBox="0 0 24 24"
                                                 fill="none"
                                                 stroke="currentColor"
                                                 stroke-width="1.8"
-                                                aria-hidden="true"
                                             >
                                                 <path d="M3 7h11v10H3z"/>
                                                 <path d="M14 10h3l4 4v3h-7z"/>
                                                 <circle cx="7" cy="19" r="1.5"/>
                                                 <circle cx="18" cy="19" r="1.5"/>
                                             </svg>
+
                                         </div>
 
                                         <div>
 
-                                            <div class="text-xs font-black text-[var(--color-text-primary)]">
+                                            <div class="text-[10px] font-black text-[var(--color-text-primary)]">
                                                 ارسال مطمئن
                                             </div>
 
-                                            <div class="mt-1 text-[11px] leading-5 text-[var(--color-text-muted)]">
-                                                هزینه و شرایط ارسال در مرحله سفارش مشخص می‌شود.
+                                            <div class="mt-0.5 text-[9px] leading-5 text-[var(--color-text-muted)]">
+                                                شرایط ارسال در مرحله سفارش مشخص می‌شود.
                                             </div>
 
                                         </div>
@@ -712,32 +850,31 @@
                                     </div>
 
 
-                                    <div class="flex items-start gap-3">
+                                    <div class="flex items-start gap-2.5">
 
-                                        <div
-                                            class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white text-[var(--color-accent-600)] shadow-sm"
-                                        >
+                                        <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white text-[var(--color-accent-600)] shadow-sm">
+
                                             <svg
-                                                class="h-4 w-4"
+                                                class="h-3.5 w-3.5"
                                                 viewBox="0 0 24 24"
                                                 fill="none"
                                                 stroke="currentColor"
                                                 stroke-width="1.8"
-                                                aria-hidden="true"
                                             >
                                                 <path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v8Z"/>
                                             </svg>
+
                                         </div>
 
                                         <div>
 
-                                            <div class="text-xs font-black text-[var(--color-text-primary)]">
+                                            <div class="text-[10px] font-black text-[var(--color-text-primary)]">
                                                 نیاز به کمک؟
                                             </div>
 
                                             <a
                                                 href="{{ route('contact.index') }}"
-                                                class="mt-1 inline-block text-[11px] font-bold text-[var(--color-accent-600)] hover:text-[var(--color-accent-700)]"
+                                                class="mt-0.5 inline-block text-[9px] font-bold text-[var(--color-accent-600)] hover:text-[var(--color-accent-700)]"
                                             >
                                                 تماس با پشتیبانی
                                             </a>
@@ -766,36 +903,70 @@
 
 
 @push('scripts')
+
     <script>
         function changeCartQuantity(button, delta) {
-            const form = button.closest('form');
+
+            const form =
+                button.closest('form');
 
             if (!form) {
                 return;
             }
 
-            const input = form.querySelector('input[name="quantity"]');
+
+            const input =
+                form.querySelector(
+                    'input[name="quantity"]'
+                );
 
             if (!input) {
                 return;
             }
 
-            const min = parseInt(input.min || '1', 10);
-            const max = parseInt(input.max || '99', 10);
-            const current = parseInt(input.value || '1', 10);
 
-            const safeCurrent = Number.isFinite(current)
-                ? current
-                : min;
+            const min =
+                parseInt(
+                    input.min || '1',
+                    10
+                );
 
-            const next = Math.min(
-                max,
-                Math.max(min, safeCurrent + delta)
-            );
+
+            const max =
+                parseInt(
+                    input.max || '99',
+                    10
+                );
+
+
+            const current =
+                parseInt(
+                    input.value || '1',
+                    10
+                );
+
+
+            const safeCurrent =
+                Number.isFinite(current)
+                    ? current
+                    : min;
+
+
+            const next =
+                Math.min(
+                    max,
+                    Math.max(
+                        min,
+                        safeCurrent + delta
+                    )
+                );
+
 
             input.value = next;
 
             form.submit();
+
         }
     </script>
+
 @endpush

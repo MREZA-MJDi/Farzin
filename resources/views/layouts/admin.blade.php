@@ -1,8 +1,6 @@
 <!DOCTYPE html>
-<html
-    lang="fa"
-    dir="rtl"
->
+<html lang="fa" dir="rtl">
+
 <head>
     <meta charset="UTF-8">
 
@@ -71,10 +69,7 @@
 >
 
 <div
-    x-data="{
-        sidebarOpen: false,
-        profileOpen: false
-    }"
+    x-data="{ sidebarOpen: false }"
     class="min-h-screen"
 >
 
@@ -111,6 +106,7 @@
         <header
             class="sticky top-0 z-30 border-b border-[var(--color-border)] bg-white/90 backdrop-blur-xl"
         >
+
             <div
                 class="flex min-h-[72px] items-center justify-between gap-4 px-4 sm:px-6 lg:px-8"
             >
@@ -122,6 +118,7 @@
                 <div class="flex min-w-0 items-center gap-3">
 
                     {{-- Mobile Menu --}}
+
                     <button
                         type="button"
                         @click="sidebarOpen = true"
@@ -145,6 +142,7 @@
 
 
                     {{-- Page Heading --}}
+
                     <div class="min-w-0">
 
                         <div
@@ -168,53 +166,28 @@
                     Left Side
                 ================================================== --}}
 
-                <div class="flex shrink-0 items-center gap-2">
-
+                <div class="flex shrink-0 items-center">
 
                     {{-- =================================================
-                        Visit Store
+                        Admin Profile
                     ================================================== --}}
 
-                    <a
-                        href="{{ route('home') }}"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="hidden h-10 items-center gap-2 rounded-xl border border-[var(--color-border)] bg-white px-3 text-sm font-bold text-[var(--color-text-secondary)] transition duration-200 hover:border-[var(--color-brand-300)] hover:bg-[var(--color-brand-50)] hover:text-[var(--color-brand-900)] sm:inline-flex"
+                    <div
+                        id="adminProfile"
+                        class="relative"
                     >
-
-                        <svg
-                            class="h-4 w-4"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="1.8"
-                            aria-hidden="true"
-                        >
-                            <path d="M3 10.5 12 4l9 6.5" />
-                            <path d="M5.5 9.5V20h13V9.5" />
-                            <path d="M9.5 20v-5h5v5" />
-                        </svg>
-
-                        مشاهده سایت
-
-                    </a>
-
-
-                    {{-- =================================================
-                        Profile
-                    ================================================== --}}
-
-                    <div class="relative">
 
                         <button
                             type="button"
-                            @click="profileOpen = !profileOpen"
-                            :aria-expanded="profileOpen.toString()"
-                            aria-haspopup="menu"
+                            id="adminProfileButton"
                             class="flex items-center gap-2 rounded-xl border border-[var(--color-border)] bg-white px-2 py-2 transition duration-200 hover:border-[var(--color-brand-300)] hover:bg-[var(--color-brand-50)] sm:gap-3 sm:px-2.5"
+                            aria-expanded="false"
+                            aria-haspopup="menu"
+                            aria-controls="adminProfileMenu"
                         >
 
                             {{-- Avatar --}}
+
                             <span
                                 class="relative flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-[var(--color-brand-900)] text-sm font-black text-white shadow-sm"
                             >
@@ -228,6 +201,7 @@
 
 
                             {{-- User Details --}}
+
                             <span class="hidden text-right sm:block">
 
                                 <span
@@ -246,9 +220,10 @@
 
 
                             {{-- Chevron --}}
+
                             <svg
+                                id="adminProfileChevron"
                                 class="hidden h-4 w-4 text-[var(--color-text-muted)] transition duration-200 sm:block"
-                                :class="{ 'rotate-180': profileOpen }"
                                 viewBox="0 0 24 24"
                                 fill="none"
                                 stroke="currentColor"
@@ -266,24 +241,16 @@
                         ================================================== --}}
 
                         <div
-                            x-show="profileOpen"
-                            x-cloak
-                            @click.outside="profileOpen = false"
-                            @keydown.escape.window="profileOpen = false"
-                            x-transition:enter="transition ease-out duration-150"
-                            x-transition:enter-start="opacity-0 translate-y-1 scale-[0.98]"
-                            x-transition:enter-end="opacity-100 translate-y-0 scale-100"
-                            x-transition:leave="transition ease-in duration-100"
-                            x-transition:leave-start="opacity-100 translate-y-0 scale-100"
-                            x-transition:leave-end="opacity-0 translate-y-1 scale-[0.98]"
-                            class="absolute left-0 top-[calc(100%+10px)] z-50 w-64 overflow-hidden rounded-2xl border border-[var(--color-border)] bg-white p-2 shadow-[var(--shadow-lg)]"
+                            id="adminProfileMenu"
+                            class="absolute left-0 top-[calc(100%+10px)] z-50 hidden w-64 overflow-hidden rounded-2xl border border-[var(--color-border)] bg-white p-2 shadow-[var(--shadow-lg)]"
                             role="menu"
+                            aria-hidden="true"
                         >
 
-                            {{-- Profile header --}}
-                            <div
-                                class="mb-1 rounded-xl bg-[var(--color-brand-50)] p-3"
-                            >
+                            {{-- Profile Header --}}
+
+                            <div class="mb-1 rounded-xl bg-[var(--color-brand-50)] p-3">
+
                                 <div class="flex items-center gap-3">
 
                                     <span
@@ -309,16 +276,15 @@
                                     </div>
 
                                 </div>
+
                             </div>
 
 
-                            {{-- Visit Website --}}
+                            {{-- Profile Link --}}
+
                             <a
-                                href="{{ route('home') }}"
-                                target="_blank"
-                                rel="noopener noreferrer"
+                                href="#"
                                 role="menuitem"
-                                @click="profileOpen = false"
                                 class="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-bold text-[var(--color-text-secondary)] transition duration-150 hover:bg-[var(--color-neutral-50)] hover:text-[var(--color-text-primary)]"
                             >
 
@@ -333,16 +299,17 @@
                                         stroke-width="1.8"
                                         aria-hidden="true"
                                     >
-                                        <path d="M3 10.5 12 4l9 6.5" />
-                                        <path d="M5.5 9.5V20h13V9.5" />
-                                        <path d="M9.5 20v-5h5v5" />
+                                        <path d="M20 21a8 8 0 0 0-16 0" />
+                                        <circle cx="12" cy="7" r="4" />
                                     </svg>
                                 </span>
 
-                                مشاهده سایت
+                                پروفایل
 
                             </a>
 
+
+                            {{-- Separator --}}
 
                             <div
                                 class="my-1.5 border-t border-[var(--color-border)]"
@@ -350,10 +317,12 @@
 
 
                             {{-- Logout --}}
+
                             <form
                                 method="POST"
                                 action="{{ route('logout') }}"
                             >
+
                                 @csrf
 
                                 <button
@@ -392,6 +361,7 @@
                 </div>
 
             </div>
+
         </header>
 
 
@@ -399,9 +369,7 @@
             Page Content
         ====================================================== --}}
 
-        <main
-            class="px-4 py-6 sm:px-6 lg:px-8 lg:py-8"
-        >
+        <main class="px-4 py-6 sm:px-6 lg:px-8 lg:py-8">
 
             {{-- =================================================
                 Flash Success
@@ -460,8 +428,14 @@
                             stroke-width="2"
                             aria-hidden="true"
                         >
-                            <circle cx="12" cy="12" r="9" />
+                            <circle
+                                cx="12"
+                                cy="12"
+                                r="9"
+                            />
+
                             <path d="M12 8v5" />
+
                             <path d="M12 16h.01" />
                         </svg>
                     </div>
@@ -501,13 +475,20 @@
                                 stroke-width="2"
                                 aria-hidden="true"
                             >
-                                <circle cx="12" cy="12" r="9" />
+                                <circle
+                                    cx="12"
+                                    cy="12"
+                                    r="9"
+                                />
+
                                 <path d="M12 8v5" />
+
                                 <path d="M12 16h.01" />
                             </svg>
                         </div>
 
                         <div>
+
                             <div class="text-sm font-black text-red-800">
                                 خطا در اطلاعات واردشده
                             </div>
@@ -515,6 +496,7 @@
                             <div class="mt-0.5 text-xs text-red-600">
                                 لطفاً موارد زیر را بررسی و اصلاح کنید.
                             </div>
+
                         </div>
 
                     </div>
@@ -529,6 +511,7 @@
                                 <li
                                     class="flex items-start gap-2 text-xs font-semibold leading-6 text-red-700"
                                 >
+
                                     <span
                                         class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-red-500"
                                     ></span>
@@ -536,6 +519,7 @@
                                     <span>
                                         {{ $error }}
                                     </span>
+
                                 </li>
 
                             @endforeach
@@ -563,8 +547,92 @@
 
 
 {{-- =============================================================
-    Scripts
+    Profile Dropdown Script
 ============================================================== --}}
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const profile = document.getElementById('adminProfile');
+        const button = document.getElementById('adminProfileButton');
+        const menu = document.getElementById('adminProfileMenu');
+        const chevron = document.getElementById('adminProfileChevron');
+
+        if (!profile || !button || !menu) {
+            return;
+        }
+
+        function openProfile() {
+            menu.classList.remove('hidden');
+
+            button.setAttribute('aria-expanded', 'true');
+            menu.setAttribute('aria-hidden', 'false');
+
+            if (chevron) {
+                chevron.classList.add('rotate-180');
+            }
+
+            menu.animate(
+                [
+                    {
+                        opacity: 0,
+                        transform: 'translateY(-5px) scale(0.98)'
+                    },
+                    {
+                        opacity: 1,
+                        transform: 'translateY(0) scale(1)'
+                    }
+                ],
+                {
+                    duration: 150,
+                    easing: 'ease-out'
+                }
+            );
+        }
+
+        function closeProfile() {
+            menu.classList.add('hidden');
+
+            button.setAttribute('aria-expanded', 'false');
+            menu.setAttribute('aria-hidden', 'true');
+
+            if (chevron) {
+                chevron.classList.remove('rotate-180');
+            }
+        }
+
+        function toggleProfile(event) {
+            event.preventDefault();
+            event.stopPropagation();
+
+            const isOpen = !menu.classList.contains('hidden');
+
+            if (isOpen) {
+                closeProfile();
+            } else {
+                openProfile();
+            }
+        }
+
+        button.addEventListener('click', toggleProfile);
+
+        document.addEventListener('click', function (event) {
+            if (!profile.contains(event.target)) {
+                closeProfile();
+            }
+        });
+
+        document.addEventListener('keydown', function (event) {
+            if (event.key === 'Escape') {
+                closeProfile();
+            }
+        });
+
+        menu.addEventListener('click', function (event) {
+            event.stopPropagation();
+        });
+    });
+</script>
+
 
 @stack('scripts')
 

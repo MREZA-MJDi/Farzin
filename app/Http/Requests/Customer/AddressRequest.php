@@ -62,6 +62,18 @@ class AddressRequest extends FormRequest
                 'max:2000',
             ],
 
+            'latitude' => [
+                'required',
+                'numeric',
+                'between:-90,90',
+            ],
+
+            'longitude' => [
+                'required',
+                'numeric',
+                'between:-180,180',
+            ],
+
             'is_default' => [
                 'nullable',
                 'boolean',

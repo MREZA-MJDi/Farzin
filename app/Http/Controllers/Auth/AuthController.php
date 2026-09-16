@@ -58,6 +58,11 @@ class AuthController extends Controller
             ->route('home')
             ->with('success', 'خوش آمدید.');
     }
+
+    /**
+     * @param RegisterRequest $request
+     * @return RedirectResponse
+     */
     public function register(
         RegisterRequest $request
     ): RedirectResponse {
@@ -76,7 +81,7 @@ class AuthController extends Controller
         $request->session()->regenerate();
 
         return redirect()
-            ->intended(route('home'))
+            ->route('home')
             ->with('success', 'حساب کاربری با موفقیت ایجاد شد.');
     }
 

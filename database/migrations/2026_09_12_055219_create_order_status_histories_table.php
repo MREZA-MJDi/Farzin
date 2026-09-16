@@ -20,7 +20,8 @@ return new class extends Migration
                 ->constrained('users')
                 ->nullOnDelete();
 
-            $table->string('status');
+            $table->string('from_status')->nullable();
+            $table->string('to_status');
 
             $table->text('note')->nullable();
 

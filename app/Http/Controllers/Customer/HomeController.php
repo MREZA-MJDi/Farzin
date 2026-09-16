@@ -43,7 +43,7 @@ class HomeController extends Controller
             ->take(3)
             ->get();
 
-        return view('customer.home', compact(
+        return view('customer.dashboard', compact(
             'featuredProducts',
             'latestProducts',
             'categories',

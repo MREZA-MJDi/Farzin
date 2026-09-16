@@ -1,286 +1,412 @@
 @extends('layouts.app')
 
-@section('title', 'آدرس‌های من | Farzin')
+@section('title', 'آدرس‌های من | فرزین')
 
-@section('meta_description', 'مدیریت آدرس‌های ارسال در حساب کاربری Farzin')
+@section('meta_description', 'مدیریت و ویرایش آدرس‌های ارسال در حساب کاربری فرزین')
 
 @section('content')
 
-    <section class="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
+    <div class="min-h-screen bg-[var(--color-neutral-50)]">
 
-        {{-- =========================================================
-            HEADER
-        ========================================================== --}}
-        <div class="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+        <section class="mx-auto max-w-5xl px-4 py-7 sm:px-6 sm:py-9 lg:px-8 lg:py-11">
 
-            <div>
+            {{-- =========================================================
+                HEADER
+            ========================================================== --}}
 
-                <div class="text-xs font-bold uppercase tracking-[0.25em] text-[#7b20df]">
+            <header class="mb-7">
+
+                <div class="inline-flex items-center gap-2 text-[9px] font-black uppercase tracking-[0.2em] text-[var(--color-accent-600)] sm:text-[10px]">
+
+                    <span class="h-1.5 w-1.5 rounded-full bg-[var(--color-accent-600)]"></span>
+
                     Addresses
+
                 </div>
 
-                <h1 class="mt-3 text-3xl font-black tracking-tight text-gray-950 sm:text-4xl">
-                    آدرس‌های من
-                </h1>
 
-                <p class="mt-2 max-w-2xl text-sm leading-7 text-gray-500">
-                    آدرس‌های ارسال را مدیریت کن تا در Checkout سریع‌تر سفارشت را ثبت کنی.
-                </p>
+                <div class="mt-2 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
 
-            </div>
+                    <div>
 
+                        <h1 class="text-2xl font-black tracking-tight text-[var(--color-text-primary)] sm:text-3xl">
+                            آدرس‌های من
+                        </h1>
 
-            <a
-                href="#add-address"
-                class="inline-flex items-center justify-center gap-2 rounded-2xl bg-[#3f207e] px-5 py-3.5 text-sm font-bold text-white shadow-lg shadow-[#3f207e]/10 transition duration-300 hover:-translate-y-0.5 hover:bg-[#321866]"
-            >
-                <span class="text-lg leading-none">+</span>
-                افزودن آدرس
-            </a>
+                        <p class="mt-1.5 max-w-2xl text-xs leading-6 text-[var(--color-text-secondary)] sm:text-sm">
+                            آدرس‌های ارسال خود را مدیریت کنید و موقعیت دقیق تحویل را ثبت کنید.
+                        </p>
 
-        </div>
+                    </div>
 
 
-        {{-- =========================================================
-            ADDRESS LIST
-        ========================================================== --}}
-        <div class="mt-10">
+                    <a
+                        href="{{ route('customer.addresses.create') }}"
+                        class="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--color-brand-600)] px-4 py-3 text-xs font-black text-white transition hover:bg-[var(--color-brand-700)] sm:w-auto"
+                    >
+
+                        <svg
+                            class="h-4 w-4"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                        >
+                            <path d="M12 5v14"/>
+                            <path d="M5 12h14"/>
+                        </svg>
+
+                        افزودن آدرس
+
+                    </a>
+
+                </div>
+
+            </header>
+
+
+            {{-- =========================================================
+                FLASH SUCCESS
+            ========================================================== --}}
+
+            @if(session('success'))
+
+                <div class="mb-5 rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3">
+
+                    <div class="flex items-start gap-3">
+
+                        <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-emerald-100 text-emerald-700">
+
+                            <svg
+                                class="h-4 w-4"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                            >
+                                <path d="m5 12 4 4L19 6"/>
+                            </svg>
+
+                        </div>
+
+
+                        <div>
+
+                            <div class="text-xs font-black text-emerald-800">
+                                عملیات موفق
+                            </div>
+
+                            <p class="mt-0.5 text-[11px] font-bold leading-6 text-emerald-700">
+                                {{ session('success') }}
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            @endif
+
+
+            {{-- =========================================================
+                FLASH ERROR
+            ========================================================== --}}
+
+            @if(session('error'))
+
+                <div class="mb-5 rounded-2xl border border-red-200 bg-red-50 px-4 py-3">
+
+                    <div class="flex items-start gap-3">
+
+                        <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-red-100 text-red-700">
+
+                            <svg
+                                class="h-4 w-4"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                            >
+                                <circle cx="12" cy="12" r="9"/>
+                                <path d="M12 8v5"/>
+                                <path d="M12 16h.01"/>
+                            </svg>
+
+                        </div>
+
+
+                        <div>
+
+                            <div class="text-xs font-black text-red-800">
+                                خطا
+                            </div>
+
+                            <p class="mt-0.5 text-[11px] font-bold leading-6 text-red-700">
+                                {{ session('error') }}
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            @endif
+
+
+            {{-- =========================================================
+                ADDRESSES
+            ========================================================== --}}
 
             @if($addresses->isNotEmpty())
 
-                <div class="grid gap-5 md:grid-cols-2">
+                <div class="space-y-4">
 
                     @foreach($addresses as $address)
 
+                        @php
+
+                            $addressLabel = collect([
+                                $address->country ?? null,
+                                $address->province ?? null,
+                                $address->city ?? null,
+                                $address->address ?? null,
+                            ])
+                                ->filter()
+                                ->implode('، ');
+
+                        @endphp
+
+
                         <article
-                            class="group relative overflow-hidden rounded-[2rem] border border-gray-200 bg-white p-6 transition duration-300 hover:-translate-y-0.5 hover:border-gray-300 hover:shadow-xl hover:shadow-gray-200/40"
+                            class="overflow-hidden rounded-2xl border {{ $address->is_default
+                                ? 'border-[var(--color-brand-300)]'
+                                : 'border-[var(--color-border)]' }}
+                                bg-white shadow-[var(--shadow-xs)]"
                         >
 
-                            {{-- Accent --}}
-                            <div
-                                class="absolute inset-x-0 top-0 h-1 {{ $address->is_default ? 'bg-[#3f207e]' : 'bg-gray-100' }}"
-                            ></div>
+                            <div class="p-5 sm:p-6">
+
+                                <div class="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
+
+                                    {{-- Address content --}}
+                                    <div class="min-w-0 flex-1">
+
+                                        <div class="flex flex-wrap items-center gap-2">
+
+                                            <h2 class="text-sm font-black text-[var(--color-text-primary)] sm:text-base">
+                                                {{ $address->title ?: 'آدرس تحویل' }}
+                                            </h2>
 
 
-                            {{-- Header --}}
-                            <div class="flex items-start justify-between gap-4">
+                                            @if($address->is_default)
 
-                                <div class="flex min-w-0 items-center gap-3">
+                                                <span class="rounded-full bg-emerald-50 px-2.5 py-1 text-[9px] font-black text-emerald-700">
+                                                    پیش‌فرض
+                                                </span>
 
-                                    <div
-                                        class="flex size-11 shrink-0 items-center justify-center rounded-2xl {{ $address->is_default ? 'bg-[#f3edfb] text-[#3f207e]' : 'bg-gray-100 text-gray-500' }}"
-                                    >
-                                        <svg
-                                            class="h-5 w-5"
-                                            viewBox="0 0 24 24"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            stroke-width="1.7"
-                                        >
-                                            <path d="M12 21s7-6.1 7-12A7 7 0 1 0 5 9c0 5.9 7 12 7 12Z"/>
-                                            <circle cx="12" cy="9" r="2.3"/>
-                                        </svg>
+                                            @endif
+
+                                        </div>
+
+
+                                        <p class="mt-3 text-xs leading-7 text-[var(--color-text-secondary)]">
+                                            {{ $addressLabel }}
+                                        </p>
+
+
+                                        <div class="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2 text-[10px] text-[var(--color-text-muted)]">
+
+                                            @if($address->full_name)
+
+                                                <span>
+                                                    گیرنده:
+
+                                                    <strong class="font-bold text-[var(--color-text-secondary)]">
+                                                        {{ $address->full_name }}
+                                                    </strong>
+                                                </span>
+
+                                            @endif
+
+
+                                            @if($address->phone)
+
+                                                <span dir="ltr">
+                                                    {{ $address->phone }}
+                                                </span>
+
+                                            @endif
+
+
+                                            @if($address->postal_code)
+
+                                                <span>
+
+                                                    کد پستی:
+
+                                                    <strong
+                                                        dir="ltr"
+                                                        class="font-mono font-bold text-[var(--color-text-secondary)]"
+                                                    >
+                                                        {{ $address->postal_code }}
+                                                    </strong>
+
+                                                </span>
+
+                                            @endif
+
+                                        </div>
+
+
+                                        <div class="mt-3 flex flex-wrap gap-2">
+
+                                            @if(
+                                                $address->latitude !== null &&
+                                                $address->longitude !== null
+                                            )
+
+                                                <span class="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 py-1.5 text-[8px] font-black text-emerald-700">
+
+                                                    <span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+
+                                                    موقعیت روی نقشه ثبت شده
+
+                                                </span>
+
+                                            @else
+
+                                                <span class="inline-flex items-center gap-1.5 rounded-full bg-amber-50 px-2.5 py-1.5 text-[8px] font-black text-amber-700">
+
+                                                    موقعیت نقشه ثبت نشده
+
+                                                </span>
+
+                                            @endif
+
+                                        </div>
+
                                     </div>
 
-                                    <div class="min-w-0">
 
-                                        <h2 class="truncate text-sm font-black text-gray-950">
-                                            {{ $address->title ?: 'آدرس ارسال' }}
-                                        </h2>
+                                    {{-- Actions --}}
+                                    <div class="flex flex-wrap items-center gap-2 lg:justify-end">
 
-                                        @if($address->is_default)
+                                        @if(!$address->is_default)
 
-                                            <div class="mt-1 inline-flex rounded-full bg-emerald-50 px-2.5 py-1 text-[10px] font-bold text-emerald-700">
-                                                آدرس پیش‌فرض
-                                            </div>
+                                            <form
+                                                action="{{ route('customer.addresses.default', $address) }}"
+                                                method="POST"
+                                            >
 
-                                        @else
+                                                @csrf
 
-                                            <div class="mt-1 text-[10px] text-gray-400">
-                                                آدرس ذخیره‌شده
-                                            </div>
+                                                @method('PATCH')
+
+                                                <button
+                                                    type="submit"
+                                                    class="inline-flex items-center gap-1.5 rounded-xl border border-[var(--color-border)] bg-white px-3 py-2.5 text-[10px] font-black text-[var(--color-text-secondary)] transition hover:border-[var(--color-brand-300)] hover:bg-[var(--color-brand-50)] hover:text-[var(--color-brand-700)]"
+                                                >
+
+                                                    پیش‌فرض کردن
+
+                                                </button>
+
+                                            </form>
 
                                         @endif
 
-                                    </div>
 
-                                </div>
-
-
-                                {{-- Actions --}}
-                                <div class="flex shrink-0 items-center gap-1">
-
-                                    <a
-                                        href="#edit-address-{{ $address->id }}"
-                                        class="flex size-9 items-center justify-center rounded-xl text-gray-400 transition hover:bg-[#f3edfb] hover:text-[#3f207e]"
-                                        title="ویرایش"
-                                        aria-label="ویرایش"
-                                    >
-                                        <svg
-                                            class="h-4 w-4"
-                                            viewBox="0 0 24 24"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            stroke-width="1.7"
+                                        <a
+                                            href="{{ route('customer.addresses.edit', $address) }}"
+                                            class="inline-flex items-center gap-1.5 rounded-xl border border-[var(--color-brand-200)] bg-[var(--color-brand-50)] px-3 py-2.5 text-[10px] font-black text-[var(--color-brand-700)] transition hover:border-[var(--color-brand-300)] hover:bg-[var(--color-brand-100)]"
                                         >
-                                            <path d="m4 16-.7 4.7L8 20l11.2-11.2a2.5 2.5 0 0 0-3.5-3.5L4.5 16.5"/>
-                                            <path d="m14.5 6.5 3 3"/>
-                                        </svg>
-                                    </a>
 
-                                    <form
-                                        action="{{ route('customer.addresses.destroy', $address) }}"
-                                        method="POST"
-                                        onsubmit="return confirm('آیا از حذف این آدرس مطمئنی؟');"
-                                    >
-                                        @csrf
-                                        @method('DELETE')
-
-                                        <button
-                                            type="submit"
-                                            class="flex size-9 items-center justify-center rounded-xl text-gray-400 transition hover:bg-red-50 hover:text-red-600"
-                                            title="حذف"
-                                            aria-label="حذف"
-                                        >
                                             <svg
-                                                class="h-4 w-4"
+                                                class="h-3.5 w-3.5"
                                                 viewBox="0 0 24 24"
                                                 fill="none"
                                                 stroke="currentColor"
-                                                stroke-width="1.7"
+                                                stroke-width="1.8"
                                             >
-                                                <path d="M3 6h18"/>
-                                                <path d="M8 6V4h8v2"/>
-                                                <path d="M19 6l-1 15H6L5 6"/>
-                                                <path d="M10 11v6M14 11v6"/>
+                                                <path d="M12 20h9"/>
+                                                <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4Z"/>
                                             </svg>
-                                        </button>
 
-                                    </form>
+                                            ویرایش
 
-                                </div>
-
-                            </div>
+                                        </a>
 
 
-                            {{-- Address body --}}
-                            <div class="mt-6 space-y-4">
-
-                                <div>
-
-                                    <div class="text-[10px] font-bold uppercase tracking-wider text-gray-400">
-                                        گیرنده
-                                    </div>
-
-                                    <div class="mt-1 text-sm font-bold text-gray-900">
-                                        {{ $address->full_name }}
-                                    </div>
-
-                                </div>
-
-
-                                <div class="grid gap-4 sm:grid-cols-2">
-
-                                    <div>
-
-                                        <div class="text-[10px] font-bold uppercase tracking-wider text-gray-400">
-                                            تلفن
-                                        </div>
-
-                                        <div class="mt-1 text-sm font-bold text-gray-700">
-                                            {{ $address->phone }}
-                                        </div>
-
-                                    </div>
-
-
-                                    <div>
-
-                                        <div class="text-[10px] font-bold uppercase tracking-wider text-gray-400">
-                                            منطقه
-                                        </div>
-
-                                        <div class="mt-1 text-sm font-bold text-gray-700">
-                                            {{ $address->province }}
-                                            ،
-                                            {{ $address->city }}
-                                        </div>
-
-                                    </div>
-
-                                </div>
-
-
-                                <div>
-
-                                    <div class="text-[10px] font-bold uppercase tracking-wider text-gray-400">
-                                        آدرس
-                                    </div>
-
-                                    <div class="mt-1 text-sm leading-7 text-gray-600">
-                                        {{ $address->address }}
-                                    </div>
-
-                                </div>
-
-
-                                @if($address->postal_code)
-
-                                    <div>
-
-                                        <div class="text-[10px] font-bold uppercase tracking-wider text-gray-400">
-                                            کد پستی
-                                        </div>
-
-                                        <div class="mt-1 font-mono text-sm font-bold text-gray-700">
-                                            {{ $address->postal_code }}
-                                        </div>
-
-                                    </div>
-
-                                @endif
-
-                            </div>
-
-
-                            {{-- Default action --}}
-                            @unless($address->is_default)
-
-                                <div class="mt-6 border-t border-gray-100 pt-5">
-
-                                    <form
-                                        action="{{ route('customer.addresses.default', $address) }}"
-                                        method="POST"
-                                    >
-                                        @csrf
-                                        @method('PATCH')
-
-                                        <button
-                                            type="submit"
-                                            class="w-full rounded-xl border border-gray-200 px-4 py-3 text-xs font-bold text-gray-600 transition hover:border-[#3f207e] hover:bg-[#f8f4fc] hover:text-[#3f207e]"
+                                        <form
+                                            action="{{ route('customer.addresses.destroy', $address) }}"
+                                            method="POST"
+                                            onsubmit="return confirm('آیا از حذف این آدرس مطمئن هستید؟');"
                                         >
-                                            انتخاب به‌عنوان آدرس پیش‌فرض
-                                        </button>
 
-                                    </form>
+                                            @csrf
 
-                                </div>
+                                            @method('DELETE')
 
-                            @else
+                                            <button
+                                                type="submit"
+                                                class="inline-flex items-center gap-1.5 rounded-xl border border-red-200 bg-red-50 px-3 py-2.5 text-[10px] font-black text-red-700 transition hover:border-red-300 hover:bg-red-100"
+                                            >
 
-                                <div class="mt-6 border-t border-gray-100 pt-5">
+                                                <svg
+                                                    class="h-3.5 w-3.5"
+                                                    viewBox="0 0 24 24"
+                                                    fill="none"
+                                                    stroke="currentColor"
+                                                    stroke-width="1.8"
+                                                >
+                                                    <path d="M3 6h18"/>
+                                                    <path d="M8 6V4h8v2"/>
+                                                    <path d="m19 6-1 14H6L5 6"/>
+                                                    <path d="M10 11v5M14 11v5"/>
+                                                </svg>
 
-                                    <div class="flex items-center gap-2 text-xs font-bold text-emerald-600">
-                                    <span class="flex size-6 items-center justify-center rounded-full bg-emerald-50">
-                                        ✓
-                                    </span>
+                                                حذف
 
-                                        این آدرس برای Checkout پیش‌فرض است.
+                                            </button>
+
+                                        </form>
+
                                     </div>
 
                                 </div>
 
-                            @endunless
+                            </div>
+
+
+                            {{-- Map metadata --}}
+                            @if(
+                                $address->latitude !== null &&
+                                $address->longitude !== null
+                            )
+
+                                <div class="border-t border-[var(--color-border)] bg-[var(--color-neutral-50)] px-5 py-3 sm:px-6">
+
+                                    <div class="flex flex-wrap items-center justify-between gap-2">
+
+                                        <span class="text-[9px] text-[var(--color-text-muted)]">
+                                            موقعیت ثبت‌شده
+                                        </span>
+
+                                        <span
+                                            dir="ltr"
+                                            class="font-mono text-[9px] font-bold text-[var(--color-text-secondary)]"
+                                        >
+                                            {{ number_format((float) $address->latitude, 7) }},
+                                            {{ number_format((float) $address->longitude, 7) }}
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+                            @endif
 
                         </article>
 
@@ -290,366 +416,60 @@
 
             @else
 
-                {{-- Empty --}}
-                <div class="rounded-[2rem] border border-dashed border-gray-300 bg-white px-6 py-24 text-center">
+                {{-- Empty state --}}
+                <div class="rounded-2xl border border-dashed border-[var(--color-border-strong)] bg-white px-5 py-14 text-center shadow-[var(--shadow-xs)]">
 
-                    <div class="mx-auto flex size-16 items-center justify-center rounded-[1.5rem] bg-[#f3edfb] text-2xl text-[#3f207e]">
-                        +
+                    <div class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-[var(--color-neutral-50)] text-[var(--color-text-muted)]">
+
+                        <svg
+                            class="h-6 w-6"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.7"
+                        >
+                            <path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"/>
+                            <circle cx="12" cy="10" r="2.5"/>
+                        </svg>
+
                     </div>
 
-                    <h2 class="mt-5 text-xl font-black text-gray-950">
-                        هنوز آدرسی ثبت نکردی
+
+                    <h2 class="mt-4 text-sm font-black text-[var(--color-text-primary)]">
+                        هنوز آدرسی ثبت نشده است
                     </h2>
 
-                    <p class="mx-auto mt-2 max-w-md text-sm leading-7 text-gray-500">
-                        یک آدرس اضافه کن تا موقع خرید لازم نباشه دوباره اطلاعات ارسال را وارد کنی.
+
+                    <p class="mx-auto mt-1.5 max-w-md text-[10px] leading-6 text-[var(--color-text-muted)]">
+                        برای سفارش سریع‌تر، اولین آدرس خود را همراه با موقعیت دقیق روی نقشه ثبت کنید.
                     </p>
 
+
                     <a
-                        href="#add-address"
-                        class="mt-6 inline-flex rounded-2xl bg-[#3f207e] px-6 py-4 text-sm font-bold text-white transition hover:bg-[#321866]"
+                        href="{{ route('customer.addresses.create') }}"
+                        class="mt-5 inline-flex items-center gap-2 rounded-xl bg-[var(--color-brand-600)] px-4 py-3 text-[10px] font-black text-white transition hover:bg-[var(--color-brand-700)]"
                     >
+
                         افزودن اولین آدرس
+
+                        <svg
+                            class="h-4 w-4"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                        >
+                            <path d="m9 18 6-6-6-6"/>
+                        </svg>
+
                     </a>
 
                 </div>
 
             @endif
 
-        </div>
-
-
-        {{-- =========================================================
-            ADD ADDRESS
-        ========================================================== --}}
-        <section
-            id="add-address"
-            class="mt-12 scroll-mt-28 overflow-hidden rounded-[2rem] border border-gray-200 bg-white"
-        >
-
-            <div class="border-b border-gray-100 px-6 py-6 sm:px-8">
-
-                <div class="text-xs font-bold uppercase tracking-[0.2em] text-[#7b20df]">
-                    New Address
-                </div>
-
-                <h2 class="mt-2 text-xl font-black text-gray-950">
-                    افزودن آدرس جدید
-                </h2>
-
-                <p class="mt-1 text-xs leading-6 text-gray-400">
-                    اطلاعات دقیق ارسال را وارد کن.
-                </p>
-
-            </div>
-
-
-            <form
-                action="{{ route('customer.addresses.store') }}"
-                method="POST"
-                class="p-6 sm:p-8"
-            >
-                @csrf
-
-                <div class="grid gap-5 sm:grid-cols-2">
-
-                    {{-- Title --}}
-                    <div>
-
-                        <label
-                            for="title"
-                            class="text-xs font-bold text-gray-700"
-                        >
-                            عنوان آدرس
-                        </label>
-
-                        <input
-                            id="title"
-                            type="text"
-                            name="title"
-                            value="{{ old('title') }}"
-                            maxlength="100"
-                            placeholder="مثلاً خانه، محل کار..."
-                            class="mt-2 w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-sm outline-none transition placeholder:text-gray-400 focus:border-[#7b20df] focus:bg-white focus:ring-4 focus:ring-[#7b20df]/10"
-                        >
-
-                        @error('title')
-                        <div class="mt-2 text-xs font-bold text-red-600">
-                            {{ $message }}
-                        </div>
-                        @enderror
-
-                    </div>
-
-
-                    {{-- Full Name --}}
-                    <div>
-
-                        <label
-                            for="full_name"
-                            class="text-xs font-bold text-gray-700"
-                        >
-                            نام گیرنده
-                        </label>
-
-                        <input
-                            id="full_name"
-                            type="text"
-                            name="full_name"
-                            value="{{ old('full_name') }}"
-                            maxlength="255"
-                            required
-                            class="mt-2 w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-sm outline-none transition focus:border-[#7b20df] focus:bg-white focus:ring-4 focus:ring-[#7b20df]/10"
-                        >
-
-                        @error('full_name')
-                        <div class="mt-2 text-xs font-bold text-red-600">
-                            {{ $message }}
-                        </div>
-                        @enderror
-
-                    </div>
-
-
-                    {{-- Phone --}}
-                    <div>
-
-                        <label
-                            for="phone"
-                            class="text-xs font-bold text-gray-700"
-                        >
-                            شماره تماس
-                        </label>
-
-                        <input
-                            id="phone"
-                            type="tel"
-                            name="phone"
-                            value="{{ old('phone') }}"
-                            maxlength="30"
-                            required
-                            class="mt-2 w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-sm outline-none transition focus:border-[#7b20df] focus:bg-white focus:ring-4 focus:ring-[#7b20df]/10"
-                        >
-
-                        @error('phone')
-                        <div class="mt-2 text-xs font-bold text-red-600">
-                            {{ $message }}
-                        </div>
-                        @enderror
-
-                    </div>
-
-
-                    {{-- Country --}}
-                    <div>
-
-                        <label
-                            for="country"
-                            class="text-xs font-bold text-gray-700"
-                        >
-                            کشور
-                        </label>
-
-                        <input
-                            id="country"
-                            type="text"
-                            name="country"
-                            value="{{ old('country', 'Iran') }}"
-                            maxlength="100"
-                            required
-                            class="mt-2 w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-sm outline-none transition focus:border-[#7b20df] focus:bg-white focus:ring-4 focus:ring-[#7b20df]/10"
-                        >
-
-                        @error('country')
-                        <div class="mt-2 text-xs font-bold text-red-600">
-                            {{ $message }}
-                        </div>
-                        @enderror
-
-                    </div>
-
-
-                    {{-- Province --}}
-                    <div>
-
-                        <label
-                            for="province"
-                            class="text-xs font-bold text-gray-700"
-                        >
-                            استان / ایالت
-                        </label>
-
-                        <input
-                            id="province"
-                            type="text"
-                            name="province"
-                            value="{{ old('province') }}"
-                            maxlength="100"
-                            required
-                            class="mt-2 w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-sm outline-none transition focus:border-[#7b20df] focus:bg-white focus:ring-4 focus:ring-[#7b20df]/10"
-                        >
-
-                        @error('province')
-                        <div class="mt-2 text-xs font-bold text-red-600">
-                            {{ $message }}
-                        </div>
-                        @enderror
-
-                    </div>
-
-
-                    {{-- City --}}
-                    <div>
-
-                        <label
-                            for="city"
-                            class="text-xs font-bold text-gray-700"
-                        >
-                            شهر
-                        </label>
-
-                        <input
-                            id="city"
-                            type="text"
-                            name="city"
-                            value="{{ old('city') }}"
-                            maxlength="100"
-                            required
-                            class="mt-2 w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-sm outline-none transition focus:border-[#7b20df] focus:bg-white focus:ring-4 focus:ring-[#7b20df]/10"
-                        >
-
-                        @error('city')
-                        <div class="mt-2 text-xs font-bold text-red-600">
-                            {{ $message }}
-                        </div>
-                        @enderror
-
-                    </div>
-
-
-                    {{-- Postal Code --}}
-                    <div>
-
-                        <label
-                            for="postal_code"
-                            class="text-xs font-bold text-gray-700"
-                        >
-                            کد پستی
-                        </label>
-
-                        <input
-                            id="postal_code"
-                            type="text"
-                            name="postal_code"
-                            value="{{ old('postal_code') }}"
-                            maxlength="20"
-                            class="mt-2 w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-sm font-mono outline-none transition focus:border-[#7b20df] focus:bg-white focus:ring-4 focus:ring-[#7b20df]/10"
-                        >
-
-                        @error('postal_code')
-                        <div class="mt-2 text-xs font-bold text-red-600">
-                            {{ $message }}
-                        </div>
-                        @enderror
-
-                    </div>
-
-
-                    {{-- Address --}}
-                    <div class="sm:col-span-2">
-
-                        <label
-                            for="address"
-                            class="text-xs font-bold text-gray-700"
-                        >
-                            آدرس کامل
-                        </label>
-
-                        <textarea
-                            id="address"
-                            name="address"
-                            rows="4"
-                            maxlength="2000"
-                            required
-                            placeholder="خیابان، کوچه، پلاک، واحد..."
-                            class="mt-2 w-full resize-none rounded-xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-sm leading-7 outline-none transition placeholder:text-gray-400 focus:border-[#7b20df] focus:bg-white focus:ring-4 focus:ring-[#7b20df]/10"
-                        >{{ old('address') }}</textarea>
-
-                        @error('address')
-                        <div class="mt-2 text-xs font-bold text-red-600">
-                            {{ $message }}
-                        </div>
-                        @enderror
-
-                    </div>
-
-
-                    {{-- Default --}}
-                    <div class="sm:col-span-2">
-
-                        <label class="flex cursor-pointer items-center gap-3">
-
-                            <input
-                                type="checkbox"
-                                name="is_default"
-                                value="1"
-                                @checked(old('is_default'))
-                            class="size-5 rounded border-gray-300 text-[#3f207e] focus:ring-[#7b20df]"
-                            >
-
-                            <span class="text-sm font-bold text-gray-700">
-                            این آدرس را به‌عنوان پیش‌فرض ذخیره کن.
-                        </span>
-
-                        </label>
-
-                        @error('is_default')
-                        <div class="mt-2 text-xs font-bold text-red-600">
-                            {{ $message }}
-                        </div>
-                        @enderror
-
-                    </div>
-
-                </div>
-
-
-                <div class="mt-7 flex flex-col gap-3 sm:flex-row sm:justify-end">
-
-                    <button
-                        type="reset"
-                        class="rounded-xl border border-gray-200 px-5 py-3.5 text-sm font-bold text-gray-600 transition hover:border-gray-300 hover:bg-gray-50"
-                    >
-                        پاک کردن
-                    </button>
-
-                    <button
-                        type="submit"
-                        class="rounded-xl bg-[#3f207e] px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-[#3f207e]/10 transition hover:-translate-y-0.5 hover:bg-[#321866]"
-                    >
-                        ذخیره آدرس
-                    </button>
-
-                </div>
-
-            </form>
-
         </section>
 
-
-        {{-- =========================================================
-            EDIT ADDRESS MODALS
-        ========================================================== --}}
-        @foreach($addresses as $address)
-
-            <div
-                id="edit-address-{{ $address->id }}"
-                class="hidden"
-            >
-            </div>
-
-        @endforeach
-
-    </section>
+    </div>
 
 @endsection

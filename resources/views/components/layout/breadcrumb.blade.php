@@ -6,9 +6,13 @@
 
 @php
     $homeHref ??= route('home');
+
+    $items = is_iterable($items)
+        ? collect($items)->values()
+        : collect();
 @endphp
 
-@if(count($items) > 0)
+@if($items->isNotEmpty())
 
     <nav
         {{ $attributes->merge([
@@ -32,6 +36,7 @@
             </li>
 
 
+            {{-- Items --}}
             @foreach($items as $index => $item)
 
                 <li
@@ -46,17 +51,27 @@
 
                 <li class="breadcrumb__item">
 
-                    @if(
-                        is_array($item)
-                        && !empty($item['href'])
-                        && $index !== array_key_last($items)
-                    )
+                    @php
+                        $isArray = is_array($item);
+
+                        $label = $isArray
+                            ? ($item['label'] ?? '')
+                            : $item;
+
+                        $href = $isArray
+                            ? ($item['href'] ?? null)
+                            : null;
+
+                        $isLast = $index === $items->count() - 1;
+                    @endphp
+
+                    @if(filled($href) && ! $isLast)
 
                         <a
-                            href="{{ $item['href'] }}"
+                            href="{{ $href }}"
                             class="breadcrumb__link"
                         >
-                            {{ $item['label'] ?? '' }}
+                            {{ $label }}
                         </a>
 
                     @else
@@ -65,10 +80,7 @@
                             class="breadcrumb__current"
                             aria-current="page"
                         >
-                            {{ is_array($item)
-                                ? ($item['label'] ?? '')
-                                : $item
-                            }}
+                            {{ $label }}
                         </span>
 
                     @endif

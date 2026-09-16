@@ -16,6 +16,9 @@ use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Illuminate\Http\JsonResponse;
 use Illuminate\View\View;
+use Morilog\Jalali\Jalalian;
+use Morilog\Jalali\CalendarUtils;
+
 
 class DashboardController extends Controller
 {
@@ -441,10 +444,10 @@ class DashboardController extends Controller
 
 
     /*
-    |--------------------------------------------------------------------------
-    | Daily Sales
-    |--------------------------------------------------------------------------
-    */
+   |--------------------------------------------------------------------------
+   | Daily Sales
+   |--------------------------------------------------------------------------
+   */
 
     private function dailySalesData(int $days): array
     {
@@ -477,10 +480,13 @@ class DashboardController extends Controller
         foreach ($period as $date) {
             $key = $date->format('Y-m-d');
 
-            $labels[] = $date
-                ->locale('fa')
-                ->translatedFormat('j F');
+            $jalali = Jalalian::fromCarbon(
+                $date->copy()
+            );
 
+            $label = $jalali->format('%d %B');
+
+            $labels[] = CalendarUtils::convertNumbers($label);
             $data[] = (int) ($rows[$key]->total ?? 0);
         }
 
@@ -493,37 +499,101 @@ class DashboardController extends Controller
 
     /*
     |--------------------------------------------------------------------------
-    | Monthly Sales - Current Year
+    | Monthly Sales - Current Jalali Year
     |--------------------------------------------------------------------------
     */
 
     private function monthlySalesData(): array
     {
-        $year = now()->year;
+        $today = Jalalian::now();
+
+        $jalaliYear = $today->getYear();
+
+        $jalaliStart = new Jalalian(
+            $jalaliYear,
+            1,
+            1
+        );
+
+        $jalaliEnd = new Jalalian(
+            $jalaliYear,
+            12,
+            29
+        );
+
+        if ($jalaliEnd->getDaysOf(12) === 30) {
+            $jalaliEnd = new Jalalian(
+                $jalaliYear,
+                12,
+                30
+            );
+        }
+
+        $start = $jalaliStart
+            ->toCarbon()
+            ->startOfDay();
+
+        $end = $jalaliEnd
+            ->toCarbon()
+            ->endOfDay();
+
+        /*
+        |--------------------------------------------------------------------------
+        | Get daily totals in current Jalali year
+        |--------------------------------------------------------------------------
+        */
 
         $rows = $this->paidOrders()
-            ->selectRaw('MONTH(created_at) as month_number, SUM(total) as total')
-            ->whereYear('created_at', $year)
-            ->groupByRaw('MONTH(created_at)')
-            ->orderBy('month_number')
-            ->get()
-            ->keyBy('month_number');
+            ->selectRaw('DATE(created_at) as sale_date, SUM(total) as total')
+            ->whereBetween('created_at', [$start, $end])
+            ->groupByRaw('DATE(created_at)')
+            ->orderBy('sale_date')
+            ->get();
+
+        /*
+        |--------------------------------------------------------------------------
+        | Prepare Jalali monthly totals
+        |--------------------------------------------------------------------------
+        */
+
+        $monthlyTotals = [];
+
+        for ($month = 1; $month <= 12; $month++) {
+            $monthlyTotals[$month] = 0;
+        }
+
+        foreach ($rows as $row) {
+            $jalali = Jalalian::fromDateTime($row->sale_date);
+
+            if ($jalali->getYear() !== $jalaliYear) {
+                continue;
+            }
+
+            $month = $jalali->getMonth();
+
+            $monthlyTotals[$month] += (int) $row->total;
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Labels
+        |--------------------------------------------------------------------------
+        */
 
         $labels = [];
         $data = [];
 
         for ($month = 1; $month <= 12; $month++) {
-            $date = Carbon::create(
-                $year,
+            $date = new Jalalian(
+                $jalaliYear,
                 $month,
                 1
             );
 
-            $labels[] = $date
-                ->locale('fa')
-                ->translatedFormat('F');
+            $label = $date->format('%B');
 
-            $data[] = (int) ($rows[$month]->total ?? 0);
+            $labels[] = CalendarUtils::convertNumbers($label);
+            $data[] = $monthlyTotals[$month];
         }
 
         return [
@@ -535,32 +605,103 @@ class DashboardController extends Controller
 
     /*
     |--------------------------------------------------------------------------
-    | Yearly Sales - Last 5 Years
+    | Yearly Sales - Last 5 Jalali Years
     |--------------------------------------------------------------------------
     */
 
     private function yearlySalesData(): array
     {
-        $currentYear = now()->year;
+        $currentJalali = Jalalian::now();
+
+        $currentYear = $currentJalali->getYear();
         $startYear = $currentYear - 4;
 
+        /*
+        |--------------------------------------------------------------------------
+        | Jalali range
+        |--------------------------------------------------------------------------
+        */
+
+        $jalaliStart = new Jalalian(
+            $startYear,
+            1,
+            1
+        );
+
+        $jalaliEnd = new Jalalian(
+            $currentYear,
+            12,
+            29
+        );
+
+        if ($jalaliEnd->getDaysOf(12) === 30) {
+            $jalaliEnd = new Jalalian(
+                $currentYear,
+                12,
+                30
+            );
+        }
+
+        $start = $jalaliStart
+            ->toCarbon()
+            ->startOfDay();
+
+        $end = $jalaliEnd
+            ->toCarbon()
+            ->endOfDay();
+
+        /*
+        |--------------------------------------------------------------------------
+        | Get daily totals
+        |--------------------------------------------------------------------------
+        */
+
         $rows = $this->paidOrders()
-            ->selectRaw('YEAR(created_at) as sale_year, SUM(total) as total')
-            ->whereBetween('created_at', [
-                Carbon::create($startYear, 1, 1)->startOfYear(),
-                Carbon::create($currentYear, 12, 31)->endOfYear(),
-            ])
-            ->groupByRaw('YEAR(created_at)')
-            ->orderBy('sale_year')
-            ->get()
-            ->keyBy('sale_year');
+            ->selectRaw('DATE(created_at) as sale_date, SUM(total) as total')
+            ->whereBetween('created_at', [$start, $end])
+            ->groupByRaw('DATE(created_at)')
+            ->orderBy('sale_date')
+            ->get();
+
+        /*
+        |--------------------------------------------------------------------------
+        | Aggregate by Jalali year
+        |--------------------------------------------------------------------------
+        */
+
+        $yearTotals = [];
+
+        for ($year = $startYear; $year <= $currentYear; $year++) {
+            $yearTotals[$year] = 0;
+        }
+
+        foreach ($rows as $row) {
+            $jalali = Jalalian::fromDateTime($row->sale_date);
+
+            $year = $jalali->getYear();
+
+            if (! array_key_exists($year, $yearTotals)) {
+                continue;
+            }
+
+            $yearTotals[$year] += (int) $row->total;
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Labels
+        |--------------------------------------------------------------------------
+        */
 
         $labels = [];
         $data = [];
 
         for ($year = $startYear; $year <= $currentYear; $year++) {
-            $labels[] = (string) $year;
-            $data[] = (int) ($rows[$year]->total ?? 0);
+            $labels[] = CalendarUtils::convertNumbers(
+                (string) $year
+            );
+
+            $data[] = $yearTotals[$year];
         }
 
         return [

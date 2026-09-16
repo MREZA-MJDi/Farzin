@@ -17,7 +17,7 @@ class WishlistController extends Controller
             ->latest()
             ->get();
 
-        return view('customer.wishlist.index', compact('wishlist'));
+        return view('wishlist.index', compact('wishlist'));
     }
 
     public function toggle(Product $product): RedirectResponse

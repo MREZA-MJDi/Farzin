@@ -48,9 +48,11 @@
                     نمای کلی عملکرد فروشگاه و وضعیت سیستم
                 </p>
             </div>
-
+            @php
+                use Morilog\Jalali\Jalalian;
+            @endphp
             <div class="rounded-xl border border-[var(--color-border)] bg-white px-4 py-3 text-sm font-bold text-[var(--color-text-secondary)] shadow-sm">
-                {{ now()->locale('fa')->translatedFormat('l، j F Y') }}
+                {{\Morilog\Jalali\Jalalian::now()->format('%A ,%d %B %Y') }}
             </div>
         </div>
 
@@ -263,21 +265,27 @@
 
                 <div class="flex rounded-xl bg-[var(--color-neutral-100)] p-1">
 
-                    <button type="button"
-                            data-range="daily"
-                            class="dashboard-chart-tab rounded-lg px-4 py-2 text-xs font-bold transition">
+                    <button
+                        type="button"
+                        data-range="daily"
+                        class="dashboard-chart-tab rounded-lg px-4 py-2 text-xs font-bold transition"
+                    >
                         روزانه
                     </button>
 
-                    <button type="button"
-                            data-range="monthly"
-                            class="dashboard-chart-tab rounded-lg px-4 py-2 text-xs font-bold transition">
+                    <button
+                        type="button"
+                        data-range="monthly"
+                        class="dashboard-chart-tab rounded-lg px-4 py-2 text-xs font-bold transition"
+                    >
                         ماهانه
                     </button>
 
-                    <button type="button"
-                            data-range="yearly"
-                            class="dashboard-chart-tab rounded-lg px-4 py-2 text-xs font-bold transition">
+                    <button
+                        type="button"
+                        data-range="yearly"
+                        class="dashboard-chart-tab rounded-lg px-4 py-2 text-xs font-bold transition"
+                    >
                         سالانه
                     </button>
 
@@ -285,13 +293,11 @@
 
             </div>
 
-
             <div class="relative mt-6 h-[360px]">
                 <canvas id="salesChart"></canvas>
             </div>
 
         </div>
-
 
         {{-- Orders + Inventory --}}
         <div class="grid grid-cols-1 gap-6 xl:grid-cols-3">
