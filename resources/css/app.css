@@ -1,13 +1,11 @@
 @import "tailwindcss";
-
 @import "./components.css";
+
 /*
 |--------------------------------------------------------------------------
-| Farzin Font
+| JANAN FONT
 |--------------------------------------------------------------------------
 */
-
-
 
 @font-face {
     font-family: "Vazirmatn";
@@ -57,16 +55,25 @@
     font-display: swap;
 }
 
+@font-face {
+    font-family: "IranNastaliq";
+    src: url("../fonts/nastaliq/IranNastaliq-Web.woff2") format("woff2");
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+}
+
 
 /*
 |--------------------------------------------------------------------------
-| Farzin Design Tokens
+| JANAN DESIGN TOKENS
 |--------------------------------------------------------------------------
 |
-| Brand:
-|   Navy = primary identity
-|   Red  = action / emphasis
-|   Neutral = supporting UI
+| Identity:
+|   Sky    = primary accent
+|   Pink   = feminine / emphasis
+|   Pearl  = main background
+|   Grey   = supporting neutral
 |
 |--------------------------------------------------------------------------
 */
@@ -75,88 +82,88 @@
 
     /*
     |--------------------------------------------------------------------------
-    | Brand Navy
+    | Janan Sky
     |--------------------------------------------------------------------------
     */
 
-    --color-brand-50: #f3f5f9;
-    --color-brand-100: #e8ecf3;
-    --color-brand-200: #d3dae7;
-    --color-brand-300: #b4bfd3;
-    --color-brand-400: #8796b4;
-    --color-brand-500: #5f7095;
-    --color-brand-600: #405477;
-    --color-brand-700: #2b4167;
-    --color-brand-800: #1c3157;
-    --color-brand-900: #0d1b3d;
-    --color-brand-950: #071126;
+    --color-brand-50: #f3fbfe;
+    --color-brand-100: #e8f7fc;
+    --color-brand-200: #d4eff9;
+    --color-brand-300: #b9e5f4;
+    --color-brand-400: #9bd8ec;
+    --color-brand-500: #7bc6df;
+    --color-brand-600: #61b3ce;
+    --color-brand-700: #4897b2;
+    --color-brand-800: #397b92;
+    --color-brand-900: #2f6679;
+    --color-brand-950: #234553;
 
 
     /*
     |--------------------------------------------------------------------------
-    | Farzin Red
+    | Janan Pink
     |--------------------------------------------------------------------------
     */
 
-    --color-accent-50: #fff3f4;
-    --color-accent-100: #ffe3e6;
-    --color-accent-200: #ffcbd0;
-    --color-accent-300: #f9a6ae;
-    --color-accent-400: #f47884;
-    --color-accent-500: #ed4b59;
-    --color-accent-600: #e21f2f;
-    --color-accent-700: #c91929;
-    --color-accent-800: #a91725;
-    --color-accent-900: #8f1722;
-    --color-accent-950: #500910;
+    --color-accent-50: #fff7fa;
+    --color-accent-100: #fff1f5;
+    --color-accent-200: #ffe4ec;
+    --color-accent-300: #ffd1de;
+    --color-accent-400: #fbb3c7;
+    --color-accent-500: #f39ab5;
+    --color-accent-600: #e883a2;
+    --color-accent-700: #d96f91;
+    --color-accent-800: #c45d7d;
+    --color-accent-900: #a94b69;
+    --color-accent-950: #713246;
 
 
     /*
     |--------------------------------------------------------------------------
-    | Neutral
+    | Janan Neutral / Cold Grey
     |--------------------------------------------------------------------------
     */
 
     --color-neutral-0: #ffffff;
 
-    --color-neutral-50: #f7f8fa;
-    --color-neutral-100: #f0f2f5;
-    --color-neutral-200: #e3e6eb;
-    --color-neutral-300: #d2d7df;
-    --color-neutral-400: #aab1bd;
-    --color-neutral-500: #89919d;
-    --color-neutral-600: #697280;
-    --color-neutral-700: #4d5665;
-    --color-neutral-800: #323b4a;
-    --color-neutral-900: #1c2432;
-    --color-neutral-950: #101722;
+    --color-neutral-50: #f7f9fb;
+    --color-neutral-100: #f1f4f6;
+    --color-neutral-200: #e5eaee;
+    --color-neutral-300: #d7dee4;
+    --color-neutral-400: #bbc5cc;
+    --color-neutral-500: #99a6af;
+    --color-neutral-600: #78858f;
+    --color-neutral-700: #5d6972;
+    --color-neutral-800: #444f57;
+    --color-neutral-900: #303a42;
+    --color-neutral-950: #222a30;
 
 
     /*
     |--------------------------------------------------------------------------
-    | Semantic Colors
+    | Semantic
     |--------------------------------------------------------------------------
     */
 
-    --color-success-50: #ecfdf5;
-    --color-success-100: #d1fae5;
-    --color-success-600: #059669;
-    --color-success-700: #047857;
+    --color-success-50: #effbf5;
+    --color-success-100: #d7f4e4;
+    --color-success-600: #1fa66a;
+    --color-success-700: #188655;
 
-    --color-warning-50: #fffbeb;
-    --color-warning-100: #fef3c7;
-    --color-warning-600: #d97706;
-    --color-warning-700: #b45309;
+    --color-warning-50: #fffaf1;
+    --color-warning-100: #fff1cf;
+    --color-warning-600: #d39a36;
+    --color-warning-700: #af7b22;
 
-    --color-danger-50: #fff1f2;
-    --color-danger-100: #ffe4e6;
-    --color-danger-600: #e11d48;
-    --color-danger-700: #be123c;
+    --color-danger-50: #fff5f7;
+    --color-danger-100: #ffe6eb;
+    --color-danger-600: #d7687d;
+    --color-danger-700: #b34e62;
 
-    --color-info-50: #eff6ff;
-    --color-info-100: #dbeafe;
-    --color-info-600: #2563eb;
-    --color-info-700: #1d4ed8;
+    --color-info-50: #f2faff;
+    --color-info-100: #e1f4fc;
+    --color-info-600: #63b4d0;
+    --color-info-700: #4697b2;
 
 
     /*
@@ -165,10 +172,10 @@
     |--------------------------------------------------------------------------
     */
 
-    --color-text-primary: #101722;
-    --color-text-secondary: #4d5665;
-    --color-text-muted: #697280;
-    --color-text-soft: #aab1bd;
+    --color-text-primary: #42484d;
+    --color-text-secondary: #646d74;
+    --color-text-muted: #879198;
+    --color-text-soft: #aeb7be;
     --color-text-inverse: #ffffff;
 
 
@@ -179,9 +186,12 @@
     */
 
     --color-surface: #ffffff;
-    --color-surface-soft: #fbfcfd;
-    --color-surface-muted: #f7f8fa;
-    --color-surface-dark: #0d1b3d;
+    --color-surface-soft: #fffdfd;
+    --color-surface-muted: #f8f7f8;
+    --color-surface-sky: #f2fbfe;
+    --color-surface-pink: #fff5f8;
+    --color-surface-pearl: #f5f1ef;
+    --color-surface-dark: #4a4749;
 
 
     /*
@@ -190,8 +200,10 @@
     |--------------------------------------------------------------------------
     */
 
-    --color-border: #e3e6eb;
-    --color-border-strong: #d2d7df;
+    --color-border: #e5e7e9;
+    --color-border-strong: #d5dadd;
+    --color-border-sky: rgba(123,198,223,.30);
+    --color-border-pink: rgba(232,131,162,.28);
 
 
     /*
@@ -201,23 +213,23 @@
     */
 
     --shadow-xs:
-        0 1px 2px rgb(16 23 34 / 0.04);
+        0 1px 2px rgba(66, 72, 77, .035);
 
     --shadow-sm:
-        0 2px 8px rgb(16 23 34 / 0.05),
-        0 1px 2px rgb(16 23 34 / 0.03);
+        0 4px 14px rgba(66, 72, 77, .045),
+        0 1px 3px rgba(66, 72, 77, .025);
 
     --shadow-md:
-        0 10px 30px rgb(16 23 34 / 0.07),
-        0 2px 8px rgb(16 23 34 / 0.04);
+        0 12px 32px rgba(66, 72, 77, .065),
+        0 3px 10px rgba(66, 72, 77, .03);
 
     --shadow-lg:
-        0 20px 50px rgb(16 23 34 / 0.10),
-        0 8px 20px rgb(16 23px 34 / 0.05);
+        0 24px 60px rgba(66, 72, 77, .085),
+        0 8px 24px rgba(66, 72, 77, .035);
 
     --shadow-xl:
-        0 30px 80px rgb(16 23 34 / 0.13),
-        0 10px 30px rgb(16 23 34 / 0.06);
+        0 34px 90px rgba(66, 72, 77, .11),
+        0 12px 32px rgba(66, 72, 77, .045);
 
 
     /*
@@ -228,7 +240,7 @@
 
     --transition-fast: 150ms ease;
     --transition-base: 220ms ease;
-    --transition-slow: 350ms ease;
+    --transition-slow: 380ms cubic-bezier(.22, .78, .24, 1);
 
 
     /*
@@ -246,7 +258,7 @@
     |--------------------------------------------------------------------------
     */
 
-    --radius-sm: 0.75rem;
+    --radius-sm: .75rem;
     --radius-md: 1rem;
     --radius-lg: 1.5rem;
     --radius-xl: 2rem;
@@ -255,44 +267,60 @@
 
 /*
 |--------------------------------------------------------------------------
-| Backward Compatibility
-|--------------------------------------------------------------------------
-|
-| Existing Blade files may still use:
-| --color-brand-*
-|
-| Those variables are intentionally mapped to the new Farzin navy system.
-|
-|--------------------------------------------------------------------------
-*/
-
-
-/*
-|--------------------------------------------------------------------------
-| Base
+| BASE
 |--------------------------------------------------------------------------
 */
 
 html {
     scroll-behavior: smooth;
     text-rendering: optimizeLegibility;
-
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    background:
+        linear-gradient(
+            180deg,
+            #fffefe 0%,
+            #faf8f8 55%,
+            #f5f7f8 100%
+        );
 }
 
 body {
     min-height: 100vh;
     margin: 0;
 
-    background: var(--color-neutral-50);
     color: var(--color-text-primary);
+
+    background:
+        radial-gradient(
+            circle at 8% 10%,
+            rgba(169, 223, 245, .16),
+            transparent 25rem
+        ),
+        radial-gradient(
+            circle at 91% 17%,
+            rgba(239, 143, 175, .12),
+            transparent 27rem
+        ),
+        radial-gradient(
+            circle at 46% 84%,
+            rgba(185, 175, 168, .095),
+            transparent 32rem
+        ),
+        linear-gradient(
+            180deg,
+            #fdfcfb 0%,
+            #f6f4f3 48%,
+            #faf9f8 100%
+        );
 
     font-family:
         "Vazirmatn",
         Tahoma,
         Arial,
         sans-serif;
+
+    line-height: 1.9;
 }
 
 *,
@@ -335,14 +363,8 @@ button {
 
 button:disabled {
     cursor: not-allowed;
+    opacity: .55;
 }
-
-
-/*
-|--------------------------------------------------------------------------
-| Alpine
-|--------------------------------------------------------------------------
-*/
 
 [x-cloak] {
     display: none !important;
@@ -351,31 +373,24 @@ button:disabled {
 
 /*
 |--------------------------------------------------------------------------
-| Selection
+| SELECTION / FOCUS
 |--------------------------------------------------------------------------
 */
 
 ::selection {
-    background: rgb(226 31 47 / 0.16);
-    color: var(--color-brand-950);
+    background: rgba(232, 131, 162, .18);
+    color: var(--color-text-primary);
 }
 
-
-/*
-|--------------------------------------------------------------------------
-| Focus
-|--------------------------------------------------------------------------
-*/
-
 :focus-visible {
-    outline: 2px solid var(--color-accent-600);
+    outline: 2px solid var(--color-brand-500);
     outline-offset: 3px;
 }
 
 
 /*
 |--------------------------------------------------------------------------
-| Scrollbar
+| SCROLLBAR
 |--------------------------------------------------------------------------
 */
 
@@ -407,7 +422,7 @@ button:disabled {
 
 /*
 |--------------------------------------------------------------------------
-| Forms
+| FORMS
 |--------------------------------------------------------------------------
 */
 
@@ -444,7 +459,7 @@ input[type="radio"] {
 
 /*
 |--------------------------------------------------------------------------
-| Shared Cards
+| SHARED CARD
 |--------------------------------------------------------------------------
 */
 
@@ -453,7 +468,7 @@ input[type="radio"] {
         1px solid var(--color-border);
 
     background:
-        var(--color-surface);
+        rgba(255,255,255,.90);
 
     border-radius:
         var(--radius-xl);
@@ -471,67 +486,70 @@ input[type="radio"] {
 
 .farzin-card-hover:hover {
     border-color:
-        var(--color-border-strong);
+        var(--color-border-sky);
 
     box-shadow:
         var(--shadow-md);
 
     transform:
-        translateY(-2px);
+        translateY(-3px);
 }
 
 
 /*
 |--------------------------------------------------------------------------
-| Glass
+| JANAN GLASS
 |--------------------------------------------------------------------------
 */
 
 .farzin-glass {
     background:
-        rgb(255 255 255 / 0.78);
+        rgba(255,255,255,.72);
 
     border:
-        1px solid rgb(255 255 255 / 0.62);
+        1px solid rgba(255,255,255,.70);
 
     backdrop-filter:
-        blur(16px);
+        blur(18px);
 
     -webkit-backdrop-filter:
-        blur(16px);
+        blur(18px);
+
+    box-shadow:
+        0 10px 30px rgba(66,72,77,.045);
 }
 
 
 /*
 |--------------------------------------------------------------------------
-| Brand Gradient
+| JANAN GRADIENT
 |--------------------------------------------------------------------------
 */
 
 .farzin-gradient {
     background:
         radial-gradient(
-            circle at 82% 12%,
-            rgb(226 31 47 / 0.17),
-            transparent 34%
+            circle at 84% 10%,
+            rgba(239,143,175,.15),
+            transparent 31%
         ),
         radial-gradient(
-            circle at 18% 88%,
-            rgb(64 84 119 / 0.18),
+            circle at 14% 88%,
+            rgba(169,223,245,.20),
             transparent 38%
         ),
         linear-gradient(
             135deg,
-            var(--color-brand-950) 0%,
-            var(--color-brand-900) 55%,
-            #14284f 100%
+            #fffdfc 0%,
+            #f8f4f4 54%,
+            #eef8fb 100%
         );
 }
 
 
 /*
 |--------------------------------------------------------------------------
-| Navy Hero
+| JANAN HERO
 |--------------------------------------------------------------------------
 */
 
@@ -540,13 +558,24 @@ input[type="radio"] {
     overflow: hidden;
 
     color:
-        var(--color-text-inverse);
+        var(--color-text-primary);
 
     background:
+        radial-gradient(
+            circle at 84% 16%,
+            rgba(239,143,175,.16),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 18% 84%,
+            rgba(169,223,245,.18),
+            transparent 34%
+        ),
         linear-gradient(
             135deg,
-            var(--color-brand-950),
-            var(--color-brand-900)
+            #fffdfc 0%,
+            #f7f2f2 56%,
+            #edf8fb 100%
         );
 }
 
@@ -564,10 +593,12 @@ input[type="radio"] {
     border-radius: 999px;
 
     background:
-        rgb(226 31 47 / 0.13);
+        rgba(239,143,175,.10);
 
     filter:
-        blur(70px);
+        blur(75px);
+
+    pointer-events: none;
 }
 
 .farzin-hero::after {
@@ -584,16 +615,18 @@ input[type="radio"] {
     border-radius: 999px;
 
     background:
-        rgb(255 255 255 / 0.05);
+        rgba(169,223,245,.13);
 
     filter:
-        blur(65px);
+        blur(70px);
+
+    pointer-events: none;
 }
 
 
 /*
 |--------------------------------------------------------------------------
-| Red Accent
+| ACCENTS
 |--------------------------------------------------------------------------
 */
 
@@ -604,20 +637,32 @@ input[type="radio"] {
 
 .farzin-accent-bg {
     background:
-        var(--color-accent-600);
+        linear-gradient(
+            135deg,
+            var(--color-accent-500),
+            var(--color-accent-700)
+        );
+
     color:
         var(--color-text-inverse);
+
+    box-shadow:
+        0 10px 24px rgba(232,131,162,.17);
 }
 
 .farzin-accent-bg:hover {
     background:
-        var(--color-accent-700);
+        linear-gradient(
+            135deg,
+            var(--color-accent-600),
+            var(--color-accent-800)
+        );
 }
 
 
 /*
 |--------------------------------------------------------------------------
-| Shared Buttons
+| SHARED BUTTON
 |--------------------------------------------------------------------------
 */
 
@@ -626,22 +671,26 @@ input[type="radio"] {
 
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
 
-    min-height: 2.75rem;
+    gap: .5rem;
+
+    min-height: 2.8rem;
 
     border-radius:
-        var(--radius-md);
+        999px;
 
     padding-inline:
-        1rem;
+        1.05rem;
+
+    border:
+        1px solid transparent;
 
     font-weight:
-        800;
+        750;
 
     transition:
         transform var(--transition-fast),
-        background-color var(--transition-fast),
+        background var(--transition-fast),
         border-color var(--transition-fast),
         color var(--transition-fast),
         box-shadow var(--transition-fast);
@@ -649,7 +698,7 @@ input[type="radio"] {
 
 .farzin-btn:hover {
     transform:
-        translateY(-1px);
+        translateY(-2px);
 }
 
 .farzin-btn:active {
@@ -660,53 +709,69 @@ input[type="radio"] {
 
 /*
 |--------------------------------------------------------------------------
-| Primary Button
+| PRIMARY BUTTON
 |--------------------------------------------------------------------------
 */
 
 .farzin-btn-primary {
     background:
-        var(--color-brand-900);
+        linear-gradient(
+            135deg,
+            var(--color-accent-500),
+            var(--color-accent-700)
+        );
 
     color:
         #ffffff;
 
     box-shadow:
-        0 8px 20px rgb(13 27 61 / 0.15);
+        0 10px 24px rgba(232,131,162,.17);
 }
 
 .farzin-btn-primary:hover {
     background:
-        var(--color-brand-950);
+        linear-gradient(
+            135deg,
+            var(--color-accent-600),
+            var(--color-accent-800)
+        );
 }
 
 
 /*
 |--------------------------------------------------------------------------
-| Red CTA Button
+| SKY BUTTON
 |--------------------------------------------------------------------------
 */
 
 .farzin-btn-accent {
     background:
-        var(--color-accent-600);
+        linear-gradient(
+            135deg,
+            var(--color-brand-400),
+            var(--color-brand-600)
+        );
 
     color:
         #ffffff;
 
     box-shadow:
-        0 8px 20px rgb(226 31 47 / 0.15);
+        0 10px 24px rgba(123,198,223,.17);
 }
 
 .farzin-btn-accent:hover {
     background:
-        var(--color-accent-700);
+        linear-gradient(
+            135deg,
+            var(--color-brand-500),
+            var(--color-brand-700)
+        );
 }
 
 
 /*
 |--------------------------------------------------------------------------
-| Outline Button
+| OUTLINE BUTTON
 |--------------------------------------------------------------------------
 */
 
@@ -715,7 +780,7 @@ input[type="radio"] {
         1px solid var(--color-border);
 
     background:
-        var(--color-surface);
+        rgba(255,255,255,.72);
 
     color:
         var(--color-text-secondary);
@@ -723,42 +788,48 @@ input[type="radio"] {
 
 .farzin-btn-outline:hover {
     border-color:
-        var(--color-brand-300);
+        var(--color-border-sky);
 
     background:
         var(--color-brand-50);
 
     color:
-        var(--color-brand-900);
+        var(--color-brand-800);
 }
 
 
 /*
 |--------------------------------------------------------------------------
-| Dark Outline Button
+| DARK OUTLINE
 |--------------------------------------------------------------------------
 */
 
 .farzin-btn-dark-outline {
     border:
-        1px solid rgb(255 255 255 / 0.14);
+        1px solid rgba(66,72,77,.12);
 
     background:
-        rgb(255 255 255 / 0.05);
+        rgba(255,255,255,.40);
 
     color:
-        #ffffff;
+        var(--color-text-primary);
 }
 
 .farzin-btn-dark-outline:hover {
     background:
-        rgb(255 255 255 / 0.10);
+        rgba(255,255,255,.72);
+
+    border-color:
+        rgba(232,131,162,.22);
+
+    color:
+        var(--color-accent-800);
 }
 
 
 /*
 |--------------------------------------------------------------------------
-| Container
+| CONTAINER
 |--------------------------------------------------------------------------
 */
 
@@ -796,7 +867,7 @@ input[type="radio"] {
 
 /*
 |--------------------------------------------------------------------------
-| Admin
+| ADMIN CARD
 |--------------------------------------------------------------------------
 */
 
@@ -819,13 +890,20 @@ input[type="radio"] {
         var(--color-text-primary);
 
     font-weight:
-        900;
+        800;
 }
 
 .admin-muted {
     color:
         var(--color-text-muted);
 }
+
+
+/*
+|--------------------------------------------------------------------------
+| ADMIN TABLE
+|--------------------------------------------------------------------------
+*/
 
 .admin-table-wrap {
     overflow-x: auto;
@@ -842,9 +920,7 @@ input[type="radio"] {
 
 .admin-table {
     width: 100%;
-
-    border-collapse:
-        collapse;
+    border-collapse: collapse;
 }
 
 .admin-table th {
@@ -855,7 +931,7 @@ input[type="radio"] {
         var(--color-text-secondary);
 
     font-size:
-        0.75rem;
+        .75rem;
 
     font-weight:
         800;
@@ -867,7 +943,7 @@ input[type="radio"] {
 .admin-table td,
 .admin-table th {
     padding:
-        0.875rem 1rem;
+        .875rem 1rem;
 
     border-bottom:
         1px solid var(--color-border);
@@ -883,13 +959,13 @@ input[type="radio"] {
 
 .admin-table tbody tr:hover {
     background:
-        var(--color-neutral-50);
+        #fcfdfe;
 }
 
 
 /*
 |--------------------------------------------------------------------------
-| Pagination
+| PAGINATION
 |--------------------------------------------------------------------------
 */
 
@@ -900,7 +976,7 @@ input[type="radio"] {
 
     align-items: center;
 
-    gap: 0.375rem;
+    gap: .375rem;
 }
 
 .pagination a,
@@ -923,16 +999,16 @@ input[type="radio"] {
         1px solid var(--color-border);
 
     border-radius:
-        0.75rem;
+        .85rem;
 
     background:
         var(--color-surface);
 
     padding-inline:
-        0.75rem;
+        .75rem;
 
     font-size:
-        0.8125rem;
+        .8125rem;
 
     font-weight:
         700;
@@ -942,25 +1018,25 @@ input[type="radio"] {
 
     transition:
         color var(--transition-fast),
-        background-color var(--transition-fast),
+        background var(--transition-fast),
         border-color var(--transition-fast);
 }
 
 .pagination a:hover {
     border-color:
-        var(--color-brand-300);
+        var(--color-border-sky);
 
     background:
         var(--color-brand-50);
 
     color:
-        var(--color-brand-900);
+        var(--color-brand-800);
 }
 
 
 /*
 |--------------------------------------------------------------------------
-| Status
+| STATUS
 |--------------------------------------------------------------------------
 */
 
@@ -974,10 +1050,10 @@ input[type="radio"] {
         999px;
 
     padding:
-        0.375rem 0.75rem;
+        .375rem .75rem;
 
     font-size:
-        0.6875rem;
+        .6875rem;
 
     font-weight:
         800;
@@ -1023,13 +1099,13 @@ input[type="radio"] {
         var(--color-brand-100);
 
     color:
-        var(--color-brand-900);
+        var(--color-brand-800);
 }
 
 
 /*
 |--------------------------------------------------------------------------
-| Content
+| CONTENT
 |--------------------------------------------------------------------------
 */
 
@@ -1049,7 +1125,7 @@ input[type="radio"] {
         var(--color-text-primary);
 
     font-weight:
-        900;
+        800;
 
     line-height:
         1.5;
@@ -1099,7 +1175,7 @@ input[type="radio"] {
 
 /*
 |--------------------------------------------------------------------------
-| Utilities
+| UTILITIES
 |--------------------------------------------------------------------------
 */
 
@@ -1134,76 +1210,65 @@ input[type="radio"] {
 
 /*
 |--------------------------------------------------------------------------
-| Motion
+| JANAN MOTION
 |--------------------------------------------------------------------------
 */
 
-@keyframes farzin-fade-up {
-
+@keyframes janan-fade-up {
     from {
-        opacity:
-            0;
-
+        opacity: 0;
         transform:
-            translateY(12px);
+            translateY(14px);
     }
 
     to {
-        opacity:
-            1;
-
+        opacity: 1;
         transform:
             translateY(0);
     }
 }
 
-@keyframes farzin-fade-in {
-
+@keyframes janan-fade-in {
     from {
-        opacity:
-            0;
+        opacity: 0;
     }
 
     to {
-        opacity:
-            1;
+        opacity: 1;
     }
 }
 
-@keyframes farzin-pulse-soft {
-
+@keyframes janan-pulse-soft {
     0%,
     100% {
-        opacity:
-            0.55;
+        opacity: .55;
     }
 
     50% {
-        opacity:
-            1;
+        opacity: 1;
     }
 }
 
 .farzin-fade-up {
     animation:
-        farzin-fade-up
-        0.55s
-        cubic-bezier(0.22, 1, 0.36, 1)
+        janan-fade-up
+        .58s
+        cubic-bezier(.22, 1, .36, 1)
         both;
 }
 
 .farzin-fade-in {
     animation:
-        farzin-fade-in
-        0.4s
+        janan-fade-in
+        .45s
         ease
         both;
 }
 
 .farzin-pulse-soft {
     animation:
-        farzin-pulse-soft
-        2.2s
+        janan-pulse-soft
+        2.4s
         ease-in-out
         infinite;
 }
@@ -1211,7 +1276,164 @@ input[type="radio"] {
 
 /*
 |--------------------------------------------------------------------------
-| Reduced Motion
+| JANAN HELPERS
+|--------------------------------------------------------------------------
+*/
+
+.janan-soft-surface {
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255,255,255,.92),
+            rgba(248,246,246,.82)
+        );
+}
+
+.janan-sky-surface {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(242,251,254,.98),
+            rgba(231,246,251,.92)
+        );
+}
+
+.janan-pink-surface {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,248,250,.98),
+            rgba(255,241,246,.90)
+        );
+}
+
+.janan-pearl-surface {
+    background:
+        linear-gradient(
+            145deg,
+            #fffdfc,
+            #f5f1ef
+        );
+}
+
+.janan-divider {
+    height: 1px;
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            var(--color-border),
+            transparent
+        );
+}
+
+.janan-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+
+    color:
+        var(--color-accent-700);
+
+    font-size:
+        .65rem;
+
+    font-weight:
+        800;
+
+    letter-spacing:
+        .16em;
+
+    text-transform:
+        uppercase;
+}
+
+.janan-eyebrow::before {
+    content: "";
+
+    width: 1.5rem;
+    height: 1px;
+
+    background:
+        currentColor;
+
+    opacity:
+        .45;
+}
+
+.janan-title {
+    color:
+        var(--color-text-primary);
+
+    font-weight:
+        700;
+
+    letter-spacing:
+        -.035em;
+
+    line-height:
+        1.35;
+}
+
+.janan-muted {
+    color:
+        var(--color-text-muted);
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| REDIRECTED LEGACY FARZIN CLASSES
+|--------------------------------------------------------------------------
+|
+| Existing Blade content can keep these class names.
+| Visual identity is now Janan.
+|
+|--------------------------------------------------------------------------
+*/
+
+.farzin-brand {
+    color:
+        var(--color-brand-700);
+}
+
+.farzin-brand-bg {
+    background:
+        var(--color-brand-500);
+
+    color:
+        #fff;
+}
+
+.farzin-brand-bg:hover {
+    background:
+        var(--color-brand-600);
+}
+
+.farzin-surface {
+    background:
+        var(--color-surface);
+}
+
+.farzin-surface-soft {
+    background:
+        var(--color-surface-soft);
+}
+
+.farzin-border {
+    border-color:
+        var(--color-border);
+}
+
+.farzin-shadow {
+    box-shadow:
+        var(--shadow-md);
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| REDUCED MOTION
 |--------------------------------------------------------------------------
 */
 
@@ -1226,20 +1448,20 @@ input[type="radio"] {
     *::before,
     *::after {
         animation-duration:
-            0.01ms !important;
+            .01ms !important;
 
         animation-iteration-count:
             1 !important;
 
         transition-duration:
-            0.01ms !important;
+            .01ms !important;
     }
 }
 
 
 /*
 |--------------------------------------------------------------------------
-| Mobile Polish
+| MOBILE POLISH
 |--------------------------------------------------------------------------
 */
 
@@ -1253,5 +1475,18 @@ input[type="radio"] {
     textarea {
         min-height:
             110px;
+    }
+
+    .farzin-container {
+        width:
+            calc(100% - 1.25rem);
+    }
+
+    .farzin-btn {
+        min-height:
+            2.7rem;
+
+        padding-inline:
+            .95rem;
     }
 }

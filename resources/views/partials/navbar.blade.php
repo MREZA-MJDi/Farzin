@@ -4,11 +4,12 @@
         accountOpen: false
     }"
     @keydown.escape.window="open = false; accountOpen = false"
-    class="sticky top-0 z-50 border-b border-[var(--color-border)] bg-white/95 shadow-[0_1px_12px_rgb(16_23_34_/0.04)] backdrop-blur-xl"
+    class="sticky top-0 z-50 border-b border-[var(--border)] bg-white/90 shadow-[0_1px_16px_rgba(72,91,105,0.05)] backdrop-blur-xl"
 >
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 
         <div class="flex min-h-[76px] items-center justify-between gap-4 lg:gap-6">
+
 
             {{-- =========================================================
                 Logo
@@ -17,13 +18,15 @@
             <a
                 href="{{ route('home') }}"
                 class="group flex shrink-0 items-center"
-                aria-label="فرزین - صفحه اصلی"
+                aria-label="ژنان - صفحه اصلی"
             >
+
                 <img
                     src="{{ asset('images/brand/logo.png') }}"
-                    alt="فرزین"
+                    alt="ژنان"
                     class="h-11 w-auto object-contain transition duration-200 group-hover:opacity-90 sm:h-12"
                 >
+
             </a>
 
 
@@ -36,45 +39,53 @@
                 aria-label="ناوبری اصلی"
             >
 
+                {{-- Home --}}
+
                 <a
                     href="{{ route('home') }}"
                     class="rounded-xl px-3.5 py-2.5 text-sm font-bold transition duration-200
                     {{ request()->routeIs('home')
-                        ? 'bg-[var(--color-brand-50)] text-[var(--color-brand-900)]'
-                        : 'text-[var(--color-text-secondary)] hover:bg-[var(--color-neutral-50)] hover:text-[var(--color-brand-900)]' }}"
+                        ? 'bg-[var(--surface-soft)] text-[var(--primary)]'
+                        : 'text-[var(--text-secondary)] hover:bg-[var(--surface-soft)] hover:text-[var(--primary)]' }}"
                 >
                     خانه
                 </a>
 
 
+                {{-- Shop --}}
+
                 <a
                     href="{{ route('shop.index') }}"
                     class="rounded-xl px-3.5 py-2.5 text-sm font-bold transition duration-200
                     {{ request()->routeIs('shop.*')
-                        ? 'bg-[var(--color-brand-50)] text-[var(--color-brand-900)]'
-                        : 'text-[var(--color-text-secondary)] hover:bg-[var(--color-neutral-50)] hover:text-[var(--color-brand-900)]' }}"
+                        ? 'bg-[var(--surface-soft)] text-[var(--primary)]'
+                        : 'text-[var(--text-secondary)] hover:bg-[var(--surface-soft)] hover:text-[var(--primary)]' }}"
                 >
                     فروشگاه
                 </a>
 
 
+                {{-- Blog --}}
+
                 <a
                     href="{{ route('blog.index') }}"
                     class="rounded-xl px-3.5 py-2.5 text-sm font-bold transition duration-200
                     {{ request()->routeIs('blog.*')
-                        ? 'bg-[var(--color-brand-50)] text-[var(--color-brand-900)]'
-                        : 'text-[var(--color-text-secondary)] hover:bg-[var(--color-neutral-50)] hover:text-[var(--color-brand-900)]' }}"
+                        ? 'bg-[var(--surface-soft)] text-[var(--primary)]'
+                        : 'text-[var(--text-secondary)] hover:bg-[var(--surface-soft)] hover:text-[var(--primary)]' }}"
                 >
                     مجله
                 </a>
 
 
+                {{-- Contact --}}
+
                 <a
                     href="{{ route('contact.index') }}"
                     class="rounded-xl px-3.5 py-2.5 text-sm font-bold transition duration-200
                     {{ request()->routeIs('contact.*')
-                        ? 'bg-[var(--color-brand-50)] text-[var(--color-brand-900)]'
-                        : 'text-[var(--color-text-secondary)] hover:bg-[var(--color-neutral-50)] hover:text-[var(--color-brand-900)]' }}"
+                        ? 'bg-[var(--surface-soft)] text-[var(--primary)]'
+                        : 'text-[var(--text-secondary)] hover:bg-[var(--surface-soft)] hover:text-[var(--primary)]' }}"
                 >
                     تماس با ما
                 </a>
@@ -109,13 +120,13 @@
                         value="{{ request('search') }}"
                         placeholder="جستجوی محصول، برند یا دسته‌بندی..."
                         autocomplete="off"
-                        class="w-full rounded-2xl border border-[var(--color-border)] bg-[var(--color-neutral-50)] py-3 pr-4 pl-12 text-sm text-[var(--color-text-primary)] outline-none transition duration-200 placeholder:text-[var(--color-text-soft)] focus:border-[var(--color-brand-900)] focus:bg-white focus:ring-4 focus:ring-[var(--color-brand-900)]/10"
+                        class="w-full rounded-2xl border border-[var(--border)] bg-[var(--surface-soft)] py-3 pr-4 pl-12 text-sm text-[var(--text)] outline-none transition duration-200 placeholder:text-[var(--text-light)] focus:border-[var(--primary)] focus:bg-white focus:ring-4 focus:ring-[var(--primary)]/10"
                     >
 
 
                     <button
                         type="submit"
-                        class="absolute left-1.5 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-xl bg-[var(--color-brand-900)] text-white transition duration-200 hover:bg-[var(--color-brand-950)] focus:outline-none focus:ring-4 focus:ring-[var(--color-brand-900)]/15"
+                        class="absolute left-1.5 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-xl bg-[var(--primary)] text-white transition duration-200 hover:bg-[var(--primary-hover)] focus:outline-none focus:ring-4 focus:ring-[var(--primary)]/15"
                         aria-label="جستجو"
                     >
 
@@ -127,8 +138,14 @@
                             stroke-width="1.8"
                             aria-hidden="true"
                         >
-                            <circle cx="11" cy="11" r="7"/>
-                            <path d="m20 20-3.5-3.5"/>
+                            <circle
+                                cx="11"
+                                cy="11"
+                                r="7"
+                            />
+
+                            <path d="m20 20-3.5-3.5" />
+
                         </svg>
 
                     </button>
@@ -144,13 +161,14 @@
 
             <div class="flex shrink-0 items-center gap-2">
 
+
                 {{-- =====================================================
                     Wishlist
                 ====================================================== --}}
 
                 <a
                     href="{{ auth()->check() ? route('customer.wishlist.index') : route('login') }}"
-                    class="hidden h-11 w-11 items-center justify-center rounded-xl border border-[var(--color-border)] bg-white text-[var(--color-text-secondary)] transition duration-200 hover:border-[var(--color-accent-200)] hover:bg-[var(--color-accent-50)] hover:text-[var(--color-accent-600)] sm:flex"
+                    class="hidden h-11 w-11 items-center justify-center rounded-xl border border-[var(--border)] bg-white text-[var(--text-secondary)] transition duration-200 hover:border-[var(--accent)] hover:bg-[var(--accent-soft)] hover:text-[var(--accent)] sm:flex"
                     aria-label="علاقه‌مندی‌ها"
                     title="علاقه‌مندی‌ها"
                 >
@@ -163,7 +181,7 @@
                         stroke-width="1.7"
                         aria-hidden="true"
                     >
-                        <path d="M20.8 8.7c0 5.2-8.8 10.3-8.8 10.3S3.2 13.9 3.2 8.7A4.7 4.7 0 0 1 12 6.2a4.7 4.7 0 0 1 8.8 2.5Z"/>
+                        <path d="M20.8 8.7c0 5.2-8.8 10.3-8.8 10.3S3.2 13.9 3.2 8.7A4.7 4.7 0 0 1 12 6.2a4.7 4.7 0 0 1 8.8 2.5Z" />
                     </svg>
 
                 </a>
@@ -177,7 +195,7 @@
 
                     <a
                         href="{{ route('customer.cart.index') }}"
-                        class="relative flex h-11 w-11 items-center justify-center rounded-xl border border-[var(--color-border)] bg-white text-[var(--color-text-secondary)] transition duration-200 hover:border-[var(--color-brand-300)] hover:bg-[var(--color-brand-50)] hover:text-[var(--color-brand-900)]"
+                        class="relative flex h-11 w-11 items-center justify-center rounded-xl border border-[var(--border)] bg-white text-[var(--text-secondary)] transition duration-200 hover:border-[var(--primary)] hover:bg-[var(--surface-soft)] hover:text-[var(--primary)]"
                         aria-label="سبد خرید"
                         title="سبد خرید"
                     >
@@ -190,9 +208,20 @@
                             stroke-width="1.7"
                             aria-hidden="true"
                         >
-                            <path d="M3 4h2l2.4 11.2a2 2 0 0 0 2 1.6h7.9a2 2 0 0 0 2-1.6L21 7H6"/>
-                            <circle cx="10" cy="20" r="1"/>
-                            <circle cx="18" cy="20" r="1"/>
+                            <path d="M3 4h2l2.4 11.2a2 2 0 0 0 2 1.6h7.9a2 2 0 0 0 2-1.6L21 7H6" />
+
+                            <circle
+                                cx="10"
+                                cy="20"
+                                r="1"
+                            />
+
+                            <circle
+                                cx="18"
+                                cy="20"
+                                r="1"
+                            />
+
                         </svg>
 
 
@@ -207,7 +236,7 @@
                         @if($cartCount > 0)
 
                             <span
-                                class="absolute -right-1.5 -top-1.5 flex min-h-5 min-w-5 items-center justify-center rounded-full bg-[var(--color-accent-600)] px-1 text-[9px] font-black leading-none text-white shadow-sm"
+                                class="absolute -right-1.5 -top-1.5 flex min-h-5 min-w-5 items-center justify-center rounded-full bg-[var(--accent)] px-1 text-[9px] font-black leading-none text-white shadow-sm"
                             >
                                 {{ $cartCount > 99 ? '99+' : $cartCount }}
                             </span>
@@ -232,11 +261,11 @@
                             @click="accountOpen = !accountOpen"
                             :aria-expanded="accountOpen.toString()"
                             aria-haspopup="menu"
-                            class="flex h-11 items-center gap-2 rounded-xl border border-[var(--color-border)] bg-white px-3.5 text-sm font-bold text-[var(--color-text-secondary)] transition duration-200 hover:border-[var(--color-brand-300)] hover:bg-[var(--color-brand-50)] hover:text-[var(--color-brand-900)]"
+                            class="flex h-11 items-center gap-2 rounded-xl border border-[var(--border)] bg-white px-3.5 text-sm font-bold text-[var(--text-secondary)] transition duration-200 hover:border-[var(--primary)] hover:bg-[var(--surface-soft)] hover:text-[var(--primary)]"
                         >
 
                             <span
-                                class="flex h-7 w-7 items-center justify-center rounded-lg bg-[var(--color-brand-900)] text-[11px] font-black text-white"
+                                class="flex h-7 w-7 items-center justify-center rounded-lg bg-[var(--primary)] text-[11px] font-black text-white"
                             >
                                 {{ mb_substr(auth()->user()->name ?? 'U', 0, 1) }}
                             </span>
@@ -256,7 +285,7 @@
                                 stroke-width="1.8"
                                 aria-hidden="true"
                             >
-                                <path d="m6 9 6 6 6-6"/>
+                                <path d="m6 9 6 6 6-6" />
                             </svg>
 
                         </button>
@@ -276,17 +305,20 @@
                             x-transition:leave-start="opacity-100 translate-y-0 scale-100"
                             x-transition:leave-end="opacity-0 translate-y-1 scale-[0.98]"
                             @click.outside="accountOpen = false"
-                            class="absolute left-0 top-[calc(100%+10px)] z-[70] w-72 overflow-hidden rounded-2xl border border-[var(--color-border)] bg-white shadow-[0_18px_50px_rgb(16_23_34_/0.12)]"
+                            class="absolute left-0 top-[calc(100%+10px)] z-[70] w-72 overflow-hidden rounded-2xl border border-[var(--border)] bg-white shadow-[0_18px_50px_rgba(72,91,105,0.12)]"
                             role="menu"
                         >
 
                             {{-- User header --}}
-                            <div class="border-b border-[var(--color-border)] bg-[var(--color-neutral-50)] px-4 py-4">
+
+                            <div
+                                class="border-b border-[var(--border)] bg-[var(--surface-soft)] px-4 py-4"
+                            >
 
                                 <div class="flex items-center gap-3">
 
                                     <span
-                                        class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[var(--color-brand-900)] text-sm font-black text-white"
+                                        class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[var(--primary)] text-sm font-black text-white"
                                     >
                                         {{ mb_substr(auth()->user()->name ?? 'U', 0, 1) }}
                                     </span>
@@ -294,8 +326,8 @@
 
                                     <div class="min-w-0">
 
-                                        <div class="truncate text-xs font-black text-[var(--color-text-primary)]">
-                                            {{ auth()->user()->name ?: 'کاربر فرزین' }}
+                                        <div class="truncate text-xs font-black text-[var(--text)]">
+                                            {{ auth()->user()->name ?: 'کاربر ژنان' }}
                                         </div>
 
 
@@ -303,7 +335,7 @@
 
                                             <div
                                                 dir="ltr"
-                                                class="mt-1 truncate text-[10px] text-[var(--color-text-muted)]"
+                                                class="mt-1 truncate text-[10px] text-[var(--text-muted)]"
                                             >
                                                 {{ auth()->user()->email }}
                                             </div>
@@ -318,16 +350,22 @@
 
 
                             {{-- Menu --}}
+
                             <div class="p-2">
+
+
+                                {{-- Dashboard --}}
 
                                 <a
                                     href="{{ route('customer.dashboard') }}"
                                     @click="accountOpen = false"
-                                    class="flex items-center gap-3 rounded-xl px-3 py-3 text-xs font-bold text-[var(--color-text-secondary)] transition hover:bg-[var(--color-brand-50)] hover:text-[var(--color-brand-900)]"
+                                    class="flex items-center gap-3 rounded-xl px-3 py-3 text-xs font-bold text-[var(--text-secondary)] transition hover:bg-[var(--surface-soft)] hover:text-[var(--primary)]"
                                     role="menuitem"
                                 >
 
-                                    <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-[var(--color-neutral-100)] text-[var(--color-brand-800)]">
+                                    <span
+                                        class="flex h-8 w-8 items-center justify-center rounded-lg bg-[var(--surface-soft)] text-[var(--primary)]"
+                                    >
 
                                         <svg
                                             class="h-4 w-4"
@@ -336,10 +374,37 @@
                                             stroke="currentColor"
                                             stroke-width="1.8"
                                         >
-                                            <rect x="3" y="3" width="7" height="7" rx="1"/>
-                                            <rect x="14" y="3" width="7" height="7" rx="1"/>
-                                            <rect x="3" y="14" width="7" height="7" rx="1"/>
-                                            <rect x="14" y="14" width="7" height="7" rx="1"/>
+                                            <rect
+                                                x="3"
+                                                y="3"
+                                                width="7"
+                                                height="7"
+                                                rx="1"
+                                            />
+
+                                            <rect
+                                                x="14"
+                                                y="3"
+                                                width="7"
+                                                height="7"
+                                                rx="1"
+                                            />
+
+                                            <rect
+                                                x="3"
+                                                y="14"
+                                                width="7"
+                                                height="7"
+                                                rx="1"
+                                            />
+
+                                            <rect
+                                                x="14"
+                                                y="14"
+                                                width="7"
+                                                height="7"
+                                                rx="1"
+                                            />
                                         </svg>
 
                                     </span>
@@ -349,26 +414,30 @@
                                     </span>
 
                                     <svg
-                                        class="h-3.5 w-3.5 text-[var(--color-text-muted)]"
+                                        class="h-3.5 w-3.5 text-[var(--text-muted)]"
                                         viewBox="0 0 24 24"
                                         fill="none"
                                         stroke="currentColor"
                                         stroke-width="1.8"
                                     >
-                                        <path d="m9 18 6-6-6-6"/>
+                                        <path d="m9 18 6-6-6-6" />
                                     </svg>
 
                                 </a>
 
 
+                                {{-- Settings --}}
+
                                 <a
                                     href="{{ route('customer.settings.index') }}"
                                     @click="accountOpen = false"
-                                    class="flex items-center gap-3 rounded-xl px-3 py-3 text-xs font-bold text-[var(--color-text-secondary)] transition hover:bg-[var(--color-neutral-50)] hover:text-[var(--color-brand-900)]"
+                                    class="flex items-center gap-3 rounded-xl px-3 py-3 text-xs font-bold text-[var(--text-secondary)] transition hover:bg-[var(--surface-soft)] hover:text-[var(--primary)]"
                                     role="menuitem"
                                 >
 
-                                    <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-[var(--color-neutral-100)] text-[var(--color-brand-800)]">
+                                    <span
+                                        class="flex h-8 w-8 items-center justify-center rounded-lg bg-[var(--surface-soft)] text-[var(--primary)]"
+                                    >
 
                                         <svg
                                             class="h-4 w-4"
@@ -377,8 +446,13 @@
                                             stroke="currentColor"
                                             stroke-width="1.8"
                                         >
-                                            <circle cx="12" cy="12" r="3"/>
-                                            <path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-1.8 1.8-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6V20h-2.5v-.1a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1-1.8-1.8.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.6-1H4v-2.5h.1a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1L7.1 6l.1.1a1.7 1.7 0 0 0 1.9.3 1.7 1.7 0 0 0 1-1.6V4h2.5v.1a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1 1.8 1.8-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.6 1h.1v2.5h-.1a1.7 1.7 0 0 0-1.6 1Z"/>
+                                            <circle
+                                                cx="12"
+                                                cy="12"
+                                                r="3"
+                                            />
+
+                                            <path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-1.8 1.8-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6V20h-2.5v-.1a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1-1.8-1.8.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.6-1H4v-2.5h.1a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1L7.1 6l.1.1a1.7 1.7 0 0 0 1.9.3 1.7 1.7 0 0 0 1-1.6V4h2.5v.1a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1 1.8 1.8-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0-.1 1.9 1.7 1.7 0 0 0 1.6 1Z" />
                                         </svg>
 
                                     </span>
@@ -388,26 +462,30 @@
                                     </span>
 
                                     <svg
-                                        class="h-3.5 w-3.5 text-[var(--color-text-muted)]"
+                                        class="h-3.5 w-3.5 text-[var(--text-muted)]"
                                         viewBox="0 0 24 24"
                                         fill="none"
                                         stroke="currentColor"
                                         stroke-width="1.8"
                                     >
-                                        <path d="m9 18 6-6-6-6"/>
+                                        <path d="m9 18 6-6-6-6" />
                                     </svg>
 
                                 </a>
 
 
+                                {{-- Addresses --}}
+
                                 <a
                                     href="{{ route('customer.addresses.index') }}"
                                     @click="accountOpen = false"
-                                    class="flex items-center gap-3 rounded-xl px-3 py-3 text-xs font-bold text-[var(--color-text-secondary)] transition hover:bg-[var(--color-neutral-50)] hover:text-[var(--color-brand-900)]"
+                                    class="flex items-center gap-3 rounded-xl px-3 py-3 text-xs font-bold text-[var(--text-secondary)] transition hover:bg-[var(--surface-soft)] hover:text-[var(--primary)]"
                                     role="menuitem"
                                 >
 
-                                    <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-[var(--color-neutral-100)] text-[var(--color-brand-800)]">
+                                    <span
+                                        class="flex h-8 w-8 items-center justify-center rounded-lg bg-[var(--surface-soft)] text-[var(--primary)]"
+                                    >
 
                                         <svg
                                             class="h-4 w-4"
@@ -416,8 +494,13 @@
                                             stroke="currentColor"
                                             stroke-width="1.8"
                                         >
-                                            <path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"/>
-                                            <circle cx="12" cy="10" r="2.5"/>
+                                            <path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z" />
+
+                                            <circle
+                                                cx="12"
+                                                cy="10"
+                                                r="2.5"
+                                            />
                                         </svg>
 
                                     </span>
@@ -427,26 +510,30 @@
                                     </span>
 
                                     <svg
-                                        class="h-3.5 w-3.5 text-[var(--color-text-muted)]"
+                                        class="h-3.5 w-3.5 text-[var(--text-muted)]"
                                         viewBox="0 0 24 24"
                                         fill="none"
                                         stroke="currentColor"
                                         stroke-width="1.8"
                                     >
-                                        <path d="m9 18 6-6-6-6"/>
+                                        <path d="m9 18 6-6-6-6" />
                                     </svg>
 
                                 </a>
 
 
+                                {{-- Orders --}}
+
                                 <a
                                     href="{{ route('customer.orders.index') }}"
                                     @click="accountOpen = false"
-                                    class="flex items-center gap-3 rounded-xl px-3 py-3 text-xs font-bold text-[var(--color-text-secondary)] transition hover:bg-[var(--color-neutral-50)] hover:text-[var(--color-brand-900)]"
+                                    class="flex items-center gap-3 rounded-xl px-3 py-3 text-xs font-bold text-[var(--text-secondary)] transition hover:bg-[var(--surface-soft)] hover:text-[var(--primary)]"
                                     role="menuitem"
                                 >
 
-                                    <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-[var(--color-neutral-100)] text-[var(--color-brand-800)]">
+                                    <span
+                                        class="flex h-8 w-8 items-center justify-center rounded-lg bg-[var(--surface-soft)] text-[var(--primary)]"
+                                    >
 
                                         <svg
                                             class="h-4 w-4"
@@ -455,8 +542,9 @@
                                             stroke="currentColor"
                                             stroke-width="1.8"
                                         >
-                                            <path d="M6 3h12a2 2 0 0 1 2 2v14l-4-2-4 2-4-2-4 2V5a2 2 0 0 1 2-2Z"/>
-                                            <path d="M9 8h6M9 12h6"/>
+                                            <path d="M6 3h12a2 2 0 0 1 2 2v14l-4-2-4 2-4-2-4 2V5a2 2 0 0 1 2-2Z" />
+
+                                            <path d="M9 8h6M9 12h6" />
                                         </svg>
 
                                     </span>
@@ -466,13 +554,13 @@
                                     </span>
 
                                     <svg
-                                        class="h-3.5 w-3.5 text-[var(--color-text-muted)]"
+                                        class="h-3.5 w-3.5 text-[var(--text-muted)]"
                                         viewBox="0 0 24 24"
                                         fill="none"
                                         stroke="currentColor"
                                         stroke-width="1.8"
                                     >
-                                        <path d="m9 18 6-6-6-6"/>
+                                        <path d="m9 18 6-6-6-6" />
                                     </svg>
 
                                 </a>
@@ -481,7 +569,10 @@
 
 
                             {{-- Logout --}}
-                            <div class="border-t border-[var(--color-border)] p-2">
+
+                            <div
+                                class="border-t border-[var(--border)] p-2"
+                            >
 
                                 <form
                                     action="{{ route('logout') }}"
@@ -492,11 +583,13 @@
 
                                     <button
                                         type="submit"
-                                        class="flex w-full items-center gap-3 rounded-xl px-3 py-3 text-right text-xs font-black text-red-600 transition hover:bg-red-50"
+                                        class="flex w-full items-center gap-3 rounded-xl px-3 py-3 text-right text-xs font-black text-[var(--danger)] transition hover:bg-[var(--danger-soft)]"
                                         role="menuitem"
                                     >
 
-                                        <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-red-50 text-red-600">
+                                        <span
+                                            class="flex h-8 w-8 items-center justify-center rounded-lg bg-[var(--danger-soft)] text-[var(--danger)]"
+                                        >
 
                                             <svg
                                                 class="h-4 w-4"
@@ -505,9 +598,11 @@
                                                 stroke="currentColor"
                                                 stroke-width="1.8"
                                             >
-                                                <path d="M10 17l5-5-5-5"/>
-                                                <path d="M15 12H3"/>
-                                                <path d="M21 19V5a2 2 0 0 0-2-2h-6"/>
+                                                <path d="M10 17l5-5-5-5" />
+
+                                                <path d="M15 12H3" />
+
+                                                <path d="M21 19V5a2 2 0 0 0-2-2h-6" />
                                             </svg>
 
                                         </span>
@@ -530,7 +625,7 @@
 
                     <a
                         href="{{ route('login') }}"
-                        class="hidden h-11 items-center justify-center rounded-xl bg-[var(--color-accent-600)] px-5 text-sm font-black text-white shadow-sm transition duration-200 hover:bg-[var(--color-accent-700)] hover:shadow-md sm:flex"
+                        class="hidden h-11 items-center justify-center rounded-xl bg-[var(--accent)] px-5 text-sm font-black text-white shadow-sm transition duration-200 hover:bg-[var(--accent-hover)] hover:shadow-md sm:flex"
                     >
                         ورود
                     </a>
@@ -551,7 +646,7 @@
                     :aria-expanded="open.toString()"
                     aria-controls="mobile-navigation"
                     aria-label="منوی سایت"
-                    class="flex h-11 w-11 items-center justify-center rounded-xl border border-[var(--color-border)] bg-white text-[var(--color-text-secondary)] transition duration-200 hover:border-[var(--color-brand-300)] hover:bg-[var(--color-brand-50)] hover:text-[var(--color-brand-900)] lg:hidden"
+                    class="flex h-11 w-11 items-center justify-center rounded-xl border border-[var(--border)] bg-white text-[var(--text-secondary)] transition duration-200 hover:border-[var(--primary)] hover:bg-[var(--surface-soft)] hover:text-[var(--primary)] lg:hidden"
                 >
 
                     <svg
@@ -564,9 +659,9 @@
                         stroke-width="1.8"
                         aria-hidden="true"
                     >
-                        <path d="M4 7h16"/>
-                        <path d="M4 12h16"/>
-                        <path d="M4 17h16"/>
+                        <path d="M4 7h16" />
+                        <path d="M4 12h16" />
+                        <path d="M4 17h16" />
                     </svg>
 
 
@@ -580,8 +675,8 @@
                         stroke-width="1.8"
                         aria-hidden="true"
                     >
-                        <path d="M6 6l12 12"/>
-                        <path d="M18 6 6 18"/>
+                        <path d="M6 6l12 12" />
+                        <path d="M18 6 6 18" />
                     </svg>
 
                 </button>
@@ -600,12 +695,14 @@
             x-show="open"
             x-cloak
             x-collapse
-            class="border-t border-[var(--color-border)] py-4 lg:hidden"
+            class="border-t border-[var(--border)] py-4 lg:hidden"
         >
 
             <div class="space-y-1">
 
+
                 {{-- Mobile Search --}}
+
                 <form
                     action="{{ route('shop.index') }}"
                     method="GET"
@@ -628,13 +725,13 @@
                             name="search"
                             value="{{ request('search') }}"
                             placeholder="جستجوی محصول یا برند..."
-                            class="w-full rounded-2xl border border-[var(--color-border)] bg-[var(--color-neutral-50)] px-4 py-3 pr-4 pl-12 text-sm outline-none transition focus:border-[var(--color-brand-900)] focus:bg-white focus:ring-4 focus:ring-[var(--color-brand-900)]/10"
+                            class="w-full rounded-2xl border border-[var(--border)] bg-[var(--surface-soft)] px-4 py-3 pr-4 pl-12 text-sm text-[var(--text)] outline-none transition focus:border-[var(--primary)] focus:bg-white focus:ring-4 focus:ring-[var(--primary)]/10"
                         >
 
 
                         <button
                             type="submit"
-                            class="absolute left-1.5 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-xl bg-[var(--color-brand-900)] text-white"
+                            class="absolute left-1.5 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-xl bg-[var(--primary)] text-white"
                             aria-label="جستجو"
                         >
 
@@ -646,8 +743,13 @@
                                 stroke-width="1.8"
                                 aria-hidden="true"
                             >
-                                <circle cx="11" cy="11" r="7"/>
-                                <path d="m20 20-3.5-3.5"/>
+                                <circle
+                                    cx="11"
+                                    cy="11"
+                                    r="7"
+                                />
+
+                                <path d="m20 20-3.5-3.5" />
                             </svg>
 
                         </button>
@@ -658,12 +760,13 @@
 
 
                 {{-- Home --}}
+
                 <a
                     href="{{ route('home') }}"
                     class="flex items-center justify-between rounded-xl px-4 py-3 text-sm font-bold transition
                     {{ request()->routeIs('home')
-                        ? 'bg-[var(--color-brand-50)] text-[var(--color-brand-900)]'
-                        : 'text-[var(--color-text-secondary)] hover:bg-[var(--color-neutral-50)]' }}"
+                        ? 'bg-[var(--surface-soft)] text-[var(--primary)]'
+                        : 'text-[var(--text-secondary)] hover:bg-[var(--surface-soft)] hover:text-[var(--primary)]' }}"
                 >
                     <span>خانه</span>
 
@@ -674,18 +777,20 @@
                         stroke="currentColor"
                         stroke-width="1.8"
                     >
-                        <path d="m9 18 6-6-6-6"/>
+                        <path d="m9 18 6-6-6-6" />
                     </svg>
+
                 </a>
 
 
                 {{-- Shop --}}
+
                 <a
                     href="{{ route('shop.index') }}"
                     class="flex items-center justify-between rounded-xl px-4 py-3 text-sm font-bold transition
                     {{ request()->routeIs('shop.*')
-                        ? 'bg-[var(--color-brand-50)] text-[var(--color-brand-900)]'
-                        : 'text-[var(--color-text-secondary)] hover:bg-[var(--color-neutral-50)]' }}"
+                        ? 'bg-[var(--surface-soft)] text-[var(--primary)]'
+                        : 'text-[var(--text-secondary)] hover:bg-[var(--surface-soft)] hover:text-[var(--primary)]' }}"
                 >
                     <span>فروشگاه</span>
 
@@ -696,18 +801,20 @@
                         stroke="currentColor"
                         stroke-width="1.8"
                     >
-                        <path d="m9 18 6-6-6-6"/>
+                        <path d="m9 18 6-6-6-6" />
                     </svg>
+
                 </a>
 
 
                 {{-- Blog --}}
+
                 <a
                     href="{{ route('blog.index') }}"
                     class="flex items-center justify-between rounded-xl px-4 py-3 text-sm font-bold transition
                     {{ request()->routeIs('blog.*')
-                        ? 'bg-[var(--color-brand-50)] text-[var(--color-brand-900)]'
-                        : 'text-[var(--color-text-secondary)] hover:bg-[var(--color-neutral-50)]' }}"
+                        ? 'bg-[var(--surface-soft)] text-[var(--primary)]'
+                        : 'text-[var(--text-secondary)] hover:bg-[var(--surface-soft)] hover:text-[var(--primary)]' }}"
                 >
                     <span>مجله</span>
 
@@ -718,18 +825,20 @@
                         stroke="currentColor"
                         stroke-width="1.8"
                     >
-                        <path d="m9 18 6-6-6-6"/>
+                        <path d="m9 18 6-6-6-6" />
                     </svg>
+
                 </a>
 
 
                 {{-- Contact --}}
+
                 <a
                     href="{{ route('contact.index') }}"
                     class="flex items-center justify-between rounded-xl px-4 py-3 text-sm font-bold transition
                     {{ request()->routeIs('contact.*')
-                        ? 'bg-[var(--color-brand-50)] text-[var(--color-brand-900)]'
-                        : 'text-[var(--color-text-secondary)] hover:bg-[var(--color-neutral-50)]' }}"
+                        ? 'bg-[var(--surface-soft)] text-[var(--primary)]'
+                        : 'text-[var(--text-secondary)] hover:bg-[var(--surface-soft)] hover:text-[var(--primary)]' }}"
                 >
                     <span>تماس با ما</span>
 
@@ -740,8 +849,9 @@
                         stroke="currentColor"
                         stroke-width="1.8"
                     >
-                        <path d="m9 18 6-6-6-6"/>
+                        <path d="m9 18 6-6-6-6" />
                     </svg>
+
                 </a>
 
 
@@ -749,17 +859,22 @@
                     Mobile Auth
                 ====================================================== --}}
 
-                <div class="mt-3 border-t border-[var(--color-border)] pt-3">
+                <div
+                    class="mt-3 border-t border-[var(--border)] pt-3"
+                >
 
                     @auth
 
                         {{-- User identity --}}
-                        <div class="mb-2 rounded-2xl bg-[var(--color-neutral-50)] p-3">
+
+                        <div
+                            class="mb-2 rounded-2xl bg-[var(--surface-soft)] p-3"
+                        >
 
                             <div class="flex items-center gap-3">
 
                                 <span
-                                    class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[var(--color-brand-900)] text-xs font-black text-white"
+                                    class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[var(--primary)] text-xs font-black text-white"
                                 >
                                     {{ mb_substr(auth()->user()->name ?? 'U', 0, 1) }}
                                 </span>
@@ -767,8 +882,10 @@
 
                                 <div class="min-w-0">
 
-                                    <div class="truncate text-xs font-black text-[var(--color-text-primary)]">
-                                        {{ auth()->user()->name ?: 'کاربر فرزین' }}
+                                    <div
+                                        class="truncate text-xs font-black text-[var(--text)]"
+                                    >
+                                        {{ auth()->user()->name ?: 'کاربر ژنان' }}
                                     </div>
 
 
@@ -776,7 +893,7 @@
 
                                         <div
                                             dir="ltr"
-                                            class="mt-0.5 truncate text-[9px] text-[var(--color-text-muted)]"
+                                            class="mt-0.5 truncate text-[9px] text-[var(--text-muted)]"
                                         >
                                             {{ auth()->user()->email }}
                                         </div>
@@ -792,9 +909,10 @@
 
                         <div class="space-y-1">
 
+
                             <a
                                 href="{{ route('customer.dashboard') }}"
-                                class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-bold text-[var(--color-text-secondary)] transition hover:bg-[var(--color-brand-50)] hover:text-[var(--color-brand-900)]"
+                                class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-bold text-[var(--text-secondary)] transition hover:bg-[var(--surface-soft)] hover:text-[var(--primary)]"
                             >
                                 داشبورد حساب کاربری
                             </a>
@@ -802,7 +920,7 @@
 
                             <a
                                 href="{{ route('customer.settings.index') }}"
-                                class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-bold text-[var(--color-text-secondary)] transition hover:bg-[var(--color-neutral-50)]"
+                                class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-bold text-[var(--text-secondary)] transition hover:bg-[var(--surface-soft)] hover:text-[var(--primary)]"
                             >
                                 تنظیمات حساب
                             </a>
@@ -810,7 +928,7 @@
 
                             <a
                                 href="{{ route('customer.addresses.index') }}"
-                                class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-bold text-[var(--color-text-secondary)] transition hover:bg-[var(--color-neutral-50)]"
+                                class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-bold text-[var(--text-secondary)] transition hover:bg-[var(--surface-soft)] hover:text-[var(--primary)]"
                             >
                                 آدرس‌های من
                             </a>
@@ -818,7 +936,7 @@
 
                             <a
                                 href="{{ route('customer.orders.index') }}"
-                                class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-bold text-[var(--color-text-secondary)] transition hover:bg-[var(--color-neutral-50)]"
+                                class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-bold text-[var(--text-secondary)] transition hover:bg-[var(--surface-soft)] hover:text-[var(--primary)]"
                             >
                                 سفارش‌های من
                             </a>
@@ -826,7 +944,7 @@
 
                             <a
                                 href="{{ route('customer.wishlist.index') }}"
-                                class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-bold text-[var(--color-text-secondary)] transition hover:bg-[var(--color-neutral-50)]"
+                                class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-bold text-[var(--text-secondary)] transition hover:bg-[var(--surface-soft)] hover:text-[var(--primary)]"
                             >
                                 علاقه‌مندی‌ها
                             </a>
@@ -834,7 +952,7 @@
 
                             <a
                                 href="{{ route('customer.cart.index') }}"
-                                class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-bold text-[var(--color-text-secondary)] transition hover:bg-[var(--color-neutral-50)]"
+                                class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-bold text-[var(--text-secondary)] transition hover:bg-[var(--surface-soft)] hover:text-[var(--primary)]"
                             >
                                 سبد خرید
                             </a>
@@ -850,7 +968,7 @@
 
                                 <button
                                     type="submit"
-                                    class="flex w-full items-center rounded-xl px-4 py-3 text-sm font-black text-red-600 transition hover:bg-red-50"
+                                    class="flex w-full items-center rounded-xl px-4 py-3 text-sm font-black text-[var(--danger)] transition hover:bg-[var(--danger-soft)]"
                                 >
                                     خروج از حساب کاربری
                                 </button>
@@ -865,7 +983,7 @@
 
                             <a
                                 href="{{ route('login') }}"
-                                class="flex items-center justify-center rounded-xl bg-[var(--color-accent-600)] px-4 py-3 text-sm font-black text-white"
+                                class="flex items-center justify-center rounded-xl bg-[var(--accent)] px-4 py-3 text-sm font-black text-white transition hover:bg-[var(--accent-hover)]"
                             >
                                 ورود
                             </a>
@@ -873,7 +991,7 @@
 
                             <a
                                 href="{{ route('register') }}"
-                                class="flex items-center justify-center rounded-xl border border-[var(--color-border)] bg-white px-4 py-3 text-sm font-black text-[var(--color-text-secondary)]"
+                                class="flex items-center justify-center rounded-xl border border-[var(--border)] bg-white px-4 py-3 text-sm font-black text-[var(--text-secondary)] transition hover:border-[var(--primary)] hover:text-[var(--primary)]"
                             >
                                 ثبت‌نام
                             </a>

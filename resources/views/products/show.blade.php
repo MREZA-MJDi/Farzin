@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', $product->meta_title ?: $product->name . ' | فرزین')
+@section('title', $product->meta_title ?: $product->name . ' | ژنان')
 
 @section(
     'meta_description',
@@ -61,113 +61,95 @@
                 'alt' => $image->alt ?: $product->name,
             ])
             ->values();
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Availability
+        |--------------------------------------------------------------------------
+        */
+
+        $isAvailable =
+            (bool) $product->is_active &&
+            (int) $product->stock > 0;
+
+        $isLowStock =
+            $isAvailable &&
+            (int) $product->stock <= 5;
     @endphp
 
 
-    <div class="min-h-screen bg-[var(--color-neutral-50)]">
+    <div class="min-h-screen bg-[var(--background)]">
 
 
         {{-- =========================================================
             BREADCRUMB
         ========================================================== --}}
 
-        <div class="border-b border-[var(--color-border)] bg-white">
+        <div class="mx-auto max-w-[1380px] px-4 pt-5 sm:px-6 lg:px-8">
 
-            <div class="mx-auto max-w-6xl px-4 py-3.5 sm:px-6 lg:px-8">
+            <nav
+                class="flex items-center gap-2 overflow-hidden text-[10px] text-[var(--text-muted)] sm:text-[11px]"
+                aria-label="مسیر صفحه"
+            >
 
-                <nav
-                    class="flex items-center gap-2 overflow-hidden text-xs"
-                    aria-label="مسیر صفحه"
+                <a
+                    href="{{ route('home') }}"
+                    class="shrink-0 transition hover:text-[var(--primary)]"
                 >
+                    خانه
+                </a>
 
-                    <a
-                        href="{{ route('home') }}"
-                        class="shrink-0 text-[var(--color-text-muted)] transition hover:text-[var(--color-brand-700)]"
-                    >
-                        خانه
-                    </a>
+                <span class="text-[var(--border-dark)]">
+                    /
+                </span>
 
+                <a
+                    href="{{ route('shop.index') }}"
+                    class="shrink-0 transition hover:text-[var(--primary)]"
+                >
+                    فروشگاه
+                </a>
 
-                    <svg
-                        class="h-3.5 w-3.5 shrink-0 text-[var(--color-neutral-400)]"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="1.8"
-                        aria-hidden="true"
-                    >
-                        <path d="m9 18 6-6-6-6"/>
-                    </svg>
+                @if($product->category)
 
-
-                    <a
-                        href="{{ route('shop.index') }}"
-                        class="shrink-0 text-[var(--color-text-muted)] transition hover:text-[var(--color-brand-700)]"
-                    >
-                        فروشگاه
-                    </a>
-
-
-                    @if($product->category)
-
-                        <svg
-                            class="h-3.5 w-3.5 shrink-0 text-[var(--color-neutral-400)]"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="1.8"
-                            aria-hidden="true"
-                        >
-                            <path d="m9 18 6-6-6-6"/>
-                        </svg>
-
-
-                        <a
-                            href="{{ route('categories.show', $product->category) }}"
-                            class="shrink-0 text-[var(--color-text-muted)] transition hover:text-[var(--color-brand-700)]"
-                        >
-                            {{ $product->category->name }}
-                        </a>
-
-                    @endif
-
-
-                    <svg
-                        class="h-3.5 w-3.5 shrink-0 text-[var(--color-neutral-400)]"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="1.8"
-                        aria-hidden="true"
-                    >
-                        <path d="m9 18 6-6-6-6"/>
-                    </svg>
-
-
-                    <span
-                        class="min-w-0 truncate font-semibold text-[var(--color-text-secondary)]"
-                    >
-                        {{ $product->name }}
+                    <span class="text-[var(--border-dark)]">
+                        /
                     </span>
 
-                </nav>
+                    <a
+                        href="{{ route('categories.show', $product->category) }}"
+                        class="shrink-0 transition hover:text-[var(--primary)]"
+                    >
+                        {{ $product->category->name }}
+                    </a>
 
-            </div>
+                @endif
+
+                <span class="text-[var(--border-dark)]">
+                    /
+                </span>
+
+                <span class="min-w-0 truncate font-semibold text-[var(--text-secondary)]">
+                    {{ $product->name }}
+                </span>
+
+            </nav>
 
         </div>
 
 
 
         {{-- =========================================================
-            PRODUCT
+            PRODUCT HERO
         ========================================================== --}}
 
         <section
-            class="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-8 lg:px-8 lg:py-10"
+            class="mx-auto max-w-[1380px] px-4 pb-14 pt-5 sm:px-6 sm:pb-20 sm:pt-7 lg:px-8 lg:pb-24"
         >
 
             <div
-                class="grid items-start gap-6 lg:grid-cols-[minmax(0,1.04fr)_minmax(320px,.96fr)] lg:gap-8 xl:gap-10"
+                class="grid items-start gap-7 lg:grid-cols-[minmax(0,1.08fr)_minmax(380px,.92fr)] lg:gap-12 xl:gap-16"
             >
 
 
@@ -201,7 +183,6 @@
                             images: @js($galleryData),
 
                             setImage(id) {
-
                                 const image = this.images.find(
                                     item => Number(item.id) === Number(id)
                                 );
@@ -217,10 +198,7 @@
                         }"
                     >
 
-
-                        <div
-                            class="grid gap-3.5 sm:grid-cols-[72px_minmax(0,1fr)]"
-                        >
+                        <div class="grid gap-3 sm:grid-cols-[78px_minmax(0,1fr)]">
 
 
                             {{-- =================================================
@@ -228,38 +206,46 @@
                             ================================================== --}}
 
                             <div
-                                class="order-2 flex gap-2.5 overflow-x-auto sm:order-1 sm:flex-col sm:overflow-visible"
+                                class="order-2 flex gap-2 overflow-x-auto pb-1 sm:order-1 sm:flex-col sm:overflow-visible sm:pb-0"
                             >
+
                                 @forelse($galleryImages as $image)
 
                                     <button
                                         type="button"
                                         @click.prevent="setImage({{ $image->id }})"
                                         :class="
-                Number(activeId) === Number({{ $image->id }})
-                    ? 'border-[var(--color-brand-700)] ring-2 ring-[var(--color-brand-100)]'
-                    : 'border-[var(--color-border)] hover:border-[var(--color-brand-300)]'
-            "
-                                        class="group flex h-[70px] w-[70px] shrink-0 items-center justify-center overflow-hidden rounded-xl border-2 bg-white transition"
+                                            Number(activeId) === Number({{ $image->id }})
+                                                ? 'border-[var(--primary)] bg-white shadow-sm'
+                                                : 'border-transparent bg-white/60 hover:border-[var(--primary)]/30'
+                                        "
+                                        class="group relative flex h-[72px] w-[72px] shrink-0 items-center justify-center overflow-hidden rounded-2xl border-2 transition duration-300"
                                         aria-label="نمایش تصویر {{ $loop->iteration }}"
-                                        :aria-pressed="Number(activeId) === Number({{ $image->id }}) ? 'true' : 'false'"
+                                        :aria-pressed="
+                                            Number(activeId) === Number({{ $image->id }})
+                                                ? 'true'
+                                                : 'false'
+                                        "
                                     >
+
                                         <img
                                             src="{{ asset('storage/' . ltrim($image->image, '/')) }}"
                                             alt="{{ $image->alt ?: $product->name }}"
-                                            class="h-full w-full object-contain p-1.5"
-                                            width="70"
-                                            height="70"
+                                            class="h-full w-full object-contain p-1.5 transition duration-300 group-hover:scale-105"
+                                            width="72"
+                                            height="72"
                                             loading="{{ $loop->first ? 'eager' : 'lazy' }}"
                                             decoding="async"
                                         >
+
                                     </button>
 
                                 @empty
 
                                     <div
-                                        class="flex h-[70px] w-[70px] shrink-0 items-center justify-center rounded-xl border border-dashed border-[var(--color-border-strong)] bg-white text-[var(--color-neutral-400)]"
+                                        class="flex h-[72px] w-[72px] shrink-0 items-center justify-center rounded-2xl border border-dashed border-[var(--border-dark)] bg-white text-[var(--text-light)]"
                                     >
+
                                         <svg
                                             class="h-6 w-6"
                                             viewBox="0 0 24 24"
@@ -268,40 +254,67 @@
                                             stroke-width="1.5"
                                             aria-hidden="true"
                                         >
-                                            <rect x="3" y="4" width="18" height="16" rx="2"/>
-                                            <circle cx="8.5" cy="9" r="1.5"/>
+                                            <rect
+                                                x="3"
+                                                y="4"
+                                                width="18"
+                                                height="16"
+                                                rx="2"
+                                            />
+
+                                            <circle
+                                                cx="8.5"
+                                                cy="9"
+                                                r="1.5"
+                                            />
+
                                             <path d="m21 15-5-5-4 4-2-2-7 7"/>
                                         </svg>
+
                                     </div>
 
                                 @endforelse
+
                             </div>
+
 
 
                             {{-- =================================================
                                 MAIN IMAGE
                             ================================================== --}}
 
-                            <div class="order-1 min-w-0 sm:order-2">
+                            <div class="order-1 sm:order-2">
 
                                 <div
-                                    class="relative overflow-hidden rounded-2xl border border-[var(--color-border)] bg-white"
+                                    class="relative overflow-hidden rounded-[32px] border border-[var(--border)] bg-white shadow-[0_20px_60px_rgba(72,91,105,0.06)]"
                                 >
 
                                     <button
                                         type="button"
                                         @click="activeUrl && (zoom = true)"
-                                        class="group relative block aspect-square w-full cursor-zoom-in overflow-hidden bg-[var(--color-neutral-50)]"
+                                        class="group relative block aspect-[4/5] w-full overflow-hidden"
                                         aria-label="بزرگ‌نمایی تصویر محصول"
                                     >
 
-
-                                        {{-- Soft Background --}}
+                                        {{-- Ambient Background --}}
 
                                         <div
-                                            class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,var(--color-brand-50),transparent_42%),radial-gradient(circle_at_bottom_left,var(--color-accent-50),transparent_42%)]"
-                                        ></div>
+                                            class="pointer-events-none absolute inset-0"
+                                        >
 
+                                            <div
+                                                class="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-[var(--primary)]/10 blur-3xl"
+                                            ></div>
+
+                                            <div
+                                                class="absolute -bottom-20 -left-20 h-72 w-72 rounded-full bg-[var(--accent)]/10 blur-3xl"
+                                            ></div>
+
+                                            <div
+                                                class="absolute inset-0 bg-[linear-gradient(135deg,rgba(126,199,232,0.035),rgba(245,214,223,0.10),rgba(255,255,255,0.55))]"
+                                            ></div>
+
+                                        </div>
 
 
                                         {{-- Main Image --}}
@@ -313,17 +326,17 @@
                                                 x-bind:src="activeUrl"
                                                 x-bind:alt="activeAlt"
                                                 alt="{{ $firstImage->alt ?: $product->name }}"
-                                                width="900"
-                                                height="900"
+                                                width="1000"
+                                                height="1250"
                                                 loading="eager"
                                                 decoding="async"
-                                                class="relative z-[1] block h-full w-full object-contain p-6 transition duration-300 sm:p-8 lg:p-10"
+                                                class="relative z-10 block h-full w-full object-contain p-7 transition duration-700 ease-[cubic-bezier(.22,1,.36,1)] group-hover:scale-[1.025] sm:p-10 lg:p-12"
                                             >
 
                                         @else
 
                                             <div
-                                                class="absolute inset-0 flex flex-col items-center justify-center text-[var(--color-neutral-400)]"
+                                                class="absolute inset-0 flex flex-col items-center justify-center text-[var(--text-light)]"
                                             >
 
                                                 <svg
@@ -360,15 +373,12 @@
                                         @endif
 
 
-
-                                        {{-- =================================================
-                                            DISCOUNT
-                                        ================================================== --}}
+                                        {{-- Discount --}}
 
                                         @if($hasDiscount && $displayDiscount > 0)
 
                                             <span
-                                                class="absolute right-3.5 top-3.5 z-10 rounded-full bg-[var(--color-accent-600)] px-3 py-1.5 text-[11px] font-black text-white shadow-md"
+                                                class="absolute right-5 top-5 z-20 rounded-full bg-[var(--accent)] px-3.5 py-2 text-[10px] font-black text-white shadow-[0_10px_25px_rgba(220,145,160,0.20)]"
                                             >
                                                 {{ $displayDiscount }}٪ تخفیف
                                             </span>
@@ -376,47 +386,52 @@
                                         @elseif($product->is_featured)
 
                                             <span
-                                                class="absolute right-3.5 top-3.5 z-10 rounded-full bg-[var(--color-brand-950)] px-3 py-1.5 text-[11px] font-black text-white shadow-md"
+                                                class="absolute right-5 top-5 z-20 inline-flex items-center gap-1.5 rounded-full border border-white bg-white/90 px-3.5 py-2 text-[10px] font-black text-[var(--primary)] shadow-sm backdrop-blur"
                                             >
-                                                محصول ویژه
+
+                                                <svg
+                                                    class="h-3 w-3"
+                                                    viewBox="0 0 24 24"
+                                                    fill="currentColor"
+                                                    aria-hidden="true"
+                                                >
+                                                    <path d="m12 2 2.6 6.2L21 11l-6.4 2.8L12 20l-2.6-6.2L3 11l6.4-2.8L12 2Z"/>
+                                                </svg>
+
+                                                انتخاب ژنان
+
                                             </span>
 
                                         @endif
 
 
+                                        {{-- Stock --}}
 
-                                        {{-- =================================================
-                                            STOCK
-                                        ================================================== --}}
-
-                                        @if(!$product->is_active || $product->stock <= 0)
+                                        @if(!$isAvailable)
 
                                             <span
-                                                class="absolute left-3.5 top-3.5 z-10 rounded-full bg-[var(--color-brand-950)]/95 px-3 py-1.5 text-[11px] font-black text-white"
+                                                class="absolute left-5 top-5 z-20 rounded-full bg-slate-800/90 px-3.5 py-2 text-[10px] font-black text-white shadow-sm backdrop-blur"
                                             >
                                                 ناموجود
                                             </span>
 
-                                        @elseif($product->stock <= 5)
+                                        @elseif($isLowStock)
 
                                             <span
-                                                class="absolute left-3.5 top-3.5 z-10 rounded-full border border-white bg-white/95 px-3 py-1.5 text-[11px] font-black text-[var(--color-text-primary)] shadow-sm"
+                                                class="absolute left-5 top-5 z-20 rounded-full border border-white bg-white/90 px-3.5 py-2 text-[10px] font-black text-[var(--text-secondary)] shadow-sm backdrop-blur"
                                             >
-                                                فقط {{ $product->stock }} عدد
+                                                فقط {{ number_format($product->stock) }} عدد
                                             </span>
 
                                         @endif
 
 
-
-                                        {{-- =================================================
-                                            ZOOM
-                                        ================================================== --}}
+                                        {{-- Zoom --}}
 
                                         @if($firstImage)
 
                                             <span
-                                                class="absolute bottom-3.5 left-3.5 z-10 flex h-9 w-9 items-center justify-center rounded-xl border border-[var(--color-border)] bg-white/95 text-[var(--color-text-secondary)] shadow-sm transition group-hover:bg-white group-hover:text-[var(--color-brand-900)]"
+                                                class="absolute bottom-5 left-5 z-20 flex h-10 w-10 items-center justify-center rounded-full border border-white/70 bg-white/80 text-[var(--text-secondary)] shadow-sm backdrop-blur-md transition duration-300 group-hover:bg-white group-hover:text-[var(--primary)]"
                                             >
 
                                                 <svg
@@ -447,29 +462,21 @@
                                 </div>
 
 
-
-                                {{-- Gallery Count --}}
+                                {{-- Gallery Meta --}}
 
                                 @if($galleryImages->count() > 0)
 
                                     <div
-                                        class="mt-2.5 flex items-center justify-between px-0.5 text-[10px] text-[var(--color-text-muted)]"
+                                        class="mt-3 flex items-center justify-between px-1 text-[10px] text-[var(--text-muted)]"
                                     >
 
                                         <span>
-                                            گالری محصول
+                                            تصاویر محصول
                                         </span>
 
                                         <span>
-
-                                            <strong
-                                                class="font-black text-[var(--color-text-secondary)]"
-                                            >
-                                                {{ number_format($galleryImages->count()) }}
-                                            </strong>
-
+                                            {{ number_format($galleryImages->count()) }}
                                             تصویر
-
                                         </span>
 
                                     </div>
@@ -494,11 +501,11 @@
                                 x-transition.opacity
                                 @click.self="zoom = false"
                                 @keydown.escape.window="zoom = false"
-                                class="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm"
+                                class="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/70 p-4 backdrop-blur-md"
                             >
 
                                 <div
-                                    class="relative flex max-h-[88vh] max-w-[92vw] items-center justify-center overflow-hidden rounded-2xl bg-white p-3 shadow-2xl sm:p-5"
+                                    class="relative flex max-h-[90vh] max-w-[94vw] items-center justify-center overflow-hidden rounded-[28px] bg-white p-3 shadow-2xl sm:p-5"
                                 >
 
                                     <img
@@ -506,17 +513,17 @@
                                         x-bind:src="activeUrl"
                                         x-bind:alt="activeAlt"
                                         alt="{{ $firstImage->alt ?: $product->name }}"
-                                        width="1200"
-                                        height="1200"
+                                        width="1400"
+                                        height="1400"
                                         decoding="async"
-                                        class="max-h-[82vh] max-w-[88vw] object-contain"
+                                        class="max-h-[84vh] max-w-[88vw] object-contain"
                                     >
 
 
                                     <button
                                         type="button"
                                         @click="zoom = false"
-                                        class="absolute left-3 top-3 flex h-9 w-9 items-center justify-center rounded-xl bg-black/80 text-white transition hover:bg-black"
+                                        class="absolute left-3 top-3 flex h-10 w-10 items-center justify-center rounded-full bg-slate-900/85 text-white transition hover:bg-slate-950"
                                         aria-label="بستن"
                                     >
 
@@ -526,7 +533,6 @@
                                             fill="none"
                                             stroke="currentColor"
                                             stroke-width="1.8"
-                                            aria-hidden="true"
                                         >
                                             <path d="m6 6 12 12"/>
                                             <path d="m18 6-12 12"/>
@@ -543,19 +549,20 @@
                     </div>
 
 
-
                     {{-- =================================================
-                        GALLERY BENEFITS
+                        BENEFITS
                     ================================================== --}}
 
-                    <div class="mt-3.5 grid grid-cols-2 gap-2.5 sm:grid-cols-4">
+                    <div
+                        class="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-4"
+                    >
 
                         <div
-                            class="rounded-xl border border-[var(--color-border)] bg-white px-3 py-3"
+                            class="group rounded-2xl bg-white/70 px-3 py-3.5 transition hover:bg-white"
                         >
 
                             <div
-                                class="flex h-8 w-8 items-center justify-center rounded-lg bg-[var(--color-brand-50)] text-[var(--color-brand-800)]"
+                                class="flex h-9 w-9 items-center justify-center rounded-xl bg-[var(--surface-soft)] text-[var(--primary)] transition group-hover:bg-[var(--accent-soft)] group-hover:text-[var(--accent)]"
                             >
 
                                 <svg
@@ -564,7 +571,6 @@
                                     fill="none"
                                     stroke="currentColor"
                                     stroke-width="1.7"
-                                    aria-hidden="true"
                                 >
                                     <path d="M3 7h11v10H3z"/>
                                     <path d="M14 10h3l4 4v3h-7z"/>
@@ -574,9 +580,7 @@
 
                             </div>
 
-                            <p
-                                class="mt-2 text-[10px] font-black text-[var(--color-text-primary)]"
-                            >
+                            <p class="mt-2 text-[10px] font-black text-[var(--text)]">
                                 ارسال مطمئن
                             </p>
 
@@ -584,11 +588,11 @@
 
 
                         <div
-                            class="rounded-xl border border-[var(--color-border)] bg-white px-3 py-3"
+                            class="group rounded-2xl bg-white/70 px-3 py-3.5 transition hover:bg-white"
                         >
 
                             <div
-                                class="flex h-8 w-8 items-center justify-center rounded-lg bg-[var(--color-brand-50)] text-[var(--color-brand-800)]"
+                                class="flex h-9 w-9 items-center justify-center rounded-xl bg-[var(--surface-soft)] text-[var(--primary)] transition group-hover:bg-[var(--accent-soft)] group-hover:text-[var(--accent)]"
                             >
 
                                 <svg
@@ -597,7 +601,6 @@
                                     fill="none"
                                     stroke="currentColor"
                                     stroke-width="1.7"
-                                    aria-hidden="true"
                                 >
                                     <path d="M12 3 5 6v5c0 5 3 8.5 7 10 4-1.5 7-5 7-10V6l-7-3Z"/>
                                     <path d="m9 12 2 2 4-4"/>
@@ -605,9 +608,7 @@
 
                             </div>
 
-                            <p
-                                class="mt-2 text-[10px] font-black text-[var(--color-text-primary)]"
-                            >
+                            <p class="mt-2 text-[10px] font-black text-[var(--text)]">
                                 خرید امن
                             </p>
 
@@ -615,11 +616,11 @@
 
 
                         <div
-                            class="rounded-xl border border-[var(--color-border)] bg-white px-3 py-3"
+                            class="group rounded-2xl bg-white/70 px-3 py-3.5 transition hover:bg-white"
                         >
 
                             <div
-                                class="flex h-8 w-8 items-center justify-center rounded-lg bg-[var(--color-accent-50)] text-[var(--color-accent-700)]"
+                                class="flex h-9 w-9 items-center justify-center rounded-xl bg-[var(--accent-soft)] text-[var(--accent)]"
                             >
 
                                 <svg
@@ -628,7 +629,6 @@
                                     fill="none"
                                     stroke="currentColor"
                                     stroke-width="1.7"
-                                    aria-hidden="true"
                                 >
                                     <circle cx="12" cy="12" r="9"/>
                                     <path d="M12 7v5l3 2"/>
@@ -636,9 +636,7 @@
 
                             </div>
 
-                            <p
-                                class="mt-2 text-[10px] font-black text-[var(--color-text-primary)]"
-                            >
+                            <p class="mt-2 text-[10px] font-black text-[var(--text)]">
                                 پاسخ‌گویی سریع
                             </p>
 
@@ -646,11 +644,11 @@
 
 
                         <div
-                            class="rounded-xl border border-[var(--color-border)] bg-white px-3 py-3"
+                            class="group rounded-2xl bg-white/70 px-3 py-3.5 transition hover:bg-white"
                         >
 
                             <div
-                                class="flex h-8 w-8 items-center justify-center rounded-lg bg-[var(--color-accent-50)] text-[var(--color-accent-700)]"
+                                class="flex h-9 w-9 items-center justify-center rounded-xl bg-[var(--accent-soft)] text-[var(--accent)]"
                             >
 
                                 <svg
@@ -659,7 +657,6 @@
                                     fill="none"
                                     stroke="currentColor"
                                     stroke-width="1.7"
-                                    aria-hidden="true"
                                 >
                                     <path d="M12 3 4 7v5c0 4.5 3.2 7.6 8 9 4.8-1.4 8-4.5 8-9V7l-8-4Z"/>
                                     <path d="m8.5 12 2.2 2.2 4.8-5"/>
@@ -667,9 +664,7 @@
 
                             </div>
 
-                            <p
-                                class="mt-2 text-[10px] font-black text-[var(--color-text-primary)]"
-                            >
+                            <p class="mt-2 text-[10px] font-black text-[var(--text)]">
                                 انتخاب مطمئن
                             </p>
 
@@ -689,294 +684,162 @@
 
                     <div class="lg:sticky lg:top-24">
 
+
+                        {{-- Small editorial label --}}
+
                         <div
-                            class="rounded-2xl border border-[var(--color-border)] bg-white p-5 shadow-[var(--shadow-xs)] sm:p-6"
+                            class="flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.18em] text-[var(--primary)]"
                         >
 
+                            <span class="h-px w-8 bg-[var(--primary)]/50"></span>
 
-                            {{-- Brand / Category --}}
+                            Janan Collection
 
-                            <div class="flex flex-wrap items-center gap-2">
-
-                                @if($product->brand)
-
-                                    <span
-                                        class="rounded-lg bg-[var(--color-brand-50)] px-2.5 py-1.5 text-[11px] font-black text-[var(--color-brand-800)]"
-                                    >
-                                        {{ $product->brand }}
-                                    </span>
-
-                                @endif
+                        </div>
 
 
-                                @if($product->category)
+                        {{-- Brand / Category --}}
 
-                                    <a
-                                        href="{{ route('categories.show', $product->category) }}"
-                                        class="text-[11px] font-semibold text-[var(--color-text-muted)] transition hover:text-[var(--color-brand-700)]"
-                                    >
-                                        {{ $product->category->name }}
-                                    </a>
+                        <div class="mt-4 flex flex-wrap items-center gap-2.5">
 
-                                @endif
+                            @if($product->brand)
 
-                            </div>
-
-
-
-                            {{-- Title --}}
-
-                            <h1
-                                class="mt-3 text-[1.55rem] font-black leading-[1.65] tracking-tight text-[var(--color-text-primary)] sm:text-[1.8rem]"
-                            >
-                                {{ $product->name }}
-                            </h1>
-
-
-
-                            {{-- Rating --}}
-
-                            <div class="mt-4 flex items-center gap-2.5">
-
-                                @if($product->review_count > 0)
-
-                                    <a
-                                        href="#reviews"
-                                        class="inline-flex items-center gap-1.5 rounded-lg bg-amber-50 px-2.5 py-1.5 text-[11px] font-black text-amber-700"
-                                    >
-
-                                        <svg
-                                            class="h-3.5 w-3.5 text-amber-500"
-                                            viewBox="0 0 24 24"
-                                            fill="currentColor"
-                                            aria-hidden="true"
-                                        >
-                                            <path d="m12 2.8 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.4l6.2-.9L12 2.8Z"/>
-                                        </svg>
-
-                                        {{ number_format($product->rating, 1) }}
-
-                                    </a>
-
-
-                                    <a
-                                        href="#reviews"
-                                        class="text-[11px] text-[var(--color-text-muted)] hover:text-[var(--color-brand-700)]"
-                                    >
-                                        {{ number_format($product->review_count) }} نظر
-                                    </a>
-
-                                @else
-
-                                    <span
-                                        class="text-[11px] text-[var(--color-text-muted)]"
-                                    >
-                                        هنوز امتیازی ثبت نشده است
-                                    </span>
-
-                                @endif
-
-                            </div>
-
-
-
-                            {{-- Description --}}
-
-                            @if($product->short_description)
-
-                                <p
-                                    class="mt-5 text-sm leading-7 text-[var(--color-text-secondary)]"
+                                <span
+                                    class="rounded-full bg-[var(--surface-soft)] px-3 py-1.5 text-[10px] font-black text-[var(--primary)]"
                                 >
-                                    {{ $product->short_description }}
-                                </p>
+                                    {{ $product->brand }}
+                                </span>
 
                             @endif
 
 
+                            @if($product->category)
 
-                            {{-- Quick info --}}
-
-                            <div
-                                class="mt-5 rounded-xl bg-[var(--color-neutral-50)] p-3.5"
-                            >
-
-                                <div
-                                    class="mb-2.5 text-[11px] font-black text-[var(--color-text-primary)]"
+                                <a
+                                    href="{{ route('categories.show', $product->category) }}"
+                                    class="text-[10px] font-semibold text-[var(--text-muted)] transition hover:text-[var(--primary)]"
                                 >
-                                    اطلاعات محصول
-                                </div>
+                                    {{ $product->category->name }}
+                                </a>
+
+                            @endif
+
+                        </div>
 
 
-                                <div class="grid gap-2 sm:grid-cols-2">
+                        {{-- Title --}}
 
-                                    @if($product->brand)
-
-                                        <div
-                                            class="flex items-center justify-between gap-3 rounded-lg bg-white px-3 py-2.5"
-                                        >
-
-                                            <span
-                                                class="text-[10px] text-[var(--color-text-muted)]"
-                                            >
-                                                برند
-                                            </span>
-
-                                            <span
-                                                class="text-[11px] font-black text-[var(--color-text-primary)]"
-                                            >
-                                                {{ $product->brand }}
-                                            </span>
-
-                                        </div>
-
-                                    @endif
+                        <h1
+                            class="mt-4 max-w-[680px] text-[2rem] font-black leading-[1.55] tracking-[-0.025em] text-[var(--text)] sm:text-[2.35rem] lg:text-[2.7rem]"
+                        >
+                            {{ $product->name }}
+                        </h1>
 
 
-                                    @if($product->category)
+                        {{-- Rating --}}
 
-                                        <div
-                                            class="flex items-center justify-between gap-3 rounded-lg bg-white px-3 py-2.5"
-                                        >
+                        <div class="mt-4 flex items-center gap-3">
 
-                                            <span
-                                                class="text-[10px] text-[var(--color-text-muted)]"
-                                            >
-                                                دسته‌بندی
-                                            </span>
+                            @if($product->review_count > 0)
 
-                                            <span
-                                                class="max-w-[60%] truncate text-[11px] font-black text-[var(--color-text-primary)]"
-                                            >
-                                                {{ $product->category->name }}
-                                            </span>
+                                <a
+                                    href="#reviews"
+                                    class="inline-flex items-center gap-1.5 rounded-full bg-[var(--accent-soft)] px-3 py-1.5 text-[10px] font-black text-[var(--accent)] transition hover:scale-[1.02]"
+                                >
 
-                                        </div>
-
-                                    @endif
-
-
-                                    @if($product->sku)
-
-                                        <div
-                                            class="flex items-center justify-between gap-3 rounded-lg bg-white px-3 py-2.5"
-                                        >
-
-                                            <span
-                                                class="text-[10px] text-[var(--color-text-muted)]"
-                                            >
-                                                کد کالا
-                                            </span>
-
-                                            <span
-                                                dir="ltr"
-                                                class="font-mono text-[11px] font-bold text-[var(--color-text-primary)]"
-                                            >
-                                                {{ $product->sku }}
-                                            </span>
-
-                                        </div>
-
-                                    @endif
-
-
-                                    <div
-                                        class="flex items-center justify-between gap-3 rounded-lg bg-white px-3 py-2.5"
+                                    <svg
+                                        class="h-3.5 w-3.5"
+                                        viewBox="0 0 24 24"
+                                        fill="currentColor"
+                                        aria-hidden="true"
                                     >
+                                        <path d="m12 2.8 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.4l6.2-.9L12 2.8Z"/>
+                                    </svg>
 
-                                        <span
-                                            class="text-[10px] text-[var(--color-text-muted)]"
-                                        >
-                                            وضعیت
-                                        </span>
+                                    {{ number_format($product->rating, 1) }}
 
+                                </a>
 
-                                        @if($product->is_active && $product->stock > 0)
-
-                                            <span
-                                                class="inline-flex items-center gap-1.5 text-[11px] font-black text-emerald-700"
-                                            >
-
-                                                <span
-                                                    class="h-1.5 w-1.5 rounded-full bg-emerald-500"
-                                                ></span>
-
-                                                موجود
-
-                                            </span>
-
-                                        @else
-
-                                            <span
-                                                class="text-[11px] font-black text-red-600"
-                                            >
-                                                ناموجود
-                                            </span>
-
-                                        @endif
-
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-
-
-                            {{-- Divider --}}
-
-                            <div
-                                class="my-5 border-t border-[var(--color-border)]"
-                            ></div>
-
-
-
-                            {{-- Price --}}
-
-                            <div>
-
-                                <div
-                                    class="flex items-end justify-between gap-4"
+                                <a
+                                    href="#reviews"
+                                    class="text-[10px] font-semibold text-[var(--text-muted)] transition hover:text-[var(--primary)]"
                                 >
+                                    {{ number_format($product->review_count) }} دیدگاه
+                                </a>
 
-                                    <div>
+                            @else
 
-                                        <p
-                                            class="text-[10px] font-bold text-[var(--color-text-muted)]"
-                                        >
-                                            قیمت فروش
-                                        </p>
+                                <span class="text-[10px] text-[var(--text-muted)]">
+                                    هنوز دیدگاهی ثبت نشده است
+                                </span>
+
+                            @endif
+
+                        </div>
 
 
-                                        <div
-                                            class="mt-1.5 flex items-baseline gap-2"
-                                        >
+                        {{-- Description --}}
 
-                                            <strong
-                                                class="text-[2rem] font-black tracking-tight text-[var(--color-brand-950)] sm:text-[2.25rem]"
-                                            >
-                                                {{ number_format($product->price) }}
-                                            </strong>
+                        @if($product->short_description)
+
+                            <p
+                                class="mt-6 max-w-[640px] text-[13px] leading-8 text-[var(--text-secondary)] sm:text-sm"
+                            >
+                                {{ $product->short_description }}
+                            </p>
+
+                        @endif
+
+
+                        {{-- Divider --}}
+
+                        <div class="my-7 h-px bg-[var(--border)]"></div>
+
+
+                        {{-- Price --}}
+
+                        <div>
+
+                            <div class="flex items-end justify-between gap-5">
+
+                                <div>
+
+                                    @if($hasDiscount)
+
+                                        <div class="mb-2 flex items-center gap-2.5">
 
                                             <span
-                                                class="text-[11px] font-bold text-[var(--color-text-muted)]"
+                                                class="text-xs text-[var(--text-light)] line-through"
                                             >
-                                                تومان
+                                                {{ number_format($product->old_price) }}
+                                            </span>
+
+                                            <span
+                                                class="rounded-full bg-[var(--accent-soft)] px-2 py-1 text-[9px] font-black text-[var(--accent)]"
+                                            >
+                                                {{ $displayDiscount }}٪
                                             </span>
 
                                         </div>
 
-                                    </div>
+                                    @endif
 
 
-                                    @if($hasDiscount && $displayDiscount > 0)
+                                    <div class="flex items-baseline gap-2">
+
+                                        <strong
+                                            class="text-[2.05rem] font-black tracking-tight text-[var(--text)] sm:text-[2.3rem]"
+                                        >
+                                            {{ number_format($product->price) }}
+                                        </strong>
 
                                         <span
-                                            class="rounded-lg bg-[var(--color-accent-50)] px-2.5 py-1.5 text-[11px] font-black text-[var(--color-accent-700)]"
+                                            class="text-[10px] font-bold text-[var(--text-muted)]"
                                         >
-                                            {{ $displayDiscount }}٪
+                                            تومان
                                         </span>
 
-                                    @endif
+                                    </div>
 
                                 </div>
 
@@ -984,35 +847,21 @@
                                 @if($hasDiscount)
 
                                     <div
-                                        class="mt-2.5 flex items-center gap-2.5"
+                                        class="hidden text-left sm:block"
                                     >
 
-                                        <span
-                                            class="text-xs font-bold text-[var(--color-text-soft)] line-through"
+                                        <div
+                                            class="text-[9px] text-[var(--text-muted)]"
                                         >
-                                            {{ number_format($product->old_price) }}
-                                        </span>
+                                            صرفه‌جویی
+                                        </div>
 
-                                        <span
-                                            class="text-[10px] text-[var(--color-text-muted)]"
+                                        <div
+                                            class="mt-1 text-xs font-black text-[var(--accent)]"
                                         >
-                                            قیمت قبل
-                                        </span>
-
-                                    </div>
-
-
-                                    <div
-                                        class="mt-3 rounded-lg bg-[var(--color-accent-50)] px-3.5 py-2.5 text-[10px] font-bold leading-6 text-[var(--color-accent-700)]"
-                                    >
-
-                                        صرفه‌جویی شما:
-
-                                        <strong class="font-black">
                                             {{ number_format($discountAmount) }}
-                                        </strong>
-
-                                        تومان
+                                            تومان
+                                        </div>
 
                                     </div>
 
@@ -1020,167 +869,25 @@
 
                             </div>
 
+                        </div>
 
 
-                            {{-- Add To Cart --}}
+                        {{-- Quick Information --}}
 
-                            @if($product->is_active && $product->stock > 0)
+                        <div
+                            class="mt-6 grid grid-cols-2 gap-x-5 gap-y-4 border-y border-[var(--border)] py-5 sm:grid-cols-3"
+                        >
 
-                                <form
-                                    action="{{ route('customer.cart.add') }}"
-                                    method="POST"
-                                    class="mt-5"
-                                >
+                            @if($product->brand)
 
-                                    @csrf
+                                <div>
 
-
-                                    <input
-                                        type="hidden"
-                                        name="product_id"
-                                        value="{{ $product->id }}"
-                                    >
-
-
-                                    <div class="flex gap-2.5">
-
-
-                                        {{-- Quantity --}}
-
-                                        <div
-                                            class="flex h-12 w-28 shrink-0 items-center justify-between rounded-xl border border-[var(--color-border)] bg-white px-2.5"
-                                        >
-
-                                            <button
-                                                type="button"
-                                                onclick="
-                                                    const input =
-                                                        document.getElementById('productQuantity');
-
-                                                    input.value = Math.max(
-                                                        1,
-                                                        parseInt(
-                                                            input.value || 1,
-                                                            10
-                                                        ) - 1
-                                                    );
-                                                "
-                                                class="flex h-8 w-8 items-center justify-center rounded-lg text-sm text-[var(--color-text-secondary)] transition hover:bg-[var(--color-neutral-100)]"
-                                                aria-label="کاهش تعداد"
-                                            >
-                                                −
-                                            </button>
-
-
-                                            <input
-                                                id="productQuantity"
-                                                type="number"
-                                                name="quantity"
-                                                min="1"
-                                                max="{{ min($product->stock, 99) }}"
-                                                value="1"
-                                                inputmode="numeric"
-                                                class="w-8 border-0 bg-transparent p-0 text-center text-xs font-black text-[var(--color-text-primary)] outline-none focus:ring-0"
-                                                aria-label="تعداد {{ $product->name }}"
-                                            >
-
-
-                                            <button
-                                                type="button"
-                                                onclick="
-                                                    const input =
-                                                    document.getElementById('productQuantity');
-
-                                                    const max =
-                                                {{ min($product->stock, 99) }};
-
-                                                    input.value = Math.min(
-                                                    max,
-                                                    parseInt(
-                                                    input.value || 1,
-                                                    10
-                                                    ) + 1
-                                                    );
-                                                    "
-                                                class="flex h-8 w-8 items-center justify-center rounded-lg text-sm text-[var(--color-text-secondary)] transition hover:bg-[var(--color-neutral-100)]"
-                                                aria-label="افزایش تعداد"
-                                            >
-                                                +
-                                            </button>
-
-                                        </div>
-
-
-
-                                        {{-- Submit --}}
-
-                                        <button
-                                            type="submit"
-                                            class="group flex h-12 min-w-0 flex-1 items-center justify-center gap-2 rounded-xl bg-[var(--color-accent-600)] px-4 text-xs font-black text-white shadow-md shadow-[var(--color-accent-600)]/15 transition hover:-translate-y-0.5 hover:bg-[var(--color-accent-700)] focus:outline-none focus:ring-4 focus:ring-[var(--color-accent-100)]"
-                                        >
-
-                                            <svg
-                                                class="h-4.5 w-4.5 shrink-0"
-                                                viewBox="0 0 24 24"
-                                                fill="none"
-                                                stroke="currentColor"
-                                                stroke-width="1.8"
-                                                aria-hidden="true"
-                                            >
-                                                <path d="M3 4h2l2.4 11.2a2 2 0 0 0 2 1.6h7.9a2 2 0 0 0 2-1.6L21 7H6"/>
-                                                <circle cx="10" cy="20" r="1"/>
-                                                <circle cx="18" cy="20" r="1"/>
-                                            </svg>
-
-                                            <span>
-                                                افزودن به سبد خرید
-                                            </span>
-
-                                        </button>
-
+                                    <div class="text-[9px] text-[var(--text-muted)]">
+                                        برند
                                     </div>
 
-                                </form>
-
-                            @else
-
-                                <div
-                                    class="mt-5 rounded-xl border border-red-200 bg-red-50 px-3.5 py-3"
-                                >
-
-                                    <div class="flex items-center gap-2.5">
-
-                                        <svg
-                                            class="h-4.5 w-4.5 shrink-0 text-red-600"
-                                            viewBox="0 0 24 24"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            stroke-width="1.8"
-                                            aria-hidden="true"
-                                        >
-                                            <circle cx="12" cy="12" r="9"/>
-                                            <path d="M12 8v5"/>
-                                            <path d="M12 16h.01"/>
-                                        </svg>
-
-
-                                        <div>
-
-                                            <div
-                                                class="text-xs font-black text-red-700"
-                                            >
-                                                این محصول فعلاً قابل سفارش نیست.
-                                            </div>
-
-
-                                            <div
-                                                class="mt-1 text-[10px] text-red-600/80"
-                                            >
-                                                در صورت موجود شدن، خرید فعال خواهد شد.
-                                            </div>
-
-                                        </div>
-
+                                    <div class="mt-1 text-[11px] font-black text-[var(--text)]">
+                                        {{ $product->brand }}
                                     </div>
 
                                 </div>
@@ -1188,71 +895,289 @@
                             @endif
 
 
+                            @if($product->category)
 
-                            {{-- Seller --}}
+                                <div>
 
-                            <div
-                                class="mt-4 rounded-xl border border-[var(--color-border)] bg-[var(--color-neutral-50)] px-3.5 py-3.5"
+                                    <div class="text-[9px] text-[var(--text-muted)]">
+                                        دسته‌بندی
+                                    </div>
+
+                                    <div class="mt-1 truncate text-[11px] font-black text-[var(--text)]">
+                                        {{ $product->category->name }}
+                                    </div>
+
+                                </div>
+
+                            @endif
+
+
+                            @if($product->sku)
+
+                                <div>
+
+                                    <div class="text-[9px] text-[var(--text-muted)]">
+                                        کد کالا
+                                    </div>
+
+                                    <div
+                                        dir="ltr"
+                                        class="mt-1 font-mono text-[10px] font-bold text-[var(--text)]"
+                                    >
+                                        {{ $product->sku }}
+                                    </div>
+
+                                </div>
+
+                            @endif
+
+                        </div>
+
+
+                        {{-- Add To Cart --}}
+
+                        @if($isAvailable)
+
+                            <form
+                                action="{{ route('customer.cart.add') }}"
+                                method="POST"
+                                class="mt-6"
                             >
 
-                                <div
-                                    class="flex items-center justify-between gap-3"
+                                @csrf
+
+                                <input
+                                    type="hidden"
+                                    name="product_id"
+                                    value="{{ $product->id }}"
                                 >
 
-                                    <div class="flex items-center gap-2.5">
 
-                                        <div
-                                            class="flex h-9 w-9 items-center justify-center rounded-lg bg-white text-[var(--color-brand-900)] shadow-sm"
+                                <div class="flex gap-3">
+
+
+                                    {{-- Quantity --}}
+
+                                    <div
+                                        class="flex h-14 w-[116px] shrink-0 items-center justify-between rounded-2xl border border-[var(--border)] bg-white px-2"
+                                    >
+
+                                        <button
+                                            type="button"
+                                            onclick="
+                                                const input =
+                                                    document.getElementById('productQuantity');
+
+                                                input.value = Math.max(
+                                                    1,
+                                                    parseInt(input.value || 1, 10) - 1
+                                                );
+                                            "
+                                            class="flex h-9 w-9 items-center justify-center rounded-xl text-lg text-[var(--text-secondary)] transition hover:bg-[var(--surface-soft)] hover:text-[var(--primary)]"
+                                            aria-label="کاهش تعداد"
+                                        >
+                                            −
+                                        </button>
+
+
+                                        <input
+                                            id="productQuantity"
+                                            type="number"
+                                            name="quantity"
+                                            min="1"
+                                            max="{{ min($product->stock, 99) }}"
+                                            value="1"
+                                            inputmode="numeric"
+                                            class="w-9 border-0 bg-transparent p-0 text-center text-sm font-black text-[var(--text)] outline-none focus:ring-0"
+                                            aria-label="تعداد {{ $product->name }}"
                                         >
 
-                                            <svg
-                                                class="h-4.5 w-4.5"
-                                                viewBox="0 0 24 24"
-                                                fill="none"
-                                                stroke="currentColor"
-                                                stroke-width="1.7"
-                                                aria-hidden="true"
-                                            >
-                                                <path d="M4 10h16"/>
-                                                <path d="M6 10v8"/>
-                                                <path d="M10 10v8"/>
-                                                <path d="M14 10v8"/>
-                                                <path d="M18 10v8"/>
-                                                <path d="M3 18h18"/>
-                                                <path d="M4 10 6 4h12l2 6"/>
-                                            </svg>
 
-                                        </div>
+                                        <button
+                                            type="button"
+                                            onclick="
+                                                const input =
+                                                document.getElementById('productQuantity');
 
+                                                const max =
+                                            {{ min($product->stock, 99) }};
 
-                                        <div>
-
-                                            <div
-                                                class="text-[11px] font-black text-[var(--color-text-primary)]"
-                                            >
-                                                فروشگاه فرزین
-                                            </div>
-
-                                            <div
-                                                class="mt-0.5 text-[10px] text-[var(--color-text-muted)]"
-                                            >
-                                                فروشنده رسمی
-                                            </div>
-
-                                        </div>
+                                                input.value = Math.min(
+                                                max,
+                                                parseInt(input.value || 1, 10) + 1
+                                                );
+                                                "
+                                            class="flex h-9 w-9 items-center justify-center rounded-xl text-lg text-[var(--text-secondary)] transition hover:bg-[var(--surface-soft)] hover:text-[var(--primary)]"
+                                            aria-label="افزایش تعداد"
+                                        >
+                                            +
+                                        </button>
 
                                     </div>
 
 
-                                    <span
-                                        class="rounded-full bg-emerald-50 px-2.5 py-1 text-[9px] font-black text-emerald-700"
+                                    {{-- Submit --}}
+
+                                    <button
+                                        type="submit"
+                                        class="group flex h-14 min-w-0 flex-1 items-center justify-center gap-2.5 rounded-2xl bg-[var(--primary)] px-5 text-sm font-black text-white shadow-[0_14px_30px_rgba(126,199,232,0.20)] transition duration-300 hover:-translate-y-0.5 hover:bg-[var(--primary-hover)] hover:shadow-[0_18px_36px_rgba(126,199,232,0.25)] focus:outline-none focus:ring-4 focus:ring-[var(--primary)]/15"
                                     >
-                                        عملکرد مطلوب
-                                    </span>
+
+                                        <svg
+                                            class="h-5 w-5 shrink-0 transition duration-300 group-hover:scale-105"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="1.7"
+                                            aria-hidden="true"
+                                        >
+                                            <path d="M3 4h2l2.4 11.2a2 2 0 0 0 2 1.6h7.9a2 2 0 0 0 2-1.6L21 7H6"/>
+
+                                            <circle
+                                                cx="10"
+                                                cy="20"
+                                                r="1"
+                                            />
+
+                                            <circle
+                                                cx="18"
+                                                cy="20"
+                                                r="1"
+                                            />
+
+                                        </svg>
+
+                                        افزودن به سبد خرید
+
+                                    </button>
+
+                                </div>
+
+                            </form>
+
+                        @else
+
+                            <div
+                                class="mt-6 rounded-2xl border border-red-200 bg-red-50 px-4 py-4"
+                            >
+
+                                <div class="flex items-start gap-3">
+
+                                    <div
+                                        class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white text-red-600"
+                                    >
+
+                                        <svg
+                                            class="h-4 w-4"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="1.8"
+                                        >
+                                            <circle
+                                                cx="12"
+                                                cy="12"
+                                                r="9"
+                                            />
+
+                                            <path d="M12 8v5"/>
+                                            <path d="M12 16h.01"/>
+                                        </svg>
+
+                                    </div>
+
+                                    <div>
+
+                                        <div class="text-xs font-black text-red-700">
+                                            این محصول فعلاً قابل سفارش نیست.
+                                        </div>
+
+                                        <div class="mt-1 text-[10px] leading-6 text-red-600/80">
+                                            در صورت موجود شدن، خرید محصول دوباره فعال خواهد شد.
+                                        </div>
+
+                                    </div>
 
                                 </div>
 
                             </div>
+
+                        @endif
+
+
+                        {{-- Seller --}}
+
+                        <div
+                            class="mt-4 flex items-center justify-between gap-4 rounded-2xl bg-[var(--surface-soft)] px-4 py-3.5"
+                        >
+
+                            <div class="flex items-center gap-3">
+
+                                <div
+                                    class="flex h-10 w-10 items-center justify-center rounded-xl bg-white text-[var(--primary)] shadow-sm"
+                                >
+
+                                    <svg
+                                        class="h-4.5 w-4.5"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="1.7"
+                                    >
+                                        <path d="M4 10h16"/>
+                                        <path d="M6 10v8"/>
+                                        <path d="M10 10v8"/>
+                                        <path d="M14 10v8"/>
+                                        <path d="M18 10v8"/>
+                                        <path d="M3 18h18"/>
+                                        <path d="M4 10 6 4h12l2 6"/>
+                                    </svg>
+
+                                </div>
+
+
+                                <div>
+
+                                    <div
+                                        class="text-[11px] font-black text-[var(--text)]"
+                                    >
+                                        فروشگاه ژنان
+                                    </div>
+
+                                    <div
+                                        class="mt-0.5 text-[9px] text-[var(--text-muted)]"
+                                    >
+                                        انتخاب و خرید مطمئن
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            @if($isAvailable)
+
+                                <span
+                                    class="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 py-1.5 text-[9px] font-black text-emerald-700"
+                                >
+
+                                    <span
+                                        class="h-1.5 w-1.5 rounded-full bg-emerald-500"
+                                    ></span>
+
+                                    موجود
+
+                                </span>
+
+                            @else
+
+                                <span
+                                    class="rounded-full bg-white px-2.5 py-1.5 text-[9px] font-black text-[var(--text-muted)]"
+                                >
+                                    ناموجود
+                                </span>
+
+                            @endif
 
                         </div>
 
@@ -1262,39 +1187,41 @@
 
             </div>
 
+        </section>
 
 
-            {{-- =====================================================
-                CONTENT NAV
-            ====================================================== --}}
+
+        {{-- =========================================================
+            PRODUCT CONTENT NAV
+        ========================================================== --}}
+
+        <div
+            class="sticky top-[76px] z-30 border-y border-[var(--border)] bg-white/90 backdrop-blur-xl"
+        >
 
             <div
-                class="mt-7 overflow-x-auto rounded-xl border border-[var(--color-border)] bg-white"
+                class="mx-auto max-w-[1380px] overflow-x-auto px-4 sm:px-6 lg:px-8"
             >
 
-                <nav
-                    class="flex min-w-max items-center gap-0.5 p-1.5"
-                >
+                <nav class="flex min-w-max items-center gap-1 py-2">
 
                     <a
                         href="#description"
-                        class="rounded-lg px-4 py-2.5 text-[11px] font-black text-[var(--color-text-secondary)] transition hover:bg-[var(--color-neutral-50)] hover:text-[var(--color-brand-800)]"
+                        class="rounded-full px-4 py-2.5 text-[10px] font-black text-[var(--text-secondary)] transition hover:bg-[var(--surface-soft)] hover:text-[var(--primary)]"
                     >
                         معرفی
                     </a>
 
-
                     <a
                         href="#specifications"
-                        class="rounded-lg px-4 py-2.5 text-[11px] font-black text-[var(--color-text-secondary)] transition hover:bg-[var(--color-neutral-50)] hover:text-[var(--color-brand-800)]"
+                        class="rounded-full px-4 py-2.5 text-[10px] font-black text-[var(--text-secondary)] transition hover:bg-[var(--surface-soft)] hover:text-[var(--primary)]"
                     >
                         مشخصات
                     </a>
 
-
                     <a
                         href="#reviews"
-                        class="rounded-lg px-4 py-2.5 text-[11px] font-black text-[var(--color-text-secondary)] transition hover:bg-[var(--color-neutral-50)] hover:text-[var(--color-brand-800)]"
+                        class="rounded-full px-4 py-2.5 text-[10px] font-black text-[var(--text-secondary)] transition hover:bg-[var(--surface-soft)] hover:text-[var(--primary)]"
                     >
                         دیدگاه‌ها
 
@@ -1304,12 +1231,11 @@
 
                     </a>
 
-
                     @if($relatedProducts->count())
 
                         <a
                             href="#related"
-                            class="rounded-lg px-4 py-2.5 text-[11px] font-black text-[var(--color-text-secondary)] transition hover:bg-[var(--color-neutral-50)] hover:text-[var(--color-brand-800)]"
+                            class="rounded-full px-4 py-2.5 text-[10px] font-black text-[var(--text-secondary)] transition hover:bg-[var(--surface-soft)] hover:text-[var(--primary)]"
                         >
                             محصولات مرتبط
                         </a>
@@ -1320,6 +1246,17 @@
 
             </div>
 
+        </div>
+
+
+
+        {{-- =========================================================
+            CONTENT
+        ========================================================== --}}
+
+        <div
+            class="mx-auto max-w-[1380px] px-4 sm:px-6 lg:px-8"
+        >
 
 
             {{-- =====================================================
@@ -1328,25 +1265,25 @@
 
             <section
                 id="description"
-                class="scroll-mt-24 border-b border-[var(--color-border)] py-12"
+                class="scroll-mt-32 border-b border-[var(--border)] py-16 sm:py-20"
             >
 
                 <div
-                    class="grid gap-6 lg:grid-cols-[180px_minmax(0,1fr)] lg:gap-10"
+                    class="grid gap-8 lg:grid-cols-[220px_minmax(0,1fr)] lg:gap-14"
                 >
 
                     <div>
 
                         <div
-                            class="text-[9px] font-black uppercase tracking-[0.2em] text-[var(--color-accent-600)]"
+                            class="text-[9px] font-black uppercase tracking-[0.2em] text-[var(--primary)]"
                         >
                             Description
                         </div>
 
                         <h2
-                            class="mt-2.5 text-xl font-black text-[var(--color-text-primary)]"
+                            class="mt-2 text-2xl font-black tracking-tight text-[var(--text)]"
                         >
-                            معرفی محصول
+                            درباره این محصول
                         </h2>
 
                     </div>
@@ -1357,25 +1294,19 @@
                         @if($product->description)
 
                             <div
-                                class="rounded-2xl border border-[var(--color-border)] bg-white p-5 sm:p-6"
+                                class="max-w-4xl text-sm leading-[2.2] text-[var(--text-secondary)]"
                             >
-
-                                <div
-                                    class="max-w-4xl text-sm leading-8 text-[var(--color-text-secondary)]"
-                                >
-                                    {!! nl2br(e($product->description)) !!}
-                                </div>
-
+                                {!! nl2br(e($product->description)) !!}
                             </div>
 
                         @else
 
                             <div
-                                class="rounded-2xl border border-dashed border-[var(--color-border-strong)] bg-white p-8 text-center"
+                                class="rounded-2xl border border-dashed border-[var(--border-dark)] bg-white px-5 py-8 text-center"
                             >
 
                                 <p
-                                    class="text-xs font-bold text-[var(--color-text-muted)]"
+                                    class="text-xs font-semibold text-[var(--text-muted)]"
                                 >
                                     توضیح کاملی برای این محصول ثبت نشده است.
                                 </p>
@@ -1398,53 +1329,47 @@
 
             <section
                 id="specifications"
-                class="scroll-mt-24 border-b border-[var(--color-border)] py-12"
+                class="scroll-mt-32 border-b border-[var(--border)] py-16 sm:py-20"
             >
 
                 <div
-                    class="grid gap-6 lg:grid-cols-[180px_minmax(0,1fr)] lg:gap-10"
+                    class="grid gap-8 lg:grid-cols-[220px_minmax(0,1fr)] lg:gap-14"
                 >
 
                     <div>
 
                         <div
-                            class="text-[9px] font-black uppercase tracking-[0.2em] text-[var(--color-accent-600)]"
+                            class="text-[9px] font-black uppercase tracking-[0.2em] text-[var(--primary)]"
                         >
-                            Specifications
+                            Details
                         </div>
 
                         <h2
-                            class="mt-2.5 text-xl font-black text-[var(--color-text-primary)]"
+                            class="mt-2 text-2xl font-black tracking-tight text-[var(--text)]"
                         >
-                            مشخصات محصول
+                            مشخصات
                         </h2>
 
                     </div>
 
 
-                    <div
-                        class="overflow-hidden rounded-2xl border border-[var(--color-border)] bg-white"
-                    >
+                    <div class="max-w-4xl">
 
                         <div
-                            class="divide-y divide-[var(--color-border)]"
+                            class="divide-y divide-[var(--border)] border-y border-[var(--border)]"
                         >
 
                             @if($product->brand)
 
                                 <div
-                                    class="grid gap-1.5 px-5 py-3.5 sm:grid-cols-[160px_1fr]"
+                                    class="grid gap-1.5 py-4 sm:grid-cols-[180px_1fr]"
                                 >
 
-                                    <span
-                                        class="text-[11px] font-bold text-[var(--color-text-muted)]"
-                                    >
+                                    <span class="text-[10px] text-[var(--text-muted)]">
                                         برند
                                     </span>
 
-                                    <span
-                                        class="text-xs font-black text-[var(--color-text-primary)]"
-                                    >
+                                    <span class="text-xs font-black text-[var(--text)]">
                                         {{ $product->brand }}
                                     </span>
 
@@ -1456,18 +1381,14 @@
                             @if($product->category)
 
                                 <div
-                                    class="grid gap-1.5 px-5 py-3.5 sm:grid-cols-[160px_1fr]"
+                                    class="grid gap-1.5 py-4 sm:grid-cols-[180px_1fr]"
                                 >
 
-                                    <span
-                                        class="text-[11px] font-bold text-[var(--color-text-muted)]"
-                                    >
+                                    <span class="text-[10px] text-[var(--text-muted)]">
                                         دسته‌بندی
                                     </span>
 
-                                    <span
-                                        class="text-xs font-black text-[var(--color-text-primary)]"
-                                    >
+                                    <span class="text-xs font-black text-[var(--text)]">
                                         {{ $product->category->name }}
                                     </span>
 
@@ -1479,18 +1400,16 @@
                             @if($product->sku)
 
                                 <div
-                                    class="grid gap-1.5 px-5 py-3.5 sm:grid-cols-[160px_1fr]"
+                                    class="grid gap-1.5 py-4 sm:grid-cols-[180px_1fr]"
                                 >
 
-                                    <span
-                                        class="text-[11px] font-bold text-[var(--color-text-muted)]"
-                                    >
+                                    <span class="text-[10px] text-[var(--text-muted)]">
                                         کد محصول
                                     </span>
 
                                     <span
                                         dir="ltr"
-                                        class="font-mono text-xs font-bold text-[var(--color-text-primary)]"
+                                        class="font-mono text-xs font-bold text-[var(--text)]"
                                     >
                                         {{ $product->sku }}
                                     </span>
@@ -1501,52 +1420,26 @@
 
 
                             <div
-                                class="grid gap-1.5 px-5 py-3.5 sm:grid-cols-[160px_1fr]"
+                                class="grid gap-1.5 py-4 sm:grid-cols-[180px_1fr]"
                             >
 
-                                <span
-                                    class="text-[11px] font-bold text-[var(--color-text-muted)]"
-                                >
+                                <span class="text-[10px] text-[var(--text-muted)]">
                                     موجودی
                                 </span>
 
+                                @if($isAvailable)
 
-                                @if($product->is_active && $product->stock > 0)
-
-                                    <span
-                                        class="text-xs font-black text-emerald-700"
-                                    >
-                                        موجود
+                                    <span class="text-xs font-black text-emerald-700">
+                                        {{ number_format($product->stock) }} عدد موجود
                                     </span>
 
                                 @else
 
-                                    <span
-                                        class="text-xs font-black text-red-600"
-                                    >
+                                    <span class="text-xs font-black text-red-600">
                                         ناموجود
                                     </span>
 
                                 @endif
-
-                            </div>
-
-
-                            <div
-                                class="grid gap-1.5 px-5 py-3.5 sm:grid-cols-[160px_1fr]"
-                            >
-
-                                <span
-                                    class="text-[11px] font-bold text-[var(--color-text-muted)]"
-                                >
-                                    وضعیت انتشار
-                                </span>
-
-                                <span
-                                    class="text-xs font-black text-[var(--color-text-primary)]"
-                                >
-                                    {{ $product->is_active ? 'فعال' : 'غیرفعال' }}
-                                </span>
 
                             </div>
 
@@ -1566,196 +1459,196 @@
 
             <section
                 id="reviews"
-                class="scroll-mt-24 border-b border-[var(--color-border)] py-12"
+                class="scroll-mt-32 border-b border-[var(--border)] py-16 sm:py-20"
             >
 
                 <div
-                    class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between"
+                    class="grid gap-8 lg:grid-cols-[220px_minmax(0,1fr)] lg:gap-14"
                 >
 
                     <div>
 
                         <div
-                            class="text-[9px] font-black uppercase tracking-[0.2em] text-[var(--color-accent-600)]"
+                            class="text-[9px] font-black uppercase tracking-[0.2em] text-[var(--primary)]"
                         >
                             Reviews
                         </div>
 
                         <h2
-                            class="mt-2.5 text-xl font-black text-[var(--color-text-primary)] sm:text-2xl"
+                            class="mt-2 text-2xl font-black tracking-tight text-[var(--text)]"
                         >
-                            دیدگاه خریداران
+                            دیدگاه‌ها
                         </h2>
 
                     </div>
 
 
-                    @if($product->review_count > 0)
+                    <div class="max-w-4xl">
 
-                        <div
-                            class="inline-flex items-center gap-2.5 rounded-xl border border-[var(--color-border)] bg-white px-3.5 py-2.5"
-                        >
+
+                        {{-- Rating summary --}}
+
+                        @if($product->review_count > 0)
 
                             <div
-                                class="flex h-8 w-8 items-center justify-center rounded-lg bg-amber-50"
+                                class="mb-7 flex flex-wrap items-center gap-5"
                             >
 
-                                <svg
-                                    class="h-4 w-4 text-amber-500"
-                                    viewBox="0 0 24 24"
-                                    fill="currentColor"
-                                    aria-hidden="true"
-                                >
-                                    <path d="m12 2.8 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.4l6.2-.9L12 2.8Z"/>
-                                </svg>
+                                <div class="flex items-center gap-3">
+
+                                    <div
+                                        class="text-4xl font-black tracking-tight text-[var(--text)]"
+                                    >
+                                        {{ number_format($product->rating, 1) }}
+                                    </div>
+
+                                    <div>
+
+                                        <div class="flex items-center gap-0.5">
+
+                                            @for($i = 1; $i <= 5; $i++)
+
+                                                <svg
+                                                    class="h-3.5 w-3.5 {{ $i <= round($product->rating) ? 'text-[var(--accent)]' : 'text-slate-200' }}"
+                                                    viewBox="0 0 24 24"
+                                                    fill="currentColor"
+                                                    aria-hidden="true"
+                                                >
+                                                    <path d="m12 2.8 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.4l6.2-.9L12 2.8Z"/>
+                                                </svg>
+
+                                            @endfor
+
+                                        </div>
+
+                                        <div class="mt-1 text-[9px] text-[var(--text-muted)]">
+                                            بر اساس {{ number_format($product->review_count) }} دیدگاه
+                                        </div>
+
+                                    </div>
+
+                                </div>
 
                             </div>
 
-                            <div>
-
-                                <div
-                                    class="text-sm font-black text-amber-700"
-                                >
-                                    {{ number_format($product->rating, 1) }}
-                                </div>
-
-                                <div
-                                    class="text-[9px] text-[var(--color-text-muted)]"
-                                >
-                                    از ۵
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    @endif
-
-                </div>
+                        @endif
 
 
-                <div class="mt-6 grid gap-3 md:grid-cols-2">
+                        <div class="grid gap-4 md:grid-cols-2">
 
-                    @forelse($product->reviews as $review)
+                            @forelse($product->reviews as $review)
 
-                        <article
-                            class="rounded-2xl border border-[var(--color-border)] bg-white p-5"
-                        >
-
-                            <div
-                                class="flex items-start justify-between gap-3"
-                            >
-
-                                <div
-                                    class="flex min-w-0 items-center gap-2.5"
+                                <article
+                                    class="rounded-[24px] bg-white p-5 shadow-[0_8px_30px_rgba(72,91,105,0.045)]"
                                 >
 
                                     <div
-                                        class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[var(--color-brand-50)] text-xs font-black text-[var(--color-brand-900)]"
+                                        class="flex items-start justify-between gap-3"
                                     >
-                                        {{ mb_substr($review->user?->name ?? 'ک', 0, 1) }}
+
+                                        <div class="flex min-w-0 items-center gap-3">
+
+                                            <div
+                                                class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[var(--surface-soft)] text-xs font-black text-[var(--primary)]"
+                                            >
+                                                {{ mb_substr($review->user?->name ?? 'ک', 0, 1) }}
+                                            </div>
+
+                                            <div class="min-w-0">
+
+                                                <div
+                                                    class="truncate text-xs font-black text-[var(--text)]"
+                                                >
+                                                    {{ $review->user?->name ?? 'کاربر' }}
+                                                </div>
+
+                                                <div
+                                                    class="mt-0.5 text-[9px] text-[var(--text-muted)]"
+                                                >
+                                                    {{ $review->created_at?->format('Y/m/d') }}
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+
+                                        <div
+                                            class="flex items-center gap-1 rounded-full bg-[var(--accent-soft)] px-2.5 py-1.5 text-[9px] font-black text-[var(--accent)]"
+                                        >
+
+                                            <svg
+                                                class="h-3 w-3"
+                                                viewBox="0 0 24 24"
+                                                fill="currentColor"
+                                            >
+                                                <path d="m12 2.8 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.4l6.2-.9L12 2.8Z"/>
+                                            </svg>
+
+                                            {{ $review->rating }}
+
+                                        </div>
+
                                     </div>
 
 
-                                    <div class="min-w-0">
+                                    @if($review->title)
 
-                                        <div
-                                            class="truncate text-xs font-black text-[var(--color-text-primary)]"
+                                        <h3
+                                            class="mt-4 text-xs font-black text-[var(--text)]"
                                         >
-                                            {{ $review->user?->name ?? 'کاربر' }}
-                                        </div>
+                                            {{ $review->title }}
+                                        </h3>
 
-                                        <div
-                                            class="mt-0.5 text-[9px] text-[var(--color-text-muted)]"
-                                        >
-                                            {{ $review->created_at?->format('Y/m/d') }}
-                                        </div>
+                                    @endif
 
-                                    </div>
 
-                                </div>
+                                    <p
+                                        class="mt-2.5 text-xs leading-7 text-[var(--text-secondary)]"
+                                    >
+                                        {{ $review->body }}
+                                    </p>
 
+                                </article>
+
+                            @empty
 
                                 <div
-                                    class="inline-flex shrink-0 items-center gap-1 rounded-lg bg-amber-50 px-2 py-1 text-[10px] font-black text-amber-700"
+                                    class="md:col-span-2 py-10"
                                 >
 
-                                    <svg
-                                        class="h-3 w-3 text-amber-500"
-                                        viewBox="0 0 24 24"
-                                        fill="currentColor"
-                                        aria-hidden="true"
+                                    <div
+                                        class="flex h-14 w-14 items-center justify-center rounded-2xl bg-[var(--surface-soft)] text-[var(--primary)]"
                                     >
-                                        <path d="m12 2.8 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.4l6.2-.9L12 2.8Z"/>
-                                    </svg>
 
-                                    {{ $review->rating }}
+                                        <svg
+                                            class="h-6 w-6"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="1.7"
+                                        >
+                                            <path d="M4 5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2H8l-4 3V5Z"/>
+                                            <path d="M8 9h8M8 13h5"/>
+                                        </svg>
+
+                                    </div>
+
+                                    <h3 class="mt-4 text-sm font-black text-[var(--text)]">
+                                        هنوز دیدگاهی ثبت نشده است.
+                                    </h3>
+
+                                    <p class="mt-1.5 text-xs leading-6 text-[var(--text-muted)]">
+                                        تجربه خود را بعد از خرید با دیگران به اشتراک بگذارید.
+                                    </p>
 
                                 </div>
 
-                            </div>
-
-
-                            @if($review->title)
-
-                                <h3
-                                    class="mt-4 text-xs font-black text-[var(--color-text-primary)]"
-                                >
-                                    {{ $review->title }}
-                                </h3>
-
-                            @endif
-
-
-                            <p
-                                class="mt-2.5 text-xs leading-7 text-[var(--color-text-secondary)]"
-                            >
-                                {{ $review->body }}
-                            </p>
-
-                        </article>
-
-                    @empty
-
-                        <div
-                            class="md:col-span-2 rounded-2xl border border-dashed border-[var(--color-border-strong)] bg-white px-5 py-12 text-center"
-                        >
-
-                            <div
-                                class="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-[var(--color-brand-50)] text-[var(--color-brand-800)]"
-                            >
-
-                                <svg
-                                    class="h-6 w-6"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    stroke-width="1.7"
-                                    aria-hidden="true"
-                                >
-                                    <path d="M4 5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2H8l-4 3V5Z"/>
-                                    <path d="M8 9h8M8 13h5"/>
-                                </svg>
-
-                            </div>
-
-
-                            <h3
-                                class="mt-4 text-xs font-black text-[var(--color-text-primary)]"
-                            >
-                                هنوز نظری برای این محصول ثبت نشده است.
-                            </h3>
-
-
-                            <p
-                                class="mt-1.5 text-[10px] leading-6 text-[var(--color-text-muted)]"
-                            >
-                                اولین نفری باشید که تجربه خود را ثبت می‌کند.
-                            </p>
+                            @endforelse
 
                         </div>
 
-                    @endforelse
+                    </div>
 
                 </div>
 
@@ -1771,25 +1664,25 @@
 
                 <section
                     id="related"
-                    class="scroll-mt-24 py-12"
+                    class="scroll-mt-32 py-16 sm:py-20"
                 >
 
                     <div
-                        class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between"
+                        class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between"
                     >
 
                         <div>
 
                             <div
-                                class="text-[9px] font-black uppercase tracking-[0.2em] text-[var(--color-accent-600)]"
+                                class="text-[9px] font-black uppercase tracking-[0.2em] text-[var(--primary)]"
                             >
-                                Related Products
+                                You May Also Like
                             </div>
 
                             <h2
-                                class="mt-2.5 text-xl font-black text-[var(--color-text-primary)] sm:text-2xl"
+                                class="mt-2 text-2xl font-black tracking-tight text-[var(--text)] sm:text-3xl"
                             >
-                                محصولات مرتبط
+                                شاید این‌ها را هم دوست داشته باشید
                             </h2>
 
                         </div>
@@ -1799,21 +1692,14 @@
 
                             <a
                                 href="{{ route('categories.show', $product->category) }}"
-                                class="inline-flex items-center gap-1.5 text-[11px] font-black text-[var(--color-brand-800)] transition hover:text-[var(--color-accent-600)]"
+                                class="inline-flex items-center gap-2 text-[10px] font-black text-[var(--primary)] transition hover:text-[var(--accent)]"
                             >
 
-                                مشاهده دسته‌بندی
+                                مشاهده همه
 
-                                <svg
-                                    class="h-3.5 w-3.5"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    stroke-width="1.8"
-                                    aria-hidden="true"
-                                >
-                                    <path d="m9 18 6-6-6-6"/>
-                                </svg>
+                                <span class="text-sm">
+                                    ←
+                                </span>
 
                             </a>
 
@@ -1823,7 +1709,7 @@
 
 
                     <div
-                        class="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4"
+                        class="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4"
                     >
 
                         @foreach($relatedProducts as $relatedProduct)
@@ -1840,9 +1726,8 @@
 
             @endif
 
-        </section>
+        </div>
 
     </div>
 
 @endsection
-

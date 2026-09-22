@@ -193,17 +193,144 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
 
-    const requestScrollUpdate = () => {
+    const initJananEditorialSlider = () => {
+        const slider = document.querySelector('[data-janan-slider]');
 
-        if (!ticking) {
-            requestAnimationFrame(
-                updateScroll
-            );
-
-            ticking = true;
+        if (!slider) {
+            return;
         }
+
+        const cards = Array.from(
+            slider.querySelectorAll('[data-slide-card]')
+        );
+
+        const currentEl = slider.querySelector('[data-slider-current]');
+        const totalEl = slider.querySelector('[data-slider-total]');
+
+        if (!cards.length) {
+            return;
+        }
+
+        const total = cards.length;
+
+        let activeIndex = 0;
+        let timer = null;
+
+        const updateNumber = () => {
+            if (currentEl) {
+                currentEl.textContent = String(activeIndex + 1).padStart(2, '0');
+            }
+
+            if (totalEl) {
+                totalEl.textContent = String(total).padStart(2, '0');
+            }
+        };
+
+        const updateCards = () => {
+            cards.forEach((card, index) => {
+
+                let slot = index - activeIndex;
+
+                if (slot < 0) {
+                    slot += total;
+                }
+
+                /*
+                 * برای 5 کارت:
+                 *
+                 * 0 = main
+                 * 1 = right
+                 * 2 = top-right
+                 * 3 = top-left
+                 * 4 = left
+                 */
+
+                card.dataset.slot = slot;
+            });
+
+            updateNumber();
+        };
+
+        const nextSlide = () => {
+            activeIndex = (activeIndex + 1) % total;
+
+            updateCards();
+        };
+
+        const start = () => {
+            if (timer) {
+                clearInterval(timer);
+            }
+
+            timer = setInterval(() => {
+                nextSlide();
+            }, 3000);
+        };
+
+        updateCards();
+        start();
+
+        /*
+         * اگر کاربر با موس خارج شد دوباره ادامه بده
+         */
+        slider.addEventListener('mouseenter', () => {
+            if (timer) {
+                clearInterval(timer);
+            }
+        });
+
+        slider.addEventListener('mouseleave', () => {
+            start();
+        });
+
+        /*
+         * موبایل:
+         * اگر swipe کرد، اسلاید هم عوض شود
+         */
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        slider.addEventListener(
+            'touchstart',
+            (event) => {
+                touchStartX = event.changedTouches[0].clientX;
+            },
+            { passive: true }
+        );
+
+        slider.addEventListener(
+            'touchend',
+            (event) => {
+
+                touchEndX = event.changedTouches[0].clientX;
+
+                const distance = touchEndX - touchStartX;
+
+                if (Math.abs(distance) > 50) {
+
+                    if (distance < 0) {
+                        nextSlide();
+                    } else {
+                        activeIndex =
+                            (activeIndex - 1 + total) % total;
+
+                        updateCards();
+                    }
+
+                    start();
+                }
+            },
+            { passive: true }
+        );
     };
 
+
+    document.addEventListener(
+        'DOMContentLoaded',
+        () => {
+            initJananEditorialSlider();
+        }
+    );
 
     window.addEventListener(
         "scroll",

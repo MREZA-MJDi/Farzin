@@ -19,12 +19,12 @@
     ========================================================== --}}
 
     <title>
-        @yield('title', 'پنل مدیریت | فرزین')
+        @yield('title', 'پنل مدیریت | ژنان')
     </title>
 
     <meta
         name="description"
-        content="@yield('meta_description', 'پنل مدیریت فروشگاه فرزین')"
+        content="@yield('meta_description', 'پنل مدیریت فروشگاه ژنان')"
     >
 
     <meta
@@ -32,13 +32,19 @@
         content="noindex, nofollow"
     >
 
+
     {{-- =========================================================
         Brand
     ========================================================== --}}
 
     <meta
         name="theme-color"
-        content="#0d1b3d"
+        content="#8fc9e8"
+    >
+
+    <meta
+        name="application-name"
+        content="ژنان"
     >
 
     <link
@@ -52,6 +58,7 @@
         href="{{ asset('images/brand/logo.png') }}"
     >
 
+
     {{-- =========================================================
         Assets
     ========================================================== --}}
@@ -64,8 +71,9 @@
     @stack('head')
 </head>
 
+
 <body
-    class="min-h-screen bg-[var(--color-neutral-50)] text-[var(--color-text-primary)] antialiased"
+    class="min-h-screen bg-[var(--background)] text-[var(--text)] antialiased"
 >
 
 <div
@@ -82,7 +90,7 @@
         x-cloak
         x-transition.opacity
         @click="sidebarOpen = false"
-        class="fixed inset-0 z-40 bg-[var(--color-brand-950)]/45 backdrop-blur-sm lg:hidden"
+        class="fixed inset-0 z-40 bg-slate-900/25 backdrop-blur-sm lg:hidden"
     ></div>
 
 
@@ -99,17 +107,19 @@
 
     <div class="min-h-screen lg:mr-[280px]">
 
+
         {{-- =====================================================
             Topbar
         ====================================================== --}}
 
         <header
-            class="sticky top-0 z-30 border-b border-[var(--color-border)] bg-white/90 backdrop-blur-xl"
+            class="sticky top-0 z-30 border-b border-[var(--border)] bg-white/90 backdrop-blur-xl"
         >
 
             <div
                 class="flex min-h-[72px] items-center justify-between gap-4 px-4 sm:px-6 lg:px-8"
             >
+
 
                 {{-- =================================================
                     Right Side
@@ -117,15 +127,17 @@
 
                 <div class="flex min-w-0 items-center gap-3">
 
+
                     {{-- Mobile Menu --}}
 
                     <button
                         type="button"
                         @click="sidebarOpen = true"
-                        class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-[var(--color-border)] bg-white text-[var(--color-text-secondary)] transition duration-200 hover:border-[var(--color-brand-300)] hover:bg-[var(--color-brand-50)] hover:text-[var(--color-brand-900)] lg:hidden"
+                        class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-[var(--border)] bg-white text-[var(--text-secondary)] transition duration-200 hover:border-[var(--primary)] hover:bg-[var(--surface-soft)] hover:text-[var(--primary)] lg:hidden"
                         aria-label="باز کردن منو"
                         aria-controls="admin-sidebar"
                     >
+
                         <svg
                             class="h-5 w-5"
                             viewBox="0 0 24 24"
@@ -138,6 +150,7 @@
                             <path d="M4 12h16" />
                             <path d="M4 17h16" />
                         </svg>
+
                     </button>
 
 
@@ -146,15 +159,15 @@
                     <div class="min-w-0">
 
                         <div
-                            class="truncate text-sm font-black text-[var(--color-text-primary)] sm:text-base"
+                            class="truncate text-sm font-black text-[var(--text)] sm:text-base"
                         >
                             @yield('page_title', 'داشبورد')
                         </div>
 
                         <div
-                            class="mt-0.5 hidden text-xs text-[var(--color-text-muted)] sm:block"
+                            class="mt-0.5 hidden text-xs text-[var(--text-muted)] sm:block"
                         >
-                            مدیریت فروشگاه فرزین
+                            مدیریت فروشگاه ژنان
                         </div>
 
                     </div>
@@ -168,6 +181,7 @@
 
                 <div class="flex shrink-0 items-center">
 
+
                     {{-- =================================================
                         Admin Profile
                     ================================================== --}}
@@ -180,23 +194,26 @@
                         <button
                             type="button"
                             id="adminProfileButton"
-                            class="flex items-center gap-2 rounded-xl border border-[var(--color-border)] bg-white px-2 py-2 transition duration-200 hover:border-[var(--color-brand-300)] hover:bg-[var(--color-brand-50)] sm:gap-3 sm:px-2.5"
+                            class="flex items-center gap-2 rounded-xl border border-[var(--border)] bg-white px-2 py-2 transition duration-200 hover:border-[var(--primary)] hover:bg-[var(--surface-soft)] sm:gap-3 sm:px-2.5"
                             aria-expanded="false"
                             aria-haspopup="menu"
                             aria-controls="adminProfileMenu"
                         >
 
+
                             {{-- Avatar --}}
 
                             <span
-                                class="relative flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-[var(--color-brand-900)] text-sm font-black text-white shadow-sm"
+                                class="relative flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-[var(--primary)] text-sm font-black text-white shadow-sm"
                             >
+
                                 {{ mb_substr(auth()->user()->name ?? 'A', 0, 1) }}
 
                                 <span
-                                    class="absolute bottom-0.5 left-0.5 h-2.5 w-2.5 rounded-full border-2 border-[var(--color-brand-900)] bg-emerald-400"
+                                    class="absolute bottom-0.5 left-0.5 h-2.5 w-2.5 rounded-full border-2 border-white bg-emerald-400"
                                     aria-hidden="true"
                                 ></span>
+
                             </span>
 
 
@@ -205,13 +222,13 @@
                             <span class="hidden text-right sm:block">
 
                                 <span
-                                    class="block max-w-[130px] truncate text-xs font-black text-[var(--color-text-primary)]"
+                                    class="block max-w-[130px] truncate text-xs font-black text-[var(--text)]"
                                 >
                                     {{ auth()->user()->name ?? 'Admin' }}
                                 </span>
 
                                 <span
-                                    class="mt-0.5 block text-[11px] font-medium text-[var(--color-text-muted)]"
+                                    class="mt-0.5 block text-[11px] font-medium text-[var(--text-muted)]"
                                 >
                                     مدیر سیستم
                                 </span>
@@ -223,7 +240,7 @@
 
                             <svg
                                 id="adminProfileChevron"
-                                class="hidden h-4 w-4 text-[var(--color-text-muted)] transition duration-200 sm:block"
+                                class="hidden h-4 w-4 text-[var(--text-muted)] transition duration-200 sm:block"
                                 viewBox="0 0 24 24"
                                 fill="none"
                                 stroke="currentColor"
@@ -242,19 +259,22 @@
 
                         <div
                             id="adminProfileMenu"
-                            class="absolute left-0 top-[calc(100%+10px)] z-50 hidden w-64 overflow-hidden rounded-2xl border border-[var(--color-border)] bg-white p-2 shadow-[var(--shadow-lg)]"
+                            class="absolute left-0 top-[calc(100%+10px)] z-50 hidden w-64 overflow-hidden rounded-2xl border border-[var(--border)] bg-white p-2 shadow-[var(--shadow-lg)]"
                             role="menu"
                             aria-hidden="true"
                         >
 
+
                             {{-- Profile Header --}}
 
-                            <div class="mb-1 rounded-xl bg-[var(--color-brand-50)] p-3">
+                            <div
+                                class="mb-1 rounded-xl bg-[var(--surface-soft)] p-3"
+                            >
 
                                 <div class="flex items-center gap-3">
 
                                     <span
-                                        class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[var(--color-brand-900)] text-sm font-black text-white"
+                                        class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[var(--primary)] text-sm font-black text-white"
                                     >
                                         {{ mb_substr(auth()->user()->name ?? 'A', 0, 1) }}
                                     </span>
@@ -262,13 +282,13 @@
                                     <div class="min-w-0">
 
                                         <p
-                                            class="truncate text-xs font-black text-[var(--color-text-primary)]"
+                                            class="truncate text-xs font-black text-[var(--text)]"
                                         >
                                             {{ auth()->user()->name ?? 'Admin' }}
                                         </p>
 
                                         <p
-                                            class="mt-0.5 truncate text-[11px] text-[var(--color-text-muted)]"
+                                            class="mt-0.5 truncate text-[11px] text-[var(--text-muted)]"
                                         >
                                             {{ auth()->user()->email ?? 'admin' }}
                                         </p>
@@ -285,12 +305,13 @@
                             <a
                                 href="#"
                                 role="menuitem"
-                                class="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-bold text-[var(--color-text-secondary)] transition duration-150 hover:bg-[var(--color-neutral-50)] hover:text-[var(--color-text-primary)]"
+                                class="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-bold text-[var(--text-secondary)] transition duration-150 hover:bg-[var(--surface-soft)] hover:text-[var(--primary)]"
                             >
 
                                 <span
-                                    class="flex h-8 w-8 items-center justify-center rounded-lg bg-[var(--color-neutral-100)] text-[var(--color-brand-900)]"
+                                    class="flex h-8 w-8 items-center justify-center rounded-lg bg-[var(--surface-soft)] text-[var(--primary)]"
                                 >
+
                                     <svg
                                         class="h-4 w-4"
                                         viewBox="0 0 24 24"
@@ -302,6 +323,7 @@
                                         <path d="M20 21a8 8 0 0 0-16 0" />
                                         <circle cx="12" cy="7" r="4" />
                                     </svg>
+
                                 </span>
 
                                 پروفایل
@@ -312,7 +334,7 @@
                             {{-- Separator --}}
 
                             <div
-                                class="my-1.5 border-t border-[var(--color-border)]"
+                                class="my-1.5 border-t border-[var(--border)]"
                             ></div>
 
 
@@ -328,12 +350,13 @@
                                 <button
                                     type="submit"
                                     role="menuitem"
-                                    class="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-bold text-[var(--color-danger-700)] transition duration-150 hover:bg-[var(--color-danger-50)]"
+                                    class="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-bold text-[var(--danger)] transition duration-150 hover:bg-[var(--danger-soft)]"
                                 >
 
                                     <span
-                                        class="flex h-8 w-8 items-center justify-center rounded-lg bg-[var(--color-danger-50)]"
+                                        class="flex h-8 w-8 items-center justify-center rounded-lg bg-[var(--danger-soft)]"
                                     >
+
                                         <svg
                                             class="h-4 w-4"
                                             viewBox="0 0 24 24"
@@ -346,6 +369,7 @@
                                             <path d="M15 12H3" />
                                             <path d="M21 3v18" />
                                         </svg>
+
                                     </span>
 
                                     خروج از حساب
@@ -369,7 +393,10 @@
             Page Content
         ====================================================== --}}
 
-        <main class="px-4 py-6 sm:px-6 lg:px-8 lg:py-8">
+        <main
+            class="px-4 py-6 sm:px-6 lg:px-8 lg:py-8"
+        >
+
 
             {{-- =================================================
                 Flash Success
@@ -385,6 +412,7 @@
                     <div
                         class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-emerald-100 text-emerald-700"
                     >
+
                         <svg
                             class="h-4 w-4"
                             viewBox="0 0 24 24"
@@ -395,6 +423,7 @@
                         >
                             <path d="m5 12 4 4L19 6" />
                         </svg>
+
                     </div>
 
                     <div class="pt-1 font-bold">
@@ -420,6 +449,7 @@
                     <div
                         class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-red-100 text-red-700"
                     >
+
                         <svg
                             class="h-4 w-4"
                             viewBox="0 0 24 24"
@@ -438,6 +468,7 @@
 
                             <path d="M12 16h.01" />
                         </svg>
+
                     </div>
 
                     <div class="pt-1 font-bold">
@@ -467,6 +498,7 @@
                         <div
                             class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-red-100 text-red-700"
                         >
+
                             <svg
                                 class="h-4 w-4"
                                 viewBox="0 0 24 24"
@@ -475,6 +507,7 @@
                                 stroke-width="2"
                                 aria-hidden="true"
                             >
+
                                 <circle
                                     cx="12"
                                     cy="12"
@@ -484,7 +517,9 @@
                                 <path d="M12 8v5" />
 
                                 <path d="M12 16h.01" />
+
                             </svg>
+
                         </div>
 
                         <div>
@@ -613,23 +648,35 @@
             }
         }
 
-        button.addEventListener('click', toggleProfile);
+        button.addEventListener(
+            'click',
+            toggleProfile
+        );
 
-        document.addEventListener('click', function (event) {
-            if (!profile.contains(event.target)) {
-                closeProfile();
+        document.addEventListener(
+            'click',
+            function (event) {
+                if (!profile.contains(event.target)) {
+                    closeProfile();
+                }
             }
-        });
+        );
 
-        document.addEventListener('keydown', function (event) {
-            if (event.key === 'Escape') {
-                closeProfile();
+        document.addEventListener(
+            'keydown',
+            function (event) {
+                if (event.key === 'Escape') {
+                    closeProfile();
+                }
             }
-        });
+        );
 
-        menu.addEventListener('click', function (event) {
-            event.stopPropagation();
-        });
+        menu.addEventListener(
+            'click',
+            function (event) {
+                event.stopPropagation();
+            }
+        );
     });
 </script>
 

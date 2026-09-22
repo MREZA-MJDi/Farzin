@@ -11,12 +11,24 @@
         aria-label="منوی سایت"
     >
 
-        {{-- Header --}}
+        {{-- =====================================================
+             HEADER
+        ====================================================== --}}
+
         <div class="mobile-menu__header">
 
-            <span class="mobile-menu__title">
-                منو
-            </span>
+            <div>
+
+                <span class="mobile-menu__title">
+                    منو
+                </span>
+
+                <span class="block mt-1 text-[8px] font-black uppercase tracking-[0.22em] text-[var(--text-muted)]">
+                    JANAN
+                </span>
+
+            </div>
+
 
             <button
                 type="button"
@@ -46,7 +58,10 @@
         </div>
 
 
-        {{-- Navigation --}}
+        {{-- =====================================================
+             NAVIGATION
+        ====================================================== --}}
+
         <nav
             class="mobile-menu__nav"
             aria-label="منوی موبایل"
@@ -57,81 +72,107 @@
                 class="mobile-menu__link {{ request()->routeIs('home') ? 'is-active' : '' }}"
             >
                 <span>خانه</span>
-                <span aria-hidden="true">←</span>
+
+                <span aria-hidden="true">
+                    ←
+                </span>
             </a>
 
+
             <a
-                href="{{ route('shop') }}"
-                class="mobile-menu__link {{ request()->routeIs('shop') ? 'is-active' : '' }}"
+                href="{{ route('shop.index') }}"
+                class="mobile-menu__link {{ request()->routeIs('shop.*') ? 'is-active' : '' }}"
             >
                 <span>فروشگاه</span>
-                <span aria-hidden="true">←</span>
+
+                <span aria-hidden="true">
+                    ←
+                </span>
             </a>
 
-            <a
-                href="{{ route('category.hood') }}"
-                class="mobile-menu__link {{ request()->routeIs('category.hood') ? 'is-active' : '' }}"
-            >
-                <span>هود</span>
-                <span aria-hidden="true">←</span>
-            </a>
 
             <a
-                href="{{ route('category.sink') }}"
-                class="mobile-menu__link {{ request()->routeIs('category.sink') ? 'is-active' : '' }}"
+                href="{{ route('categories.index') }}"
+                class="mobile-menu__link {{ request()->routeIs('categories.*') ? 'is-active' : '' }}"
             >
-                <span>سینک</span>
-                <span aria-hidden="true">←</span>
+                <span>دسته‌بندی‌ها</span>
+
+                <span aria-hidden="true">
+                    ←
+                </span>
             </a>
+
 
             <a
                 href="{{ route('blog.index') }}"
                 class="mobile-menu__link {{ request()->routeIs('blog.*') ? 'is-active' : '' }}"
             >
-                <span>مجله</span>
-                <span aria-hidden="true">←</span>
+                <span>ژورنال</span>
+
+                <span aria-hidden="true">
+                    ←
+                </span>
             </a>
+
 
             <a
                 href="{{ route('about') }}"
                 class="mobile-menu__link {{ request()->routeIs('about') ? 'is-active' : '' }}"
             >
-                <span>درباره ما</span>
-                <span aria-hidden="true">←</span>
+                <span>درباره ژنان</span>
+
+                <span aria-hidden="true">
+                    ←
+                </span>
             </a>
 
+
             <a
-                href="{{ route('contact') }}"
-                class="mobile-menu__link {{ request()->routeIs('contact') ? 'is-active' : '' }}"
+                href="{{ route('contact.index') }}"
+                class="mobile-menu__link {{ request()->routeIs('contact.*') ? 'is-active' : '' }}"
             >
                 <span>تماس با ما</span>
-                <span aria-hidden="true">←</span>
+
+                <span aria-hidden="true">
+                    ←
+                </span>
             </a>
+
 
             <a
                 href="{{ route('wishlist') }}"
                 class="mobile-menu__link {{ request()->routeIs('wishlist') ? 'is-active' : '' }}"
             >
                 <span>علاقه‌مندی‌ها</span>
-                <span aria-hidden="true">←</span>
+
+                <span aria-hidden="true">
+                    ←
+                </span>
             </a>
 
+
             <a
-                href="{{ route('cart') }}"
-                class="mobile-menu__link {{ request()->routeIs('cart') ? 'is-active' : '' }}"
+                href="{{ route('customer.cart.index') }}"
+                class="mobile-menu__link {{ request()->routeIs('customer.cart.*') ? 'is-active' : '' }}"
             >
                 <span>سبد خرید</span>
-                <span aria-hidden="true">←</span>
+
+                <span aria-hidden="true">
+                    ←
+                </span>
             </a>
 
         </nav>
 
 
-        {{-- Footer --}}
+        {{-- =====================================================
+             FOOTER
+        ====================================================== --}}
+
         <div class="mobile-menu__footer">
 
             <a
-                href="{{ route('contact') }}"
+                href="{{ route('contact.index') }}"
                 class="mobile-menu__link"
             >
                 <span>
@@ -142,6 +183,19 @@
                     ←
                 </span>
             </a>
+
+
+            <div class="mt-4 border-t border-[var(--border)] pt-4">
+
+                <span class="block text-[7px] font-black uppercase tracking-[0.22em] text-[var(--text-muted)]">
+                    JANAN
+                </span>
+
+                <span class="mt-1 block text-[9px] text-[var(--text-muted)]">
+                    Everyday Beauty
+                </span>
+
+            </div>
 
         </div>
 

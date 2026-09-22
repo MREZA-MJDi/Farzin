@@ -1,23 +1,42 @@
 <section
-    class="section home-section home-section--blog"
+    class="section home-section home-section--blog janan-blog"
     aria-labelledby="home-blog-title"
 >
     <div class="container">
 
         <div class="section__inner">
 
+            {{-- =========================================================
+                HEADER
+            ========================================================== --}}
+
             <x-ui.section-header
-                eyebrow="مجله فرزین"
-                title="راهنمای انتخاب بهتر"
-                description="نکات کاربردی برای انتخاب هود، سینک و طراحی آشپزخانه."
+                eyebrow="JANAN JOURNAL"
+                title="برای خودت، کمی بیشتر."
+                description="یادداشت‌ها، راهنماها و ایده‌هایی درباره زیبایی، راحتی و انتخاب‌های روزمره."
                 title-id="home-blog-title"
             >
                 <x-slot:action>
                     <a
                         href="{{ route('blog.index') }}"
-                        class="btn btn--outline"
+                        class="janan-blog__all"
                     >
-                        مشاهده مجله
+                        ورود به مجله
+
+                        <svg
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            aria-hidden="true"
+                        >
+                            <path d="M5 12h14"/>
+                            <path d="m13 6 6 6-6 6"/>
+                        </svg>
                     </a>
                 </x-slot:action>
             </x-ui.section-header>
@@ -25,34 +44,277 @@
 
             <div class="section-content">
 
-                <div class="blog-grid">
+                <div class="janan-blog__grid">
 
-                    <x-content.blog-card
-                        title="قبل از خرید هود به چه نکاتی توجه کنیم؟"
-                        image="{{ asset('images/blog/hood-guide.webp') }}"
-                        href="{{ route('blog.show', ['slug' => 'guide-to-choosing-hood']) }}"
-                        category="راهنمای خرید"
-                        excerpt="چند نکته کاربردی برای انتخاب هودی که با فضای آشپزخانه شما هماهنگ باشد."
-                        meta="۵ دقیقه مطالعه"
-                    />
+                    {{-- =================================================
+                        FEATURED ARTICLE
+                    ================================================== --}}
 
-                    <x-content.blog-card
-                        title="سینک توکار یا روکار؛ کدام مناسب شماست؟"
-                        image="{{ asset('images/blog/sink-guide.webp') }}"
-                        href="{{ route('blog.show', ['slug' => 'kitchen-sink-guide']) }}"
-                        category="راهنمای خرید"
-                        excerpt="تفاوت‌ها، مزایا و نکاتی که قبل از انتخاب سینک بهتر است بدانید."
-                        meta="۴ دقیقه مطالعه"
-                    />
+                    <article class="janan-blog-card janan-blog-card--featured">
 
-                    <x-content.blog-card
-                        title="چطور آشپزخانه‌ای مدرن و یکدست داشته باشیم؟"
-                        image="{{ asset('images/blog/kitchen-design.webp') }}"
-                        href="{{ route('blog.show', ['slug' => 'modern-kitchen-design']) }}"
-                        category="طراحی"
-                        excerpt="از رنگ و متریال تا انتخاب تجهیزات؛ یک نگاه ساده به طراحی آشپزخانه مدرن."
-                        meta="۶ دقیقه مطالعه"
-                    />
+                        <a
+                            href="{{ route('blog.show', ['slug' => 'guide-to-choosing-hood']) }}"
+                            class="janan-blog-card__media"
+                        >
+
+                            <img
+                                src="{{ asset('images/blog/hood-guide.webp') }}"
+                                alt="راهنمای انتخاب بهتر"
+                                class="janan-blog-card__image"
+                                loading="lazy"
+                                decoding="async"
+                            >
+
+                            <div class="janan-blog-card__overlay"></div>
+
+
+                            <div class="janan-blog-card__top">
+
+                                <span class="janan-blog-card__category">
+                                    راهنما
+                                </span>
+
+                                <span class="janan-blog-card__number">
+                                    01
+                                </span>
+
+                            </div>
+
+
+                            <div class="janan-blog-card__floating">
+                                <span>
+                                    JANAN JOURNAL
+                                </span>
+                            </div>
+
+                        </a>
+
+
+                        <div class="janan-blog-card__body">
+
+                            <div class="janan-blog-card__meta">
+                                ۵ دقیقه مطالعه
+                                <span></span>
+                                GUIDE
+                            </div>
+
+
+                            <a
+                                href="{{ route('blog.show', ['slug' => 'guide-to-choosing-hood']) }}"
+                                class="janan-blog-card__title"
+                            >
+                                چطور انتخابی داشته باشیم که
+                                بیشتر شبیه خودمان باشد؟
+                            </a>
+
+
+                            <p class="janan-blog-card__excerpt">
+                                گاهی انتخاب خوب، فقط درباره ظاهر نیست؛
+                                درباره حسی است که بعد از انتخاب با خودت می‌بری.
+                            </p>
+
+
+                            <a
+                                href="{{ route('blog.show', ['slug' => 'guide-to-choosing-hood']) }}"
+                                class="janan-blog-card__read"
+                            >
+                                ادامه مطلب
+
+                                <svg
+                                    width="15"
+                                    height="15"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="1.8"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    aria-hidden="true"
+                                >
+                                    <path d="M5 12h14"/>
+                                    <path d="m13 6 6 6-6 6"/>
+                                </svg>
+                            </a>
+
+                        </div>
+
+                    </article>
+
+
+                    {{-- =================================================
+                        ARTICLE 02
+                    ================================================== --}}
+
+                    <article class="janan-blog-card">
+
+                        <a
+                            href="{{ route('blog.show', ['slug' => 'kitchen-sink-guide']) }}"
+                            class="janan-blog-card__media"
+                        >
+
+                            <img
+                                src="{{ asset('images/blog/sink-guide.webp') }}"
+                                alt="راهنمای انتخاب لباس زیر"
+                                class="janan-blog-card__image"
+                                loading="lazy"
+                                decoding="async"
+                            >
+
+                            <div class="janan-blog-card__overlay"></div>
+
+
+                            <div class="janan-blog-card__top">
+
+                                <span class="janan-blog-card__category">
+                                    انتخاب
+                                </span>
+
+                                <span class="janan-blog-card__number">
+                                    02
+                                </span>
+
+                            </div>
+
+                        </a>
+
+
+                        <div class="janan-blog-card__body">
+
+                            <div class="janan-blog-card__meta">
+                                ۴ دقیقه مطالعه
+                                <span></span>
+                                STYLE
+                            </div>
+
+
+                            <a
+                                href="{{ route('blog.show', ['slug' => 'kitchen-sink-guide']) }}"
+                                class="janan-blog-card__title"
+                            >
+                                زیبایی از جایی شروع می‌شود
+                                که راحتی را فراموش نکنیم.
+                            </a>
+
+
+                            <p class="janan-blog-card__excerpt">
+                                درباره انتخاب‌هایی که هم زیبا هستند
+                                و هم برای استفاده روزمره احساس خوبی می‌سازند.
+                            </p>
+
+
+                            <a
+                                href="{{ route('blog.show', ['slug' => 'kitchen-sink-guide']) }}"
+                                class="janan-blog-card__read"
+                            >
+                                ادامه مطلب
+
+                                <svg
+                                    width="15"
+                                    height="15"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="1.8"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    aria-hidden="true"
+                                >
+                                    <path d="M5 12h14"/>
+                                    <path d="m13 6 6 6-6 6"/>
+                                </svg>
+                            </a>
+
+                        </div>
+
+                    </article>
+
+
+                    {{-- =================================================
+                        ARTICLE 03
+                    ================================================== --}}
+
+                    <article class="janan-blog-card">
+
+                        <a
+                            href="{{ route('blog.show', ['slug' => 'modern-kitchen-design']) }}"
+                            class="janan-blog-card__media"
+                        >
+
+                            <img
+                                src="{{ asset('images/blog/kitchen-design.webp') }}"
+                                alt="استایل و انتخاب روزمره"
+                                class="janan-blog-card__image"
+                                loading="lazy"
+                                decoding="async"
+                            >
+
+                            <div class="janan-blog-card__overlay"></div>
+
+
+                            <div class="janan-blog-card__top">
+
+                                <span class="janan-blog-card__category">
+                                    الهام
+                                </span>
+
+                                <span class="janan-blog-card__number">
+                                    03
+                                </span>
+
+                            </div>
+
+                        </a>
+
+
+                        <div class="janan-blog-card__body">
+
+                            <div class="janan-blog-card__meta">
+                                ۶ دقیقه مطالعه
+                                <span></span>
+                                JOURNAL
+                            </div>
+
+
+                            <a
+                                href="{{ route('blog.show', ['slug' => 'modern-kitchen-design']) }}"
+                                class="janan-blog-card__title"
+                            >
+                                چند انتخاب کوچک برای
+                                احساس بهتر در هر روز
+                            </a>
+
+
+                            <p class="janan-blog-card__excerpt">
+                                از رنگ و پارچه تا جزئیات ساده‌ای که
+                                می‌توانند حال‌وهوای روزمره را تغییر دهند.
+                            </p>
+
+
+                            <a
+                                href="{{ route('blog.show', ['slug' => 'modern-kitchen-design']) }}"
+                                class="janan-blog-card__read"
+                            >
+                                ادامه مطلب
+
+                                <svg
+                                    width="15"
+                                    height="15"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="1.8"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    aria-hidden="true"
+                                >
+                                    <path d="M5 12h14"/>
+                                    <path d="m13 6 6 6-6 6"/>
+                                </svg>
+                            </a>
+
+                        </div>
+
+                    </article>
 
                 </div>
 

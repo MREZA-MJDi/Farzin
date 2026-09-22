@@ -19,12 +19,12 @@
     ========================================================== --}}
 
     <title>
-        @yield('title', 'فرزین | فروشگاه آنلاین')
+        @yield('title', 'ژنان | فروشگاه آنلاین لباس زیر زنانه')
     </title>
 
     <meta
         name="description"
-        content="@yield('meta_description', 'فرزین | فروشگاه آنلاین محصولات با کیفیت')"
+        content="@yield('meta_description', 'ژنان | فروشگاه آنلاین لباس زیر زنانه با طراحی ظریف، کیفیت بالا و انتخابی متنوع')"
     >
 
     <meta
@@ -37,18 +37,19 @@
         href="@yield('canonical_url', url()->current())"
     >
 
+
     {{-- =========================================================
         Brand / Browser
     ========================================================== --}}
 
     <meta
         name="theme-color"
-        content="#0d1b3d"
+        content="#8fc9e8"
     >
 
     <meta
         name="application-name"
-        content="فرزین"
+        content="ژنان"
     >
 
     {{-- Favicon --}}
@@ -63,6 +64,7 @@
         href="{{ asset('images/brand/logo.png') }}"
     >
 
+
     {{-- =========================================================
         Open Graph
     ========================================================== --}}
@@ -74,17 +76,17 @@
 
     <meta
         property="og:site_name"
-        content="فرزین"
+        content="ژنان"
     >
 
     <meta
         property="og:title"
-        content="@yield('og_title', trim($__env->yieldContent('title', 'فرزین | فروشگاه آنلاین')))"
+        content="@yield('og_title', trim($__env->yieldContent('title', 'ژنان | فروشگاه آنلاین لباس زیر زنانه')))"
     >
 
     <meta
         property="og:description"
-        content="@yield('og_description', trim($__env->yieldContent('meta_description', 'فرزین | فروشگاه آنلاین محصولات با کیفیت')))"
+        content="@yield('og_description', trim($__env->yieldContent('meta_description', 'ژنان | فروشگاه آنلاین لباس زیر زنانه با طراحی ظریف، کیفیت بالا و انتخابی متنوع')))"
     >
 
     <meta
@@ -102,6 +104,7 @@
         content="@yield('og_image', asset('images/brand/logo.png'))"
     >
 
+
     {{-- =========================================================
         Twitter / Social
     ========================================================== --}}
@@ -113,18 +116,19 @@
 
     <meta
         name="twitter:title"
-        content="@yield('twitter_title', trim($__env->yieldContent('title', 'فرزین | فروشگاه آنلاین')))"
+        content="@yield('twitter_title', trim($__env->yieldContent('title', 'ژنان | فروشگاه آنلاین لباس زیر زنانه')))"
     >
 
     <meta
         name="twitter:description"
-        content="@yield('twitter_description', trim($__env->yieldContent('meta_description', 'فرزین | فروشگاه آنلاین محصولات با کیفیت')))"
+        content="@yield('twitter_description', trim($__env->yieldContent('meta_description', 'ژنان | فروشگاه آنلاین لباس زیر زنانه با طراحی ظریف، کیفیت بالا و انتخابی متنوع')))"
     >
 
     <meta
         name="twitter:image"
         content="@yield('twitter_image', asset('images/brand/logo.png'))"
     >
+
 
     {{-- =========================================================
         Assets
@@ -138,7 +142,8 @@
     @stack('styles')
 </head>
 
-<body class="min-h-screen bg-[#f7f8fa] text-gray-900 antialiased">
+
+<body class="min-h-screen bg-[var(--background)] text-[var(--text)] antialiased">
 
 {{-- =========================================================
     Navbar

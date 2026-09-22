@@ -1,5 +1,5 @@
 <section
-    class="section home-section home-section--features"
+    class="section home-section home-section--features janan-features"
     aria-labelledby="features-title"
 >
     <div class="container">
@@ -7,33 +7,37 @@
         <div class="section__inner">
 
             <x-ui.section-header
-                eyebrow="چرا فرزین؟"
-                title="خریدی ساده، انتخابی مطمئن."
-                description="از انتخاب محصول تا دریافت سفارش، تجربه‌ای ساده و شفاف برای شما ساخته‌ایم."
+                eyebrow="چرا ژنان؟"
+                title="برای حسی که هر روز با توست."
+                description="در ژنان تلاش کرده‌ایم انتخاب، خرید و دریافت سفارش ساده، آرام و قابل اعتماد باشد."
                 title-id="features-title"
             />
 
             <div class="section-content">
 
-                <div class="features-grid">
+                <div class="features-grid janan-features-grid">
 
-                    <article class="feature">
+                    {{-- =================================================
+                        FEATURE 01
+                    ================================================== --}}
+
+                    <article class="feature janan-feature">
 
                         <div
-                            class="feature__icon"
+                            class="feature__icon janan-feature__icon"
                             aria-hidden="true"
                         >
-                            ✓
+                            <span>01</span>
                         </div>
 
                         <div class="feature__content">
 
                             <h3 class="feature__title">
-                                انتخاب دقیق
+                                انتخاب با دقت
                             </h3>
 
                             <p class="feature__description">
-                                محصولاتی با مشخصات روشن و اطلاعات کاربردی.
+                                هر محصول با توجه به کیفیت، طراحی و تجربه واقعی استفاده انتخاب شده است.
                             </p>
 
                         </div>
@@ -41,23 +45,27 @@
                     </article>
 
 
-                    <article class="feature">
+                    {{-- =================================================
+                        FEATURE 02
+                    ================================================== --}}
+
+                    <article class="feature janan-feature">
 
                         <div
-                            class="feature__icon"
+                            class="feature__icon janan-feature__icon"
                             aria-hidden="true"
                         >
-                            ◇
+                            <span>02</span>
                         </div>
 
                         <div class="feature__content">
 
                             <h3 class="feature__title">
-                                کیفیت قابل اعتماد
+                                راحتی در اولویت
                             </h3>
 
                             <p class="feature__description">
-                                تمرکز روی محصولاتی که برای استفاده واقعی انتخاب شده‌اند.
+                                زیبایی برای ما زمانی کامل است که در کنار آن، حس راحتی و آرامش هم داشته باشی.
                             </p>
 
                         </div>
@@ -65,13 +73,17 @@
                     </article>
 
 
-                    <article class="feature">
+                    {{-- =================================================
+                        FEATURE 03
+                    ================================================== --}}
+
+                    <article class="feature janan-feature">
 
                         <div
-                            class="feature__icon"
+                            class="feature__icon janan-feature__icon"
                             aria-hidden="true"
                         >
-                            →
+                            <span>03</span>
                         </div>
 
                         <div class="feature__content">
@@ -81,7 +93,7 @@
                             </h3>
 
                             <p class="feature__description">
-                                سفارش شما با فرآیندی شفاف و قابل پیگیری ارسال می‌شود.
+                                سفارش تو با فرآیندی منظم و شفاف آماده و ارسال می‌شود تا با خیال راحت منتظرش بمانی.
                             </p>
 
                         </div>
@@ -89,23 +101,27 @@
                     </article>
 
 
-                    <article class="feature">
+                    {{-- =================================================
+                        FEATURE 04
+                    ================================================== --}}
+
+                    <article class="feature janan-feature">
 
                         <div
-                            class="feature__icon"
+                            class="feature__icon janan-feature__icon"
                             aria-hidden="true"
                         >
-                            ♡
+                            <span>04</span>
                         </div>
 
                         <div class="feature__content">
 
                             <h3 class="feature__title">
-                                پشتیبانی انسانی
+                                همراه تو
                             </h3>
 
                             <p class="feature__description">
-                                برای انتخاب بهتر، همیشه یک راه برای ارتباط با ما دارید.
+                                از انتخاب محصول تا بعد از خرید، راه ارتباطی با ژنان همیشه برای تو باز است.
                             </p>
 
                         </div>

@@ -1,5 +1,5 @@
 <header
-    class="site-header"
+    class="site-header janan-header"
     x-data="{ accountOpen: false }"
 >
 
@@ -8,50 +8,32 @@
         <div class="container site-header__inner">
 
             {{-- =====================================================
-                 Logo
+                 LOGO
             ====================================================== --}}
+
             <a
                 href="{{ route('home') }}"
-                class="site-header__logo"
-                aria-label="فرزین"
+                class="site-header__logo janan-header__logo"
+                aria-label="ژنان"
             >
+
                 <span class="site-header__logo-text">
-                    FARZIN
+                    JANAN
                 </span>
 
-                <span
-                    class="site-header__logo-mark"
-                    aria-hidden="true"
-                >
-                    <svg
-                        viewBox="0 0 48 48"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <path
-                            d="M31.8 5H43L33.8 15.2H24.7L31.8 5Z"
-                            fill="currentColor"
-                        />
-
-                        <path
-                            d="M24.8 18.8H37.8L28.4 29H15.5L24.8 18.8Z"
-                            fill="currentColor"
-                        />
-
-                        <path
-                            d="M15.5 32.6H28.4L19.2 42.9H6.2L15.5 32.6Z"
-                            fill="currentColor"
-                        />
-                    </svg>
+                <span class="janan-header__logo-sub">
+                    EVERYDAY BEAUTY
                 </span>
+
             </a>
 
 
             {{-- =====================================================
-                 Desktop Navigation
+                 DESKTOP NAVIGATION
             ====================================================== --}}
+
             <nav
-                class="site-header__nav"
+                class="site-header__nav janan-header__nav"
                 aria-label="منوی اصلی"
             >
 
@@ -62,60 +44,59 @@
                     خانه
                 </a>
 
+
                 <a
-                    href="{{ route('shop') }}"
-                    class="site-header__nav-link {{ request()->routeIs('shop') ? 'is-active' : '' }}"
+                    href="{{ route('shop.index') }}"
+                    class="site-header__nav-link {{ request()->routeIs('shop.*') ? 'is-active' : '' }}"
                 >
                     فروشگاه
                 </a>
 
-                <a
-                    href="{{ route('category.hood') }}"
-                    class="site-header__nav-link {{ request()->routeIs('category.hood') ? 'is-active' : '' }}"
-                >
-                    هود
-                </a>
 
                 <a
-                    href="{{ route('category.sink') }}"
-                    class="site-header__nav-link {{ request()->routeIs('category.sink') ? 'is-active' : '' }}"
+                    href="{{ route('categories.index') }}"
+                    class="site-header__nav-link {{ request()->routeIs('categories.*') ? 'is-active' : '' }}"
                 >
-                    سینک
+                    دسته‌بندی‌ها
                 </a>
+
 
                 <a
                     href="{{ route('blog.index') }}"
                     class="site-header__nav-link {{ request()->routeIs('blog.*') ? 'is-active' : '' }}"
                 >
-                    مجله
+                    ژورنال
                 </a>
+
 
                 <a
                     href="{{ route('about') }}"
                     class="site-header__nav-link {{ request()->routeIs('about') ? 'is-active' : '' }}"
                 >
-                    درباره ما
+                    درباره ژنان
                 </a>
 
+
                 <a
-                    href="{{ route('contact') }}"
-                    class="site-header__nav-link {{ request()->routeIs('contact') ? 'is-active' : '' }}"
+                    href="{{ route('contact.index') }}"
+                    class="site-header__nav-link {{ request()->routeIs('contact.*') ? 'is-active' : '' }}"
                 >
-                    تماس با ما
+                    تماس
                 </a>
 
             </nav>
 
 
             {{-- =====================================================
-                 Actions
+                 ACTIONS
             ====================================================== --}}
-            <div class="site-header__actions">
+
+            <div class="site-header__actions janan-header__actions">
 
                 {{-- Search --}}
                 <button
                     type="button"
-                    class="icon-btn site-header__action"
+                    class="icon-btn site-header__action janan-header__action"
                     aria-label="جستجو"
                     aria-expanded="false"
                     data-search-toggle
@@ -133,7 +114,7 @@
                             r="6.5"
                         />
 
-                        <path d="M16 16L21 21" />
+                        <path d="M16 16L21 21"/>
                     </svg>
                 </button>
 
@@ -141,7 +122,7 @@
                 {{-- Wishlist --}}
                 <a
                     href="{{ route('wishlist') }}"
-                    class="icon-btn site-header__action"
+                    class="icon-btn site-header__action janan-header__action"
                     aria-label="علاقه‌مندی‌ها"
                 >
                     <svg
@@ -159,13 +140,14 @@
 
 
                 {{-- =================================================
-                     Account
+                     ACCOUNT
                 ================================================== --}}
+
                 @auth
 
                     <button
                         type="button"
-                        class="icon-btn site-header__action"
+                        class="icon-btn site-header__action janan-header__action"
                         aria-label="حساب کاربری"
                         aria-haspopup="dialog"
                         :aria-expanded="accountOpen ? 'true' : 'false'"
@@ -194,7 +176,7 @@
 
                     <a
                         href="{{ route('login') }}"
-                        class="icon-btn site-header__action"
+                        class="icon-btn site-header__action janan-header__action"
                         aria-label="ورود"
                     >
                         <svg
@@ -220,11 +202,12 @@
 
 
                 {{-- =================================================
-                     Cart
+                     CART
                 ================================================== --}}
+
                 <a
-                    href="{{ route('cart') }}"
-                    class="site-header__cart"
+                    href="{{ route('customer.cart.index') }}"
+                    class="site-header__cart janan-header__cart"
                     aria-label="سبد خرید"
                 >
                     <svg
@@ -234,7 +217,7 @@
                         stroke-width="1.8"
                         aria-hidden="true"
                     >
-                        <path d="M4 5H6L8.2 15.5H18L20 8H7" />
+                        <path d="M4 5H6L8.2 15.5H18L20 8H7"/>
 
                         <circle
                             cx="9.5"
@@ -249,18 +232,25 @@
                         />
                     </svg>
 
-                    <span class="site-header__cart-count">
-                        {{ $cartCount ?? 0 }}
-                    </span>
+
+                    @if(($cartCount ?? 0) > 0)
+
+                        <span class="site-header__cart-count janan-header__cart-count">
+                            {{ $cartCount }}
+                        </span>
+
+                    @endif
+
                 </a>
 
 
                 {{-- =================================================
-                     Mobile Menu
+                     MOBILE MENU
                 ================================================== --}}
+
                 <button
                     type="button"
-                    class="icon-btn site-header__menu-toggle"
+                    class="icon-btn site-header__menu-toggle janan-header__menu-toggle"
                     aria-label="باز کردن منو"
                     aria-expanded="false"
                     aria-controls="mobile-menu"
@@ -273,9 +263,9 @@
                         stroke-width="1.8"
                         aria-hidden="true"
                     >
-                        <path d="M4 7H20" />
-                        <path d="M4 12H20" />
-                        <path d="M4 17H20" />
+                        <path d="M4 7H20"/>
+                        <path d="M4 12H20"/>
+                        <path d="M4 17H20"/>
                     </svg>
                 </button>
 
@@ -287,19 +277,21 @@
 
 
     {{-- =============================================================
-         Search Panel
+         SEARCH PANEL
     ============================================================== --}}
+
     <div
-        class="site-header__search"
+        class="site-header__search janan-header__search"
         data-search-panel
         hidden
     >
+
         <div class="container">
 
             <form
                 action="{{ route('search') }}"
                 method="GET"
-                class="site-header__search-form"
+                class="site-header__search-form janan-header__search-form"
             >
 
                 <svg
@@ -315,8 +307,9 @@
                         r="6.5"
                     />
 
-                    <path d="M16 16L21 21" />
+                    <path d="M16 16L21 21"/>
                 </svg>
+
 
                 <label
                     for="header-search"
@@ -325,18 +318,20 @@
                     جستجوی محصولات
                 </label>
 
+
                 <input
                     id="header-search"
                     type="search"
                     name="q"
                     value="{{ request('q') }}"
-                    placeholder="جستجوی هود، سینک و محصولات..."
+                    placeholder="در ژنان چه چیزی می‌خواهی پیدا کنی؟"
                     autocomplete="off"
                 >
 
+
                 <button
                     type="button"
-                    class="site-header__search-close"
+                    class="site-header__search-close janan-header__search-close"
                     aria-label="بستن جستجو"
                     data-search-close
                 >
@@ -346,12 +341,14 @@
             </form>
 
         </div>
+
     </div>
 
 
     {{-- =============================================================
-         Account Modal
+         ACCOUNT MODAL
     ============================================================== --}}
+
     @auth
 
         <div
@@ -359,7 +356,7 @@
             x-show="accountOpen"
             x-transition.opacity
             @keydown.escape.window="accountOpen = false"
-            class="fixed inset-0 z-[9999] flex items-center justify-center bg-black/40 px-4 backdrop-blur-sm"
+            class="janan-account-modal fixed inset-0 z-[9999] flex items-center justify-center px-4"
             role="dialog"
             aria-modal="true"
             aria-label="حساب کاربری"
@@ -368,7 +365,7 @@
             {{-- Backdrop --}}
             <button
                 type="button"
-                class="absolute inset-0 h-full w-full cursor-default"
+                class="absolute inset-0 h-full w-full cursor-default bg-slate-900/25 backdrop-blur-sm"
                 aria-label="بستن"
                 @click="accountOpen = false"
             ></button>
@@ -378,25 +375,34 @@
             <div
                 x-show="accountOpen"
                 x-transition:enter="transition ease-out duration-200"
-                x-transition:enter-start="translate-y-2 scale-95 opacity-0"
+                x-transition:enter-start="translate-y-3 scale-[.97] opacity-0"
                 x-transition:enter-end="translate-y-0 scale-100 opacity-100"
                 x-transition:leave="transition ease-in duration-150"
                 x-transition:leave-start="translate-y-0 scale-100 opacity-100"
-                x-transition:leave-end="translate-y-2 scale-95 opacity-0"
+                x-transition:leave-end="translate-y-3 scale-[.97] opacity-0"
                 @click.stop
-                class="relative z-10 w-full max-w-md overflow-hidden rounded-3xl border border-[var(--color-border)] bg-white shadow-2xl"
+                class="relative z-10 w-full max-w-md overflow-hidden rounded-[28px] border border-[var(--border)] bg-white shadow-[0_30px_90px_rgba(51,78,90,.18)]"
             >
 
-                {{-- Modal Header --}}
+                {{-- Decorative --}}
                 <div
-                    class="flex items-center justify-between border-b border-[var(--color-border)] px-6 py-5"
-                >
+                    class="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-[var(--primary)]/10 blur-3xl"
+                    aria-hidden="true"
+                ></div>
+
+                <div
+                    class="pointer-events-none absolute -bottom-20 -left-14 h-44 w-44 rounded-full bg-[var(--accent)]/10 blur-3xl"
+                    aria-hidden="true"
+                ></div>
+
+
+                {{-- Modal Header --}}
+                <div class="relative flex items-center justify-between border-b border-[var(--border)] px-6 py-5">
 
                     <div class="flex items-center gap-3">
 
-                        <div
-                            class="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--color-brand-50)] text-[var(--color-brand-700)]"
-                        >
+                        <div class="flex h-11 w-11 items-center justify-center rounded-2xl bg-[linear-gradient(145deg,#eef9fd,#fff4f7)] text-[var(--primary)]">
+
                             <svg
                                 viewBox="0 0 24 24"
                                 fill="none"
@@ -415,17 +421,24 @@
                                     d="M5.2 20C5.9 16.6 8.4 14.8 12 14.8C15.6 14.8 18.1 16.6 18.8 20"
                                 />
                             </svg>
+
                         </div>
 
 
                         <div>
-                            <h3 class="text-sm font-black text-[var(--color-text-primary)]">
+
+                            <div class="text-[9px] font-black uppercase tracking-[0.18em] text-[var(--primary)]">
+                                JANAN
+                            </div>
+
+                            <h3 class="mt-1 text-sm font-black text-[var(--text)]">
                                 حساب کاربری
                             </h3>
 
-                            <p class="mt-1 text-xs text-[var(--color-text-muted)]">
+                            <p class="mt-1 text-[10px] text-[var(--text-muted)]">
                                 {{ auth()->user()->name }}
                             </p>
+
                         </div>
 
                     </div>
@@ -435,7 +448,7 @@
                     <button
                         type="button"
                         @click="accountOpen = false"
-                        class="flex h-9 w-9 items-center justify-center rounded-xl text-[var(--color-text-muted)] transition hover:bg-[var(--color-neutral-100)] hover:text-[var(--color-text-primary)]"
+                        class="flex h-9 w-9 items-center justify-center rounded-xl text-[var(--text-muted)] transition hover:bg-[var(--surface-soft)] hover:text-[var(--text)]"
                         aria-label="بستن"
                     >
                         <svg
@@ -446,8 +459,8 @@
                             class="h-5 w-5"
                             aria-hidden="true"
                         >
-                            <path d="M6 6L18 18" />
-                            <path d="M18 6L6 18" />
+                            <path d="M6 6L18 18"/>
+                            <path d="M18 6L6 18"/>
                         </svg>
                     </button>
 
@@ -455,19 +468,19 @@
 
 
                 {{-- Modal Body --}}
-                <div class="space-y-3 p-6">
+                <div class="relative space-y-3 p-6">
 
                     {{-- User Info --}}
-                    <div
-                        class="rounded-2xl bg-[var(--color-neutral-50)] p-4"
-                    >
-                        <p class="text-xs text-[var(--color-text-muted)]">
+                    <div class="rounded-2xl border border-[var(--border)] bg-[linear-gradient(145deg,#f6fbfd,#fff7fa)] p-4">
+
+                        <p class="text-[9px] font-bold text-[var(--text-muted)]">
                             حساب واردشده
                         </p>
 
-                        <p class="mt-1 text-sm font-bold text-[var(--color-text-primary)]">
+                        <p class="mt-1 text-sm font-bold text-[var(--text)]">
                             {{ auth()->user()->email }}
                         </p>
+
                     </div>
 
 
@@ -475,9 +488,45 @@
                     <a
                         href="{{ route('home') }}"
                         @click="accountOpen = false"
-                        class="flex w-full items-center justify-center rounded-2xl border border-[var(--color-border)] px-4 py-3 text-sm font-bold text-[var(--color-text-primary)] transition hover:bg-[var(--color-neutral-50)]"
+                        class="flex w-full items-center justify-center gap-2 rounded-2xl border border-[var(--border)] px-4 py-3.5 text-xs font-black text-[var(--text)] transition hover:border-[var(--primary)]/20 hover:bg-[var(--surface-soft)] hover:text-[var(--primary)]"
                     >
                         بازگشت به فروشگاه
+
+                        <svg
+                            class="h-4 w-4"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            aria-hidden="true"
+                        >
+                            <path d="m9 18 6-6-6-6"/>
+                        </svg>
+
+                    </a>
+
+
+                    {{-- Cart --}}
+                    <a
+                        href="{{ route('customer.cart.index') }}"
+                        @click="accountOpen = false"
+                        class="flex w-full items-center justify-center gap-2 rounded-2xl border border-[var(--border)] px-4 py-3.5 text-xs font-black text-[var(--text)] transition hover:border-[var(--primary)]/20 hover:bg-[var(--surface-soft)] hover:text-[var(--primary)]"
+                    >
+                        سبد خرید
+
+                        <svg
+                            class="h-4 w-4"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            aria-hidden="true"
+                        >
+                            <path d="M4 5H6L8.2 15.5H18L20 8H7"/>
+                            <circle cx="9.5" cy="19" r="1.2"/>
+                            <circle cx="17" cy="19" r="1.2"/>
+                        </svg>
+
                     </a>
 
 
@@ -490,7 +539,7 @@
 
                         <button
                             type="submit"
-                            class="flex w-full items-center justify-center gap-2 rounded-2xl bg-red-50 px-4 py-3.5 text-sm font-black text-red-600 transition hover:bg-red-100"
+                            class="flex w-full items-center justify-center gap-2 rounded-2xl bg-red-50 px-4 py-3.5 text-xs font-black text-red-600 transition hover:bg-red-100"
                         >
 
                             <svg
@@ -498,12 +547,12 @@
                                 fill="none"
                                 stroke="currentColor"
                                 stroke-width="1.8"
-                                class="h-5 w-5"
+                                class="h-4 w-4"
                                 aria-hidden="true"
                             >
-                                <path d="M10 17L15 12L10 7" />
-                                <path d="M15 12H3" />
-                                <path d="M21 4V20" />
+                                <path d="M10 17L15 12L10 7"/>
+                                <path d="M15 12H3"/>
+                                <path d="M21 4V20"/>
                             </svg>
 
                             خروج از حساب کاربری
@@ -521,7 +570,10 @@
     @endauth
 
 
-    {{-- Mobile Menu --}}
+    {{-- =============================================================
+         MOBILE MENU
+    ============================================================== --}}
+
     <x-layout.mobile-menu />
 
 </header>
