@@ -100,14 +100,14 @@
             >
 
                 <a
-                    href="{{ route('shop') }}"
+                    href="{{ route('shop.index') }}"
                     class="btn btn--primary btn--lg"
                 >
                     مشاهده محصولات
                 </a>
 
                 <a
-                    href="{{ route('about') }}"
+                    href="#"
                     class="btn btn--outline btn--lg"
                 >
                     درباره فرزین

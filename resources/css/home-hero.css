@@ -1,0 +1,797 @@
+/* =========================================================
+   FARZIN HERO
+========================================================= */
+
+.farzin-hero {
+    position: relative;
+    width: 100%;
+    min-height: min(760px, 100svh);
+    overflow: hidden;
+    isolation: isolate;
+    background: #090909;
+    color: #fff;
+}
+
+
+/* =========================================================
+   SLIDES
+========================================================= */
+
+.farzin-hero__slides {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    background: #090909;
+}
+
+
+.farzin-hero__slide {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    z-index: 0;
+
+    transition:
+        opacity .9s cubic-bezier(.22, 1, .36, 1),
+        visibility .9s ease;
+}
+
+
+.farzin-hero__slide.is-active {
+    opacity: 1;
+    visibility: visible;
+    z-index: 1;
+    pointer-events: auto;
+}
+
+
+/* =========================================================
+   PRODUCT IMAGE
+========================================================= */
+
+.farzin-hero__image {
+    position: absolute;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    /*
+     * مهم:
+     * محصول کامل‌تر دیده می‌شود و crop نمی‌شود.
+     */
+    object-fit: contain;
+    object-position: center center;
+
+    /*
+     * مقدار کوچک برای جلوگیری از حس کاملاً ثابت بودن تصویر
+     */
+    transform:
+        translate3d(var(--hero-x, 0px), var(--hero-y, 0px), 0)
+        scale(1.015);
+
+    transform-origin: center center;
+
+    opacity: 0;
+
+    filter:
+        saturate(.94)
+        contrast(1.02);
+
+    transition:
+        opacity .8s ease,
+        transform 5.5s cubic-bezier(.22, 1, .36, 1),
+        filter .5s ease;
+
+    will-change: transform, opacity;
+}
+
+
+.farzin-hero__slide.is-active .farzin-hero__image {
+    opacity: 1;
+}
+
+
+/*
+ * کمی حرکت سینمایی هنگام نمایش اسلاید
+ */
+.farzin-hero__slide.is-active .farzin-hero__image {
+    animation: farzinHeroImageEnter 5.5s ease both;
+}
+
+
+@keyframes farzinHeroImageEnter {
+
+    0% {
+        opacity: 0;
+        transform:
+            translate3d(var(--hero-x, 0px), var(--hero-y, 0px), 0)
+            scale(1.035);
+    }
+
+    12% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 1;
+        transform:
+            translate3d(var(--hero-x, 0px), var(--hero-y, 0px), 0)
+            scale(1.015);
+    }
+}
+
+
+/* =========================================================
+   CINEMATIC OVERLAY
+========================================================= */
+
+.farzin-hero__overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(0, 0, 0, .03) 0%,
+            rgba(0, 0, 0, .08) 34%,
+            rgba(0, 0, 0, .30) 68%,
+            rgba(0, 0, 0, .62) 100%
+        ),
+        linear-gradient(
+            180deg,
+            rgba(0, 0, 0, .08) 0%,
+            rgba(0, 0, 0, 0) 32%,
+            rgba(0, 0, 0, .28) 100%
+        );
+}
+
+
+/* =========================================================
+   INNER
+========================================================= */
+
+.farzin-hero__inner {
+    position: relative;
+    z-index: 4;
+
+    width: min(100% - 48px, 1440px);
+    min-height: min(760px, 100svh);
+
+    margin-inline: auto;
+
+    padding:
+        120px
+        0
+        108px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.farzin-hero__content {
+    max-width: 520px;
+
+    margin-top: auto;
+    margin-bottom: auto;
+
+    text-align: right;
+}
+
+
+.farzin-hero__label {
+    display: inline-block;
+
+    margin-bottom: 18px;
+
+    color: rgba(255, 255, 255, .62);
+
+    font-size: .68rem;
+    line-height: 1;
+    font-weight: 700;
+
+    letter-spacing: .16em;
+    text-transform: uppercase;
+}
+
+
+.farzin-hero__title {
+    margin: 0;
+
+    max-width: 560px;
+
+    color: #fff;
+
+    font-size:
+        clamp(
+            2.8rem,
+            6vw,
+            6rem
+        );
+
+    line-height: 1.05;
+    font-weight: 800;
+
+    letter-spacing: -.045em;
+}
+
+
+.farzin-hero__title span {
+    display: block;
+    margin-top: .12em;
+
+    color: #d9b678;
+}
+
+
+.farzin-hero__cta {
+    margin-top: 30px;
+
+    min-height: 48px;
+
+    padding-inline: 19px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+
+    border: 1px solid rgba(255, 255, 255, .15);
+    border-radius: 999px;
+
+    background: rgba(255, 255, 255, .06);
+
+    color: #fff;
+
+    text-decoration: none;
+
+    font-size: .78rem;
+    font-weight: 700;
+
+    backdrop-filter: blur(14px);
+
+    transition:
+        transform .3s ease,
+        background-color .3s ease,
+        border-color .3s ease;
+}
+
+
+.farzin-hero__cta:hover {
+    transform: translateY(-2px);
+
+    background: rgba(255, 255, 255, .11);
+
+    border-color:
+        rgba(255, 255, 255, .28);
+}
+
+
+.farzin-hero__cta svg {
+    width: 17px;
+    height: 17px;
+}
+
+
+/* =========================================================
+   BOTTOM
+========================================================= */
+
+.farzin-hero__bottom {
+    width: 100%;
+
+    display: grid;
+    grid-template-columns:
+        auto
+        minmax(120px, 1fr)
+        auto;
+
+    align-items: center;
+
+    gap: 24px;
+}
+
+
+/* =========================================================
+   COUNTER
+========================================================= */
+
+.farzin-hero__counter {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+
+    color: rgba(255, 255, 255, .68);
+
+    font-size: .68rem;
+    font-weight: 700;
+
+    letter-spacing: .08em;
+}
+
+
+.farzin-hero__counter i {
+    width: 22px;
+    height: 1px;
+
+    display: block;
+
+    background:
+        rgba(255, 255, 255, .26);
+}
+
+
+/* =========================================================
+   PRODUCT NAME
+========================================================= */
+
+.farzin-hero__product-name {
+    min-width: 0;
+
+    overflow: hidden;
+
+    color: rgba(255, 255, 255, .70);
+
+    text-align: center;
+
+    font-size: .74rem;
+    font-weight: 600;
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+
+.farzin-hero__product-name span {
+    display: inline-block;
+}
+
+
+/* =========================================================
+   CONTROLS
+========================================================= */
+
+.farzin-hero__controls {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 11px;
+}
+
+
+/* =========================================================
+   ARROWS
+========================================================= */
+
+.farzin-hero__arrow {
+    width: 34px;
+    height: 34px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
+    border: 1px solid rgba(255, 255, 255, .15);
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, .035);
+
+    color: rgba(255, 255, 255, .78);
+
+    cursor: pointer;
+
+    backdrop-filter: blur(12px);
+
+    transition:
+        transform .25s ease,
+        background-color .25s ease,
+        border-color .25s ease,
+        color .25s ease;
+}
+
+
+.farzin-hero__arrow:hover {
+    transform: scale(1.05);
+
+    background:
+        rgba(255, 255, 255, .09);
+
+    border-color:
+        rgba(255, 255, 255, .30);
+
+    color: #fff;
+}
+
+
+.farzin-hero__arrow svg {
+    width: 15px;
+    height: 15px;
+}
+
+
+/* =========================================================
+   DOTS
+========================================================= */
+
+.farzin-hero__dots {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+}
+
+
+.farzin-hero__dot {
+    width: 7px;
+    height: 7px;
+
+    padding: 0;
+
+    border: 0;
+    border-radius: 50%;
+
+    background:
+        rgba(255, 255, 255, .30);
+
+    cursor: pointer;
+
+    transition:
+        width .3s ease,
+        background-color .3s ease,
+        transform .3s ease;
+}
+
+
+.farzin-hero__dot:hover {
+    transform: scale(1.2);
+}
+
+
+.farzin-hero__dot.is-active {
+    width: 24px;
+
+    border-radius: 999px;
+
+    background:
+        #d9b678;
+}
+
+
+/* =========================================================
+   PROGRESS
+========================================================= */
+
+.farzin-hero__progress {
+    position: absolute;
+
+    inset-inline: 0;
+    bottom: 0;
+
+    z-index: 7;
+
+    width: 100%;
+    height: 2px;
+
+    overflow: hidden;
+
+    background:
+        rgba(255, 255, 255, .10);
+}
+
+
+.farzin-hero__progress span {
+    display: block;
+
+    width: 0;
+    height: 100%;
+
+    background: #d9b678;
+
+    transform-origin: right center;
+}
+
+
+.farzin-hero__progress span.is-running {
+    animation:
+        farzinHeroProgress 5.5s
+        linear forwards;
+}
+
+
+@keyframes farzinHeroProgress {
+
+    from {
+        width: 0;
+    }
+
+    to {
+        width: 100%;
+    }
+
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1000px) {
+
+    .farzin-hero {
+        min-height: 680px;
+    }
+
+
+    .farzin-hero__inner {
+        width: min(100% - 36px, 100%);
+
+        min-height: 680px;
+
+        padding:
+            108px
+            0
+            90px;
+    }
+
+
+    .farzin-hero__content {
+        max-width: 480px;
+    }
+
+
+    .farzin-hero__title {
+        font-size:
+            clamp(
+                2.7rem,
+                7vw,
+                4.8rem
+            );
+    }
+
+
+    .farzin-hero__overlay {
+        background:
+            linear-gradient(
+                90deg,
+                rgba(0, 0, 0, .08) 0%,
+                rgba(0, 0, 0, .30) 52%,
+                rgba(0, 0, 0, .66) 100%
+            ),
+            linear-gradient(
+                180deg,
+                rgba(0, 0, 0, .04),
+                rgba(0, 0, 0, .32)
+            );
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 700px) {
+
+    .farzin-hero {
+        min-height: 650px;
+    }
+
+
+    .farzin-hero__inner {
+        width: min(100% - 28px, 100%);
+
+        min-height: 650px;
+
+        padding:
+            100px
+            0
+            76px;
+    }
+
+
+    /*
+     * عکس در موبایل کمی بالاتر قرار می‌گیرد
+     * تا Hero فضای تنفس داشته باشد.
+     */
+    .farzin-hero__image {
+        object-position: center center;
+        transform:
+            translate3d(var(--hero-x, 0px), var(--hero-y, 0px), 0)
+            scale(1.01);
+    }
+
+
+    .farzin-hero__content {
+        max-width: 100%;
+
+        margin-top: auto;
+        margin-bottom: 18vh;
+    }
+
+
+    .farzin-hero__label {
+        margin-bottom: 14px;
+
+        font-size: .61rem;
+    }
+
+
+    .farzin-hero__title {
+        max-width: 100%;
+
+        font-size:
+            clamp(
+                2.45rem,
+                12vw,
+                4rem
+            );
+
+        line-height: 1.04;
+    }
+
+
+    .farzin-hero__cta {
+        margin-top: 22px;
+
+        min-height: 45px;
+
+        padding-inline: 17px;
+
+        font-size: .73rem;
+    }
+
+
+    .farzin-hero__bottom {
+        grid-template-columns: auto 1fr auto;
+
+        gap: 12px;
+    }
+
+
+    .farzin-hero__counter {
+        font-size: .62rem;
+    }
+
+
+    .farzin-hero__product-name {
+        font-size: .68rem;
+        text-align: center;
+    }
+
+
+    .farzin-hero__controls {
+        gap: 7px;
+    }
+
+
+    .farzin-hero__arrow {
+        width: 31px;
+        height: 31px;
+    }
+
+
+    .farzin-hero__dots {
+        gap: 5px;
+    }
+
+
+    .farzin-hero__dot {
+        width: 5px;
+        height: 5px;
+    }
+
+
+    .farzin-hero__dot.is-active {
+        width: 19px;
+    }
+
+
+    .farzin-hero__overlay {
+        background:
+            linear-gradient(
+                180deg,
+                rgba(0, 0, 0, .03) 0%,
+                rgba(0, 0, 0, .08) 38%,
+                rgba(0, 0, 0, .66) 100%
+            );
+    }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 420px) {
+
+    .farzin-hero {
+        min-height: 600px;
+    }
+
+
+    .farzin-hero__inner {
+        min-height: 600px;
+
+        padding:
+            92px
+            0
+            68px;
+    }
+
+
+    .farzin-hero__content {
+        margin-bottom: 15vh;
+    }
+
+
+    .farzin-hero__title {
+        font-size: 2.35rem;
+    }
+
+
+    .farzin-hero__bottom {
+        gap: 8px;
+    }
+
+
+    .farzin-hero__product-name {
+        max-width: 110px;
+    }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .farzin-hero__slide {
+        transition: opacity .2s ease;
+    }
+
+
+    .farzin-hero__image {
+        animation: none !important;
+
+        transform: none !important;
+
+        transition:
+            opacity .2s ease;
+    }
+
+
+    .farzin-hero__cta,
+    .farzin-hero__arrow,
+    .farzin-hero__dot {
+        transition: none;
+    }
+
+
+    .farzin-hero__progress span.is-running {
+        animation: none;
+    }
+
+}
